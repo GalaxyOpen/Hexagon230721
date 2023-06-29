@@ -33,13 +33,13 @@ public class SalesEntity extends BaseEntity{
     @Column(length = 20, nullable = false)
     private String status;
 
-    public static SalesEntity toSalesSaveEntity(SalesDTO salesDTO){
-        SalesEntity salesEntity = new SalesEntity();
-        salesEntity.setMemberEntity(salesDTO.getMemberEntity);
-        salesEntity.setGameEntity(salesDTO.getGameEntity);
-        salesEntity.setSalesAmount(salesDTO.getSalesAmount);
-        salesEntity.setPayMethod(salesDTO.getPayMethod);
-        salesEntity.setStatus(salesDTO.getStatus);
-        return purchaseEntity;
-    }
+//    public static SalesEntity toSalesSaveEntity(SalesDTO salesDTO){
+//        SalesEntity salesEntity = new SalesEntity();
+//        salesEntity.setMemberEntity(salesDTO.getMemberEntity);
+//        salesEntity.setGameEntity(salesDTO.getGameEntity);
+//        salesEntity.setSalesAmount(salesDTO.getSalesAmount);
+//        salesEntity.setPayMethod(salesDTO.getPayMethod);
+//        salesEntity.setStatus(salesDTO.getStatus);
+//        return purchaseEntity;
+//    }
 }

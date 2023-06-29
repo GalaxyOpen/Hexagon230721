@@ -26,6 +26,11 @@ public class ChatRoomEntity {
     @Column(length = 20, nullable = false)
     private String roomId;
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="member_id")
+    private MemberEntity memberEntity;
+
+
     @OneToMany(mappedBy="chatRoomEntity", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChatMessageEntity> chatMessageEntityList = new ArrayList<>();
 }

@@ -21,10 +21,7 @@ public class MemberPhotoEntity {
     @Column(length = 100)
     private String StoredFileName;
 
-    @Column
-    private Long memberId;
-
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="memberId")
+    @JoinColumn(name="member_Id")
     private MemberEntity memberEntity;
 }

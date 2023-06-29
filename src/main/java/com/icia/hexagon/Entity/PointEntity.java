@@ -18,14 +18,14 @@ public class PointEntity {
     private Long id;
 
     @Column(nullable = false)
-    private long usedPoint;
+    private Long usedPoint;
 
     @Column(nullable = false)
-    private long chargedPoint;
+    private Long chargedPoint;
 
     @Column(nullable = false)
     @ColumnDefault("0")
-    private long totalPoint;
+    private Long totalPoint;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

@@ -32,6 +32,14 @@ public class PurchaseEntity extends BaseEntity{
     @Column(length = 20, nullable = false)
     private String status;
 
-
+public static PurchaseEntity toPurchaseEntity(PurchaseDTO purchaseDTO){
+    PurchaseEntity purchaseEntity = new PurchaseEntity();
+    purchaseEntity.setMemberEntity(purchaseDTO.getMemberEntity);
+    purchaseEntity.setGameEntity(purchaseDTO.getGameEntity);
+    purchaseEntity.setBuyAmount(purchaseDTO.getBuyAmount);
+    purchaseEntity.setPayMethod(purchaseDTO.getPayMethod);
+    purchaseEntity.setStatus(purchaseDTO.getStatus);
+    return purchaseEntity;
+}
 
 }

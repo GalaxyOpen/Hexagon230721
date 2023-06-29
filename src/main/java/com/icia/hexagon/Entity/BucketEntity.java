@@ -18,4 +18,15 @@ public class BucketEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private GameEntity gameEntity;
+
+    public static BucketEntity toBucketSaveEntity(BucketDTO bucketDTO){
+        BucketEntity bucketEntity = new BucketEntity();
+        bucketEntity.setMemberEntity(bucketDTO.getMemberEntity());
+        bucketEntity.setGameEntity(bucketDTO.getGameEntity);
+        return bucketEntity;
+    }
 }

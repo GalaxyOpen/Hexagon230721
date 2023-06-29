@@ -36,30 +36,30 @@ public class MemberEntity {
     @Column(nullable = false)
     private LocalDateTime memberBirth;
 
-    @OneToMany(mappedBy="memberPhotoEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<MemberPhotoEntity> memberPhotoEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<GameEntity> gameEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy="bucketEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<BucketEntity> bucketEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pointEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PointEntity> pointEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy="gameReviewEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="memberEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<GameReviewEntity> gameReviewEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy ="purchaseEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy ="memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<PurchaseEntity> purchaseEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "salesEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SalesEntity> salesEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "starEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<StarEntity> starEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chatRoomEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<ChatRoomEntity> chatRoomEntityList = new ArrayList<>();
 }

@@ -31,13 +31,13 @@ public class PointEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    public static PointEntity toPointSaveEntity(PointDTO pointDTO){
-        PointEntity pointEntity = new PointEntity();
-        pointEntity.setUsedPoint(pointDTO.getUsedPoint);
-        pointEntity.setChargedPoint(pointDTO.getChargedPoint);
-        pointEntity.setTotalPoint(pointDTO.getTotalPoint);
-        pointEntity.setMemberEntity(pointDTO.getMemberEntity);
-        return pointEntity;
-    }
+//    public static PointEntity toPointSaveEntity(PointDTO pointDTO){
+//        PointEntity pointEntity = new PointEntity();
+//        pointEntity.setUsedPoint(pointDTO.getUsedPoint);
+//        pointEntity.setChargedPoint(pointDTO.getChargedPoint);
+//        pointEntity.setTotalPoint(pointDTO.getTotalPoint);
+//        pointEntity.setMemberEntity(pointDTO.getMemberEntity);
+//        return pointEntity;
+//    }
 
 }

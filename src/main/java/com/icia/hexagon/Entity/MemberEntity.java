@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name="member_table")
 
 public class MemberEntity {
     @Id

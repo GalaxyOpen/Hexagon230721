@@ -16,10 +16,10 @@
             <button onclick="search_fx()">검색</button>
         </div>
         <li class="right" id="sign-up-nav">
-            <a href="/"> 회원가입 </a>
+            <a href="/member/save"> 회원가입 </a>
         </li>
         <li class="right" id="login-nav">
-            <a href="/"> 로그인 </a>
+            <a href="/member/login"> 로그인 </a>
         </li>
         <li id="right-nav3" style="display: none">
             <i class="bi bi-person-circle"></i>
@@ -35,6 +35,7 @@
             searchArea.style.display = "block";
             loginNav.innerHTML = "<a href='/'>" + "로그아웃";
             signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'></i>"
+            rightNav3.style.display = "block"
         }
 
         const search_fx = () => {

@@ -20,6 +20,7 @@ public class MemberDTO {
     private String memberPassword;
     private String memberName;
     private String memberMobile;
+    private String memberBirth;
     private String createdAt;
     private Long totalPoint;
 

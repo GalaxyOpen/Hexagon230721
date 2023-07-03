@@ -18,18 +18,19 @@ import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    @GetMapping("/member/save")
+    @GetMapping("/save")
     public String saveForm(){
         return "/memberPages/memberSave";
     }
-    @PostMapping("/member/save")
+    @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) throws IOException {
         memberService.save(memberDTO);
         return "redirect:/member/login";
     }
-    @PostMapping("/member/dup-check")
+    @PostMapping("/dup-check")
     public ResponseEntity IDCheck(@RequestBody MemberDTO memberDTO){
         boolean result = memberService.IDCheck(memberDTO.getMemberEmail());
         if (result) {
@@ -40,7 +41,7 @@ public class MemberController {
         }
     }
     @Transactional
-    @GetMapping("/member")
+    @GetMapping("")
     public String findAll(@PageableDefault(page=1)Pageable pageable,
                           @RequestParam(value="type", required=false, defaultValue = "")String type,
                           @RequestParam(value="q", required = false, defaultValue = "")String q,
@@ -61,14 +62,14 @@ public class MemberController {
         model.addAttribute("q", q);
         return "/memberPages/memberList";
     }
-    @GetMapping("/member/login")
+    @GetMapping("/login")
     public String loginForm(@RequestParam(value="redirectURI", defaultValue = "/member/myPage")String redirectURI,
                            Model model){
         model.addAttribute("redirectURI", redirectURI);
         return "/memberPages/memberLogin";
     }
     @Transactional
-    @PostMapping("/member/login")
+    @PostMapping("/login")
         public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session,
                             @RequestParam("redirectURI")String redirectURI){
         boolean memberLoginResult = memberService.login(memberDTO);
@@ -80,33 +81,33 @@ public class MemberController {
             return "/memberPages/memberLogin";
         }
     }
-    @PostMapping("/member/login/axios")
+    @PostMapping("/login/axios")
     public ResponseEntity loginAxios(@RequestBody MemberDTO memberDTO, HttpSession session){
         memberService.loginAxios(memberDTO);
         session.setAttribute("loginId", memberDTO.getMemberId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/member/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("loginId");
         return "redirect:/";
     }
-    @GetMapping("/member/myPage")
+    @GetMapping("/myPage")
     public String myPage(){
         return "/memberPages/memberMain";
     }
-    @GetMapping("/member/axios/{id}")
+    @GetMapping("/axios/{id}")
     public ResponseEntity detailAxios(@PathVariable Long id){
         MemberDTO memberDTO= memberService.findById(id);
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
-    @GetMapping("/member/{id}")
+    @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model){
         MemberDTO memberDTO = memberService.findById(id);
         model.addAttribute("member", memberDTO);
         return "/memberPages/memberDetail";
     }
-    @GetMapping("/member/update")
+    @GetMapping("/update")
     public String updateForm(HttpSession session, Model model) {
         String loginId = (String)session.getAttribute("loginId");
         System.out.println("loginId = " + loginId);
@@ -114,12 +115,12 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "/memberPages/memberUpdate";
     }
-    @PostMapping("/member/update")
+    @PostMapping("/update")
     public String update(MemberDTO memberDTO){
         memberService.update(memberDTO);
         return "/memberPages/memberMain";
     }
-    @DeleteMapping("/member/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         memberService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

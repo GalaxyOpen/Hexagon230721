@@ -1,41 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/memberLogin.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+<div th:replace="/components/header :: header"></div>
+<div id="member-login-section">
+    <form action="/member/login" method="post" id="login-form">
+        <h2>로그인</h2>
+        <input type="hidden" name="redirectURI" th:value="${redirectURI}">
 
-<form action="/member/login" method="post">
-  <input type="hidden" name="redirectURI" th:value="${redirectURI}">
-  <input type="text" name="memberId"  placeholder="Id">
-  <input type="text" name="memberPassword"  placeholder="Password">
-  <p id="login-result" style="color: red; display:none">
-    이메일이나 비밀번호가 일치하지 않습니다.
-  </p>
-  <input type="button" value="로그인" onclick="login()">
-</form>
+        <div class="input-area">
+            <p>계정 이름으로 로그인</p>
+            <input type="text" name="memberId" placeholder="Id">
+        </div>
 
+        <div class="input-area">
+            <p>비밀번호</p>
+            <input type="text" name="memberPassword" placeholder="Password">
+            <p id="login-result" style="color: red; display:none"> 이메일 또는 비밀번호가 일치하지 않습니다. </p>
+        </div>
+
+        <input type="button" value="로그인" onclick="login()">
+    </form>
+</div>
+<div th:replace="/components/footer :: footer"></div>
 </body>
 <script>
-  const login=()=>{
-    const memberId=document.querySelector('input[name="memberId"]').value;
-    const password=document.querySelector('input[name="memberPassword"]').value;
-    const redirectURI=document.querySelector('input[name="redirectURI"]').value;
-    axios({
-      method:"post",
-      url:"/member/login/axios",
-      data:{
-        memberId:memberId,
-        memberPassword:password
-      }
-    }).then(res=>{
-      console.log("res",res)
-      location.href=redirectURI;
-    }).catch(err=>{
-      console.log("err", err)
-      document.getElementById("login-result").style.display="block";
-    });
-  }
+    const login = () => {
+        const memberId = document.querySelector('input[name="memberId"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberId: memberId,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res)
+            location.href = redirectURI;
+        }).catch(err => {
+            console.log("err", err)
+            document.getElementById("login-result").style.display = "block";
+        });
+    }
 </script>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<head>
+
+</head>
+<body>
+
+<form action="/member/update" method="post">
+    <div id="container">
+    <input type="hidden" name="id" th:value="${member.id}"><br>
+    ID : <input type="text" name="memberId" th:value="${member.memberId}" readonly><br>
+    Email : <input type="text" name="memberEmail" th:value="${member.memberEmail}"><br>
+    Password : <input type="text" name="memberPassword"><br>
+    이름 : <input type="text" name="memberName" th:value="${member.memberName}"><br>
+    전화번호 : <input type="text" name="memberMobile" class="form-control" th:value="${member.memberMobile}"><br>
+    <input type="submit" value="정보수정">
+    </div>
+</form>
+
+</body>
+</html>

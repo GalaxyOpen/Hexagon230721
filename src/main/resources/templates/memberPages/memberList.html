@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+
+<div id="section">
+    <div class="container" id="paging-list">
+        <div th:if="${memberList !=null}" id="member-list">
+            <table class="table-primary">
+                <thead>
+                <tr>
+                    <th scope="col">가입번호</th>
+                    <th scope="col">아이디</th>
+                    <th scope="col">회원이름</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">생성날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member: ${memberList}">
+                    <td th:text="${member.id}"></td>
+                    <td th:text="${member.memberId}"></td>
+                    <td><a th:href="@{|/member/${member.id}?page=${memberList.number+1}&type=${type}&q=${q}|}"
+                           th:text="${member.memberName}">이름</a></td>
+                    <td th:text="${member.memberMobile}"></td>
+                    <td th:text="${member.createdAt}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="container">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/member(page=1, type=${type}, q=${q})}">
+                            <span>첫 페이지</span>
+                        </a>
+                    </li>
+                    <li th:class="${memberList.first} ? 'disabled'" class="page-item">
+                        <a class="page-link"
+                           th:href="${memberList.first} ? '#' : @{/member(page=${memberList.number}, tyep=${type}, q=${q})}">
+                            <span><</span>
+                        </a>
+                    </li>
+                    <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                        th:class="${page == memberList.number+1}?'page-item active'" class="page-item">
+                        <a th:href="@{/member(page=${page}, type=${type}, q=${q})}" class="page-link"
+                           th:text="${page}"></a>
+                    </li>
+                    <li th:class="${memberList.last}?'disabled'">
+                        <a class="page-link"
+                           th:href="${memberList.last}?'#':@{/member(page=${memberList.number+2}, type=${type}, q=${q})}">
+                            <span>&gt;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/member(page=${memberList.totalPages}, type=${type}, q=${q})}">
+                            <span>끝 페이지</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div th:unless="${memberList!=null}">
+            <h1>검색결과가 없습니다!!</h1>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

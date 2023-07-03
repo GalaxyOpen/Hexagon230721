@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<head>
+
+</head>
+<body>
+
+<div id="section">
+    <p th:text="${session.loginId}">님 어서오세요</p>
+    <button onclick="member_update()">회원 정보 수정</button>
+
+</div>
+
+</body>
+<script>
+    const member_update=()=>{
+        location.href="/member/update";
+    }
+</script>
+</html>

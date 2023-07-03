@@ -1,5 +1,7 @@
 package com.icia.hexagon.DTO;
 
+import com.icia.hexagon.Entity.MemberEntity;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +16,22 @@ import java.time.LocalDateTime;
 public class MemberDTO {
     private Long id;
     private String memberId;
+    private String memberEmail;
     private String memberPassword;
     private String memberName;
-    private String memberEmail;
     private String memberMobile;
-    private LocalDateTime memberBirth;
-    private int photoAttached;
     private String createdAt;
     private Long totalPoint;
+
+    public static MemberDTO toDTO(MemberEntity memberEntity){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberId(memberEntity.getMemberId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberName(memberEntity.getMemberName());
+        memberDTO.setMemberMobile(memberEntity.getMemberMobile());
+        memberDTO.setCreatedAt(UtilClass.dateFormat(memberEntity.getCreatedAt()));
+        return memberDTO;
+    }
 }

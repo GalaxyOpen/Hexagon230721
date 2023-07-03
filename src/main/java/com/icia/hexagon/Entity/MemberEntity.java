@@ -1,9 +1,9 @@
 package com.icia.hexagon.Entity;
+import com.icia.hexagon.DTO.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +12,13 @@ import java.util.List;
 @Entity
 @Table(name="member_table")
 
-public class MemberEntity {
+public class MemberEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column(length = 30, unique = true, nullable = false)
+    @Column(length = 30, unique = true)
     private String memberId;
 
     @Column(length = 30, nullable = false)
@@ -33,11 +33,6 @@ public class MemberEntity {
     @Column(length=20, nullable = false)
     private String memberMobile;
 
-    @Column(nullable = false)
-    private LocalDateTime memberBirth;
-
-    @OneToMany(mappedBy="memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
-    private List<MemberPhotoEntity> memberPhotoEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<GameEntity> gameEntityList = new ArrayList<>();
@@ -62,4 +57,25 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<ChatRoomEntity> chatRoomEntityList = new ArrayList<>();
+
+    public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberId(memberDTO.getMemberId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        return memberEntity;
+    }
+    public static MemberEntity toUpdateEntity(MemberDTO memberDTO){
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberId(memberDTO.getMemberId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        return memberEntity;
+    }
 }

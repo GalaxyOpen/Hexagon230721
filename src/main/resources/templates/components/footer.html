@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/main.css">
+</head>
+<body>
+<div th:fragment="footer" id="footer">
+    <ul>
+        <li>
+            <a href="/">프로젝트 소개</a>
+        </li>
+        <li>
+            <a href="/">이용약관</a>
+        </li>
+        <li>
+            <a href="/">개인정보처리방침</a>
+        </li>
+        <li>
+            <a href="/">청소년보호정책</a>
+        </li>
+        <li>
+            <a href="/">운영정책</a>
+        </li>
+        <li>
+            <a href="/">고객센터</a>
+        </li>
+    </ul>
+    <ul>
+        <span>헥사곤게임즈</span> <span>개발 : 이기홍 송길수 이문정</span> <span>주소 : 인천광역시 미추홀구 매소홀로488번길 6-32, 4층 404호</span> <br>
+        <span> 대표번호 : 404-NOT-FOUND </span> <span> 팩스 : 404-NOT-FOUND </span> <span>Github : https://github.com/GalaxyOpen/Hexagon230721 </span>
+    </ul>
+    <ul>
+        <div id="copyrights">
+
+        </div>
+    </ul>
+    <script>
+        const date = new Date();
+        console.log(date);
+        console.log(date.getFullYear());
+        const footer = document.getElementById("copyrights");
+        footer.innerHTML = "<p>&copy;" + date.getFullYear() + "&nbsp" + " HEXAGON GAMES All Rights Reserved";
+    </script>
+</div>
+</body>
+</html>

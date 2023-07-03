@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<head>
+
+</head>
+<body>
+
+<div id="section">
+    <table class="table table-striped">
+        <tr>
+            <th>가입번호</th>
+            <td th:text="${member.id}"></td>
+        </tr>
+        <tr>
+            <th>아이디</th>
+            <td th:text="${member.memberId}"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${member.memberEmail}"></td>
+        </tr>
+        <tr>
+            <th>비밀번호</th>
+            <td th:text="${member.memberPassword}"></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td th:text="${member.memberName}"></td>
+        </tr>
+        <tr>
+            <th>탄생일</th>
+            <td th:text="${member.memberBirth}"></td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td th:text="${member.memberMobile}"></td>
+        </tr>
+    </table>
+    <div class="container">
+        <button onclick="member_list()">목록</button>
+        <button onclick="member_update()">수정</button>
+        <button onclick="member_delete()">삭제</button>
+    </div>
+    <div class="pass-check">
+    </div>
+</div>
+
+
+</body>
+<script th:inline="javascript">
+    const member_list=()=> {
+        location.href = "/";
+    }
+    const member_update=()=>{
+        const id=[[${member.id}]]
+        axios({
+            method:"put",
+            url:"/member/"+id,
+            data:{
+                id:id
+            }
+        }).then(res=>{
+            console.log("수정 성공")
+            location.href = "/member/"
+        }).catch(err=>{
+            alert("실패")
+        })
+    }
+    const member_delete=()=>{
+        const id=[[${member.id}]]
+        axios({
+            method:"delete",
+            url: "/member/delete/"+id
+        }).then(res=>{
+            location.href="/";
+        }).catch(err=>{
+            alert("삭제실패");
+        })
+    }
+
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<head>
+
+</head>
+<body>
+
+<form action="/member/save" method="post">
+    <input type="hidden" name="id">
+    ID<input type="text" name="memberId" placeholder="ID" id="member-Id" onblur="email_check()"><br>
+    <p id="check-result">
+        <span id="correct" style="color:blue; display:none">
+        사용가능한 이메일입니다.
+        </span>
+        <span id="incorrect" style="color:red; display:none">
+        누군가 사용 중입니다.
+        </span>
+    </p>
+    Email주소<input type="text" name="memberEmail" placeholder="이메일" id="member-email" class="form-control"><br>
+    비밀번호<input type="text" name="memberPassword" placeholder="설정할 비밀번호"><br>
+    이름<input type="text" name="memberName" placeholder="이름"><br>
+    생년월일<input type="date" name="memberBirth"><br>
+    전화번호 <input type="text" name="memberMobile" placeholder="010-****-****"><br>
+    <input type="submit" value="회원가입">
+</form>
+
+</body>
+<script th:inline="javascript">
+    const email_check=()=>{
+        document.querySelector("#correct").style.display="none";
+        document.querySelector("#incorrect").style.display="none";
+        const id=document.querySelector("#member-Id").value;
+        axios({
+            method:"post",
+            url:"/member/dup-check",
+            data:{
+                memberId: id
+            }
+        }).then(res=>{
+            document.querySelector("#correct").style.display="block";
+        }).catch(err=>{
+            document.querySelector("#incorrect").style.display="block";
+        });
+
+    }
+</script>
+</html>

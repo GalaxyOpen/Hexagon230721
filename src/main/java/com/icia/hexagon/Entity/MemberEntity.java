@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MemberEntity extends BaseEntity{
     @Column(length = 30, unique = true)
     private String memberId;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 150, nullable = false)
     private String memberPassword;
 
     @Column(length = 20, nullable = false)
@@ -32,6 +33,9 @@ public class MemberEntity extends BaseEntity{
 
     @Column(length=20, nullable = false)
     private String memberMobile;
+
+    @Column
+    private String memberBirth;
 
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
@@ -60,10 +64,10 @@ public class MemberEntity extends BaseEntity{
 
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setId(memberDTO.getId());
         memberEntity.setMemberId(memberDTO.getMemberId());
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         return memberEntity;
@@ -74,6 +78,7 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberId(memberDTO.getMemberId());
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         return memberEntity;

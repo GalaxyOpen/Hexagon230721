@@ -1,0 +1,53 @@
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("../images/memLgn_wallpaper.jpg");
+    background-size: cover;
+}
+
+#member-login-section {
+    min-height: 100%;
+    height: auto;
+    padding-bottom: 300px;
+}
+
+#login-form {
+    margin-top: 160px;
+    margin-bottom: 500px;
+    width: 33%;
+    position: center;
+    height: auto;
+
+    background-color: #110911;
+    /*border: 1px solid #cccccc;*/
+    padding: 50px 50px 50px 50px;
+}
+
+#login-form h2 {
+    margin-bottom: 30px;
+}
+
+#login-form .input-area {
+    margin-bottom: 20px;
+}
+
+#login-form .input-area p {
+    margin-bottom: 5px;
+}
+
+#login-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+}
+
+#login-form input[type="date"] {
+    width: 75%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+    text-align: center;
+}
+
+

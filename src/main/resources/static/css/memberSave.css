@@ -1,0 +1,52 @@
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("../images/memSv_wallpaper.jpg");
+}
+
+
+#member-save-section {
+    min-height: 100%;
+    height: auto;
+    padding-bottom: 300px;
+}
+
+#save-form {
+    margin-top: 80px;
+    margin-bottom: 150px;
+    width: 33%;
+    position: center;
+    height: auto;
+
+    background-color: #110911;
+    /*border: 1px solid #cccccc;*/
+    padding: 50px 50px 50px 50px;
+}
+
+#save-form h2 {
+    margin-bottom: 30px;
+}
+
+#save-form .input-area {
+    margin-bottom: 20px;
+}
+
+#save-form .input-area p {
+    margin-bottom: 5px;
+}
+
+#save-form input[type="text"] {
+    width: 75%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+}
+
+#save-form input[type="date"] {
+    width: 75%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+    text-align: center;
+}
+

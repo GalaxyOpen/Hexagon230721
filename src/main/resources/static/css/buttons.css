@@ -1,0 +1,16 @@
+input[type="submit"],
+input[type="button"] {
+    margin-top: 30px;
+    background: linear-gradient(to right, #bc3265, #672873) ;
+    width: 150px;
+    color: white;
+    padding: 10px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background: linear-gradient(to right, #e02c6f, #692577) ;
+}

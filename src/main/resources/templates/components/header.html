@@ -26,21 +26,28 @@
         </li>
     </ul>
     <script th:inline="javascript">
-        const loginNav = document.getElementById("login-nav")
-        const signUpNav = document.getElementById("sign-up-nav")
-        const rightNav3 = document.getElementById("right-nav3")
-        const searchArea = document.getElementById("search-area")
-        const loginEmail = [[${session.loginEmail}]]
-        if (loginEmail.length !== null) {
+        const loginNav = document.getElementById("login-nav");
+        const signUpNav = document.getElementById("sign-up-nav");
+        const rightNav3 = document.getElementById("right-nav3");
+        const searchArea = document.getElementById("search-area");
+        const loginId = [[${session.loginId}]];
+
+        if (loginId != null) {
+            console.log(loginId)
             searchArea.style.display = "block";
-            loginNav.innerHTML = "<a href='/member/logout'>" + "로그아웃";
-            signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'></i>"
-            rightNav3.style.display = "block"
+            loginNav.innerHTML = "<a href='/member/logout'>" + "로그아웃" + "</a>";
+            signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";
+            rightNav3.style.display = "block";
+        } else {
+            console.log(loginId);
+            loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";
+            signUpNav.innerHTML = "<a href='/member/save'>" + "회원가입" + "</a>";
         }
 
-        const search_fx = () => {
-
-        }
+        // const search_fx = () => {
+        //
+        // }
     </script>
+</div>
 </body>
 </html>

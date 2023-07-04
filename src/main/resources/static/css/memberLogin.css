@@ -1,12 +1,15 @@
 body {
     background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("../images/memLgn_wallpaper.jpg");
     background-size: cover;
+    position: center;
+    height: auto;
 }
 
 #member-login-section {
     min-height: 100%;
     height: auto;
-    padding-bottom: 300px;
+    /*padding-bottom: 300px;*/
+    overflow: hidden;
 }
 
 #login-form {
@@ -23,6 +26,7 @@ body {
 
 #login-form h2 {
     margin-bottom: 30px;
+    color: white;
 }
 
 #login-form .input-area {
@@ -31,6 +35,7 @@ body {
 
 #login-form .input-area p {
     margin-bottom: 5px;
+    color: white;
 }
 
 #login-form input[type="text"] {

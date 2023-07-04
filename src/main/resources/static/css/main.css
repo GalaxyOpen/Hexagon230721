@@ -59,7 +59,7 @@
     background-color: #201425;
     min-height: 100%;
     height: auto;
-    padding-bottom: 300px;
+    /*padding-bottom: 300px;*/
 }
 
 #section img {
@@ -71,7 +71,8 @@
     width: 100%;
     height: 300px;
     position: relative;
-    transform: translateY(-100%);
+    /*transform: translateY(-100%);*/
+    bottom: 0;
 }
 
 #footer ul {

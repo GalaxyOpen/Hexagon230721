@@ -1,5 +1,8 @@
 body {
     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("../images/memSv_wallpaper.jpg");
+    background-size: cover;
+    position: center;
+    height: auto;
 }
 
 
@@ -23,6 +26,7 @@ body {
 
 #save-form h2 {
     margin-bottom: 30px;
+    color: white;
 }
 
 #save-form .input-area {
@@ -31,6 +35,7 @@ body {
 
 #save-form .input-area p {
     margin-bottom: 5px;
+    color: white;
 }
 
 #save-form input[type="text"] {

@@ -11,43 +11,42 @@
         <li class="left">
             <a href="/"><img src="/images/로고%20가로ver.png" width="300" height="70"></a>
         </li>
-        <li class="search-area" id="search-area">
+        <li class="search-area">
             <input type="text" placeholder="검색어 입력" id="q">
             <button onclick="search_fx()">검색</button>
         </li>
         <li class="right" id="sign-up-nav">
-            <a href="/member/save"> 회원가입 </a>
+            <a th:if="${#httpServletRequest.remoteUser != null}" href="/member/save"> <i class='bi bi-person-circle'></i> </a>
+            <a th:unless="${#httpServletRequest.remoteUser != null}" href="/member/save"> 회원가입 </a>
         </li>
         <li class="right" id="login-nav">
-            <a href="/member/login"> 로그인 </a>
-        </li>
-        <li id="right-nav3" style="display: none">
-
+            <a th:if="${#httpServletRequest.remoteUser != null}" href="/logout">로그아웃</a>
+            <a th:unless="${#httpServletRequest.remoteUser != null}" href="/member/login">로그인</a>
         </li>
     </ul>
-    <script th:inline="javascript">
-        const loginNav = document.getElementById("login-nav");
-        const signUpNav = document.getElementById("sign-up-nav");
-        const rightNav3 = document.getElementById("right-nav3");
-        const searchArea = document.getElementById("search-area");
-        const loginId = [[${session.loginId}]];
+<!--    <script th:inline="javascript">-->
+<!--        const loginNav = document.getElementById("login-nav");-->
+<!--        const signUpNav = document.getElementById("sign-up-nav");-->
+<!--        const rightNav3 = document.getElementById("right-nav3");-->
+<!--        const searchArea = document.getElementById("search-area");-->
+<!--        const loginId = /*[[${#httpServletRequest.remoteUser != null}]]*/ false;-->
 
-        if (loginId.length != 0) {
-            console.log(loginId);
-            searchArea.style.display = "block";
-            loginNav.innerHTML = "<a href='/member/logout'>" + "로그아웃" + "</a>";
-            signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";
-            rightNav3.style.display = "inline-block";
-        } else {
-            console.log(loginId);
-            loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";
-            signUpNav.innerHTML = "<a href='/member/save'>" + "회원가입" + "</a>";
-        }
 
-        // const search_fx = () => {
-        //
-        // }
-    </script>
+<!--        // if (loginId) {-->
+<!--        //     console.log(loginId);-->
+<!--        //     searchArea.style.display = "block";-->
+<!--        //     signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";-->
+<!--        //     rightNav3.style.display = "inline-block";-->
+<!--        // } else {-->
+<!--        //     console.log(loginId);-->
+<!--        //     loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";-->
+<!--        //     signUpNav.innerHTML = "<a href='/member/save'>" + "회원가입" + "</a>";-->
+<!--        // }-->
+
+<!--        // const search_fx = () => {-->
+<!--        //-->
+<!--        // }-->
+<!--    </script>-->
 </div>
 </body>
 </html>

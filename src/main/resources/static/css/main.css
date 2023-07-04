@@ -46,15 +46,22 @@
     padding: 0px;
 }
 
-#search-area.search-area {
+#header ul li.search-area {
     text-align: center;
     float: left;
-    display: none;
-    width: 33%;
-    margin-left: 300px;
+    width: 40%;
+    margin-left: 200px;
     /*margin-right: 300px;*/
-    /*padding-top: 35px;*/
+    padding-top: 28px;
     /*padding-bottom: 30px;*/
+}
+
+#header ul li.search-area input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
 }
 
 #section {

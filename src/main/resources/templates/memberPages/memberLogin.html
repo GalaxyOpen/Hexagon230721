@@ -16,7 +16,6 @@
 <div id="member-login-section">
     <form action="/member/login" method="post" id="login-form">
         <h2>로그인</h2>
-        <input type="hidden" name="redirectURI" th:value="${redirectURI}">
 
         <div class="input-area">
             <p>계정 이름으로 로그인</p>
@@ -29,31 +28,12 @@
             <p id="login-result" style="color: red; display:none"> 이메일 또는 비밀번호가 일치하지 않습니다. </p>
         </div>
 
-        <input type="button" value="로그인" onclick="login()">
+        <input type="submit" value="로그인">
     </form>
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script>
-    const login = () => {
-        const memberId = document.querySelector('input[name="memberId"]').value;
-        const password = document.querySelector('input[name="memberPassword"]').value;
-        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
-        axios({
-            method: "post",
-            url: "/member/login/axios",
-            data: {
-                memberId: memberId,
-                memberPassword: password
-            }
-        }).then(res => {
-            console.log("res", res)
 
-            location.href = redirectURI;
-        }).catch(err => {
-            console.log("err", err)
-            document.getElementById("login-result").style.display = "block";
-        });
-    }
 </script>
 </html>

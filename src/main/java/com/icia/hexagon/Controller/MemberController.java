@@ -45,6 +45,7 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
     @Transactional
     @GetMapping("/")
     public String findAll(@PageableDefault(page=1)Pageable pageable,

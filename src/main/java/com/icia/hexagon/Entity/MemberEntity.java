@@ -83,4 +83,10 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         return memberEntity;
     }
+
+    public String getRoles() {
+        // 멤버의 권한(role) 정보를 반환하는 로직 작성
+        // 예: "USER,ADMIN"
+        return "USER";
+    }
 }

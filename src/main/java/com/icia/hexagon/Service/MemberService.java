@@ -1,5 +1,6 @@
 package com.icia.hexagon.Service;
 
+import com.icia.hexagon.Config.Security.PasswordUtils;
 import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.Entity.MemberEntity;
 import com.icia.hexagon.Repository.MemberRepository;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,19 +59,31 @@ public class MemberService {
         return memberDTOS;
     }
 
-    public boolean login(MemberDTO memberDTO) {
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberIdAndMemberPassword(memberDTO.getMemberId(), memberDTO.getMemberPassword());
-        if(memberEntity.isPresent()){
-            return true;
-        }else{
+    public boolean authenticate(String memberEmail, String memberPassword) {
+        // 사용자 이메일에 해당하는 회원 정보 조회
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberEmail(memberEmail);
+
+        // 사용자가 입력한 이메일과 일치하는 회원 정보가 없는 경우
+        if (memberEntityOptional.isEmpty()) {
             return false;
         }
+
+        MemberEntity memberEntity = memberEntityOptional.get();
+
+        // 사용자가 입력한 비밀번호와 저장된 비밀번호 비교
+        String hashedPassword = memberEntity.getMemberPassword();
+
+        // BCrypt.checkpw() 메서드는 BCrypt 해시 알고리즘을 사용하여 입력한 비밀번호와 해시된 비밀번호를 비교하는 역할.
+        // BCrypt 해시 알고리즘은 무작위 솔트(salt)와 함께 비밀번호를 해시화하여 저장하므로, 안전한 비밀번호 비교를 위해 사용.
+        boolean passwordMatch = BCrypt.checkpw(memberPassword, hashedPassword);
+
+        return passwordMatch;
     }
 
-    public void loginAxios(MemberDTO memberDTO) {
-        memberRepository.findByMemberIdAndMemberPassword(memberDTO.getMemberId(), memberDTO.getMemberPassword())
-                        .orElseThrow(()->new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
-    }
+//    public void loginAxios(MemberDTO memberDTO) {
+//        memberRepository.findByMemberIdAndMemberPassword(memberDTO.getMemberId(), memberDTO.getMemberPassword())
+//                        .orElseThrow(()->new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
+//    }
 
     public MemberDTO findById(Long id) {
         MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(()->new NoSuchElementException());
@@ -76,17 +91,19 @@ public class MemberService {
     }
 
     public MemberDTO findByMemberId(String loginId) {
-        MemberEntity memberEntity = memberRepository.findByMemberId(loginId).orElseThrow(()-> new NoSuchElementException("something wrong"));
+        Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberId(loginId);
+        MemberEntity memberEntity = memberEntityOptional.orElseThrow(() -> new UsernameNotFoundException("Member not found"));
         return MemberDTO.toDTO(memberEntity);
     }
 
     @Transactional
     public void update(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
-        memberRepository.save(memberEntity);
+        String encryptedPassword = PasswordUtils.encryptPassword(memberDTO.getMemberPassword());  // 비밀번호 암호화
+        memberDTO.setMemberPassword(encryptedPassword);  // 암호화된 비밀번호로 설정
+        memberRepository.save(MemberEntity.toUpdateEntity(memberDTO));  // MemberDTO를 MemberEntity로 변환하여 저장
     }
-    public void delete(Long id){
-        memberRepository.deleteById(id);
+    public void delete(MemberDTO memberDTO){
+        memberRepository.delete(MemberEntity.toUpdateEntity(memberDTO));
     }
 
 

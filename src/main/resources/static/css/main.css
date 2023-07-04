@@ -46,13 +46,15 @@
     padding: 0px;
 }
 
-#header ul .search-area {
+#search-area.search-area {
     text-align: center;
+    float: left;
     display: none;
+    width: 33%;
     margin-left: 300px;
-    margin-right: 300px;
-    padding-top: 35px;
-    padding-bottom: 30px;
+    /*margin-right: 300px;*/
+    /*padding-top: 35px;*/
+    /*padding-bottom: 30px;*/
 }
 
 #section {

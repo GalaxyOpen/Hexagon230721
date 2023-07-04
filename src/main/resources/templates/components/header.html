@@ -11,10 +11,10 @@
         <li class="left">
             <a href="/"><img src="/images/로고%20가로ver.png" width="300" height="70"></a>
         </li>
-        <div class="search-area">
+        <li class="search-area" id="search-area">
             <input type="text" placeholder="검색어 입력" id="q">
             <button onclick="search_fx()">검색</button>
-        </div>
+        </li>
         <li class="right" id="sign-up-nav">
             <a href="/member/save"> 회원가입 </a>
         </li>
@@ -22,7 +22,7 @@
             <a href="/member/login"> 로그인 </a>
         </li>
         <li id="right-nav3" style="display: none">
-            <i class="bi bi-person-circle"></i>
+
         </li>
     </ul>
     <script th:inline="javascript">
@@ -32,12 +32,12 @@
         const searchArea = document.getElementById("search-area");
         const loginId = [[${session.loginId}]];
 
-        if (loginId != null) {
-            console.log(loginId)
+        if (loginId.length != 0) {
+            console.log(loginId);
             searchArea.style.display = "block";
             loginNav.innerHTML = "<a href='/member/logout'>" + "로그아웃" + "</a>";
             signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";
-            rightNav3.style.display = "block";
+            rightNav3.style.display = "inline-block";
         } else {
             console.log(loginId);
             loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";

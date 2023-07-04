@@ -19,7 +19,8 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member")
-public class MemberController {
+public class
+MemberController {
     private final MemberService memberService;
     @GetMapping("/save")
     public String saveForm(){

@@ -12,13 +12,11 @@ import java.awt.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessageDTO {
-
     public enum MessageType{
         ENTER, TALK
     }
-
     private MessageType type;
-    private Long roomId; // 방 번호
+    private String roomId; // 방 번호
     private String sender; // 채팅을 보낸 사람
     private String message; // 채팅 메시지
     private String createdAt; // 채팅 발송 시간

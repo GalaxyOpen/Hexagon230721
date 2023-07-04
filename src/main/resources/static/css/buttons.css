@@ -1,5 +1,6 @@
 input[type="submit"],
-input[type="button"] {
+input[type="button"],
+button {
     margin-top: 30px;
     background: linear-gradient(to right, #bc3265, #672873) ;
     width: 150px;
@@ -11,6 +12,7 @@ input[type="button"] {
 }
 
 input[type="submit"]:hover,
-input[type="button"]:hover {
+input[type="button"]:hover,
+button {
     background: linear-gradient(to right, #e02c6f, #692577) ;
 }

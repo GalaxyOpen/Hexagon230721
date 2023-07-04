@@ -47,7 +47,7 @@ public class LoginIdPwValidator implements UserDetailsService {
 
         // 인증에 성공한 경우 세션에 memberId 값을 저장
         HttpSession session = request.getSession();
-        session.setAttribute("loginEmail", insertedId);
+        session.setAttribute("loginId", insertedId);
 
         return user;
     }

@@ -32,6 +32,8 @@ public class MemberDTO {
         memberDTO.setMemberPassword(memberEntity.getMemberPassword());
         memberDTO.setMemberName(memberEntity.getMemberName());
         memberDTO.setMemberMobile(memberEntity.getMemberMobile());
+        memberDTO.setMemberBirth(memberEntity.getMemberBirth());
+        memberDTO.setTotalPoint(memberEntity.getTotalPoint());
         memberDTO.setCreatedAt(UtilClass.dateFormat(memberEntity.getCreatedAt()));
         return memberDTO;
     }

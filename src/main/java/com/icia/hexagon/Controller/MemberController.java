@@ -10,12 +10,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -82,36 +84,44 @@ public class MemberController {
         return "/memberPages/memberMain";
     }
 
-    @GetMapping("/axios/{id}")
-    public ResponseEntity detailAxios(@PathVariable Long id){
-        MemberDTO memberDTO= memberService.findById(id);
-        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
-    }
+//    @GetMapping("/axios/{id}")
+//    public ResponseEntity detailAxios(@PathVariable Long id){
+//        MemberDTO memberDTO= memberService.findById(id);
+//        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+//    }
 
-    @GetMapping("/{id}")
+    @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal User user, Model model){
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
         model.addAttribute("user", memberDTO);
         return "/memberPages/memberDetail";
     }
 
-    @GetMapping("/update")
-    public String updateForm(@AuthenticationPrincipal User user, Model model) {
-        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateForm(@PathVariable Long id, Model model) {
+        MemberDTO memberDTO = memberService.findById(id);
+        System.out.println("update = "+ memberDTO);
         model.addAttribute("user", memberDTO);
-        return "/memberPages/memberUpdate";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/update")
     public String update(MemberDTO memberDTO){
         memberService.update(memberDTO);
-        return "/memberPages/memberMain";
+        return "redirect:/";
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity delete(@AuthenticationPrincipal User user){
-        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id, HttpServletRequest request){
+        MemberDTO memberDTO = memberService.findById(id);
         memberService.delete(memberDTO);
+
+        // 로그아웃 수행
+        SecurityContextHolder.clearContext();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

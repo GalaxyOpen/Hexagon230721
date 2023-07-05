@@ -11,15 +11,19 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/chat")
 public class ChatController {
     private final ChatService chatService;
 
-    @PostMapping
+    @GetMapping("/member/chat")
+    private String chat(){
+        return "/memberPages/chat";
+    }
+
+    @PostMapping("/chat/enter")
     public ChatRoomDTO createRoom(@RequestParam String name){
         return chatService.createRoom(name);
     }
-    @GetMapping
+    @GetMapping("/chat/message")
     public List<ChatRoomDTO> findAllRooms(){
         return chatService.findAllRoom();
     }

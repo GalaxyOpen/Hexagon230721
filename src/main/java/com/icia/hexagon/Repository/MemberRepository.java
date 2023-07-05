@@ -14,4 +14,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Optional<MemberEntity> findByMemberIdAndMemberPassword(String memberId, String memberPassword);
     Page<MemberEntity> findByMemberEmailContaining(String q, PageRequest id);
     Page<MemberEntity> findByMemberNameContaining(String q, PageRequest id);
+
+    Page<MemberEntity> findByMemberIdContaining(String q, PageRequest id);
 }

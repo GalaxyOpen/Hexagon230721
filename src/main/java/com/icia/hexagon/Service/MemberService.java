@@ -42,8 +42,8 @@ public class MemberService {
         int page = pageable.getPageNumber()-1;
         int pageLimit =5;
         Page<MemberEntity> memberEntities = null;
-        if(type.equals("memberEmail")){
-            memberEntities=memberRepository.findByMemberEmailContaining(q,PageRequest.of(page,pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        if(type.equals("memberId")){
+            memberEntities=memberRepository.findByMemberIdContaining(q,PageRequest.of(page,pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         }else if(type.equals("memberName")){
             memberEntities=memberRepository.findByMemberNameContaining(q,PageRequest.of(page,pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         }else{

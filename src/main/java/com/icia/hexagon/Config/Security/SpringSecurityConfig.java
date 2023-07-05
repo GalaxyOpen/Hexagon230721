@@ -3,6 +3,7 @@ package com.icia.hexagon.Config.Security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +27,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**").permitAll()  // 인증(로그인) 없이 접근 허용
                 .anyRequest().authenticated()  // 나머지 요청은 인증된 사용자만 접근 가능
+                .antMatchers(HttpMethod.PUT, "/member/update/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/member/delete/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/member/login")  // 사용자 정의 로그인 페이지

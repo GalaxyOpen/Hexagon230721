@@ -34,8 +34,11 @@ public class MemberEntity extends BaseEntity{
     @Column(length=20, nullable = false)
     private String memberMobile;
 
-    @Column
+    @Column(nullable = false)
     private String memberBirth;
+
+    @Column(nullable = false)
+    private Long totalPoint;
 
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
@@ -70,6 +73,7 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberBirth(memberDTO.getMemberBirth());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setTotalPoint(0L);
         return memberEntity;
     }
     public static MemberEntity toUpdateEntity(MemberDTO memberDTO){
@@ -81,6 +85,7 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberBirth(memberDTO.getMemberBirth());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setTotalPoint(memberDTO.getTotalPoint());
         return memberEntity;
     }
 

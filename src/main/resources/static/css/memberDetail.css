@@ -1,0 +1,83 @@
+body {
+    background: linear-gradient(#201425, #341d34);
+    background-size: cover;
+    position: center;
+    height: auto;
+}
+
+#member-detail-section {
+    min-height: 100%;
+    height: auto;
+    /*padding-bottom: 300px;*/
+    overflow: hidden;
+}
+
+.top-table {
+    width: 33%;
+    margin: 50px auto 0px;
+    color: white;
+    background-color: black;
+    padding: 10px;
+}
+
+.top-table th {
+    width: 50%;
+    padding: 10px;
+}
+
+.member-table {
+    width: 33%;
+    color: white;
+    margin-bottom: 50px;
+    border: none;
+    outline: none;
+    background-color: #181018;
+}
+
+.member-table th {
+    width: 50%;
+    padding: 10px;
+    text-align: left;
+}
+
+.member-table td {
+    overflow: hidden;
+    width: 50%;
+    padding: 10px;
+    text-align: left;
+}
+
+.point-table {
+    width: 33%;
+    color: white;
+    margin-bottom: 50px;
+    border: none;
+    outline: none;
+    background-color: #181018;
+}
+
+#cash-icon {
+    text-align: center;
+    font-size: 100px;
+    background: linear-gradient(180deg, #9220a1, #bc3265);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+#you-have-n-points{
+    text-align: center;
+}
+
+#points-amount {
+    text-align: center;
+    font-size: 30px;
+    color: #bc3265;
+    font-weight: bold;
+}
+
+#charge-list {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    margin: auto;
+}

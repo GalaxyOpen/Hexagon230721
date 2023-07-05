@@ -26,10 +26,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**").permitAll()  // 인증(로그인) 없이 접근 허용
-                .anyRequest().authenticated()  // 나머지 요청은 인증된 사용자만 접근 가능
                 .antMatchers(HttpMethod.PUT, "/member/update/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/member/delete/**").authenticated()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()  // 나머지 요청은 인증된 사용자만 접근 가능
                 .and()
                 .formLogin()
                 .loginPage("/member/login")  // 사용자 정의 로그인 페이지

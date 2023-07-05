@@ -16,7 +16,7 @@
             <button class="btn-1-search" onclick="search_fx()">검색</button>
         </li>
         <li class="right" id="sign-up-nav">
-            <a th:if="${#httpServletRequest.remoteUser != null}" href="/member/{id}">
+            <a th:if="${#httpServletRequest.remoteUser != null}" href="/member/detail">
                 <span th:value="${session.loginId}"></span> <i class='bi bi-person-circle'></i>
             </a>
             <a th:unless="${#httpServletRequest.remoteUser != null}" href="/member/save"> 회원가입 </a>

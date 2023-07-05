@@ -1,4 +1,4 @@
-package com.icia.hexagon.Config;
+package com.icia.hexagon.Chatting;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -13,7 +13,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
         registry.addEndpoint("/stomp/chat")
-                .setAllowedOrigins("http://localhost:8086")
+                .setAllowedOrigins("localhost:8086")
                 .withSockJS();
     }
 

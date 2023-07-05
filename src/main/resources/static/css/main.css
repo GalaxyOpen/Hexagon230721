@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     margin: auto;
     text-decoration: none;
     border-collapse: collapse;
@@ -24,6 +24,28 @@
     margin: auto;
 }
 
+#search-area.search-area {
+    box-sizing: border-box;
+    background: black;
+    text-align: center;
+    float: left;
+    width: 40%;
+    height: 100px;
+    /*margin-left: 200px;*/
+    margin: auto;
+    /*margin-right: 300px;*/
+    padding-top: 28px;
+    /*padding-bottom: 30px;*/
+}
+
+#search-area.search-area input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+}
+
 #header ul li.right {
     padding: 35px 30px;
 }
@@ -46,16 +68,6 @@
     padding: 0px;
 }
 
-#search-area.search-area {
-    text-align: center;
-    float: left;
-    display: none;
-    width: 33%;
-    margin-left: 300px;
-    /*margin-right: 300px;*/
-    /*padding-top: 35px;*/
-    /*padding-bottom: 30px;*/
-}
 
 #section {
     background-color: #201425;

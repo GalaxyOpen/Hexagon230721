@@ -6,79 +6,119 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="/components/header :: header"></div>
-<div id="section">
-    <table class="table table-striped">
+<div id="member-detail-section">
+    <table class="top-table">
         <tr>
+            <th>회원정보</th>
+            <th>
+                <button class="btn-2" onclick="member_list()">목록</button>
+                <button class="btn-2" onclick="member_update()">수정</button>
+                <button class="btn-2" onclick="member_delete()">삭제</button>
+            </th>
+        </tr>
+    </table>
+
+    <table class="member-table">
+        <tr style="display: none">
             <th>가입번호</th>
-            <td th:text="${member.id}"></td>
+            <td th:text="${user.id}"></td>
         </tr>
         <tr>
-            <th>아이디</th>
-            <td th:text="${member.memberId}"></td>
+            <th>ID</th>
+            <td th:text="${user.memberId}"></td>
         </tr>
         <tr>
-            <th>이메일</th>
-            <td th:text="${member.memberEmail}"></td>
+            <th>E-mail</th>
+            <td th:text="${user.memberEmail}"></td>
         </tr>
         <tr>
             <th>비밀번호</th>
-            <td th:text="${member.memberPassword}"></td>
+            <td th:text="${user.memberPassword}" style="display: none"></td>
+            <td style="color: #00d01b"> ✅ 안전하게 보호되고 있습니다.</td>
         </tr>
         <tr>
             <th>이름</th>
-            <td th:text="${member.memberName}"></td>
+            <td th:text="${user.memberName}"></td>
         </tr>
         <tr>
-            <th>탄생일</th>
-            <td th:text="${member.memberBirth}"></td>
+            <th>생년월일</th>
+            <td th:text="${user.memberBirth}"></td>
         </tr>
         <tr>
             <th>전화번호</th>
-            <td th:text="${member.memberMobile}"></td>
+            <td th:text="${user.memberMobile}"></td>
         </tr>
     </table>
-    <div class="container">
-        <button onclick="member_list()">목록</button>
-        <button onclick="member_update()">수정</button>
-        <button onclick="member_delete()">삭제</button>
-    </div>
+
+    <table class="top-table">
+        <th> 포인트 내역</th>
+    </table>
+    <table class="point-table">
+        <tr style="display: none">
+            <th>비밀번호</th>
+            <td th:text="${user.memberPassword}"></td>
+        </tr>
+        <tr>
+            <th id="cash-icon"><i class="bi bi-currency-exchange"></i></th>
+        </tr>
+        <tr>
+            <th id="you-have-n-points">
+                <span th:text="${user.memberId}"></span> 님이 보유하신 포인트
+            </th>
+        </tr>
+        <tr>
+            <th id="points-amount">
+                0 POINT
+            </th>
+        </tr>
+        <tr>
+            <th id="charge-list">
+                <button class="btn-3" onclick="member_list()">충전하기</button>
+                <button class="btn-3" onclick="member_update()">내역보기</button>
+            </th>
+        </tr>
+    </table>
     <div class="pass-check">
     </div>
+</div>
+
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    const member_list=()=> {
+    const member_list = () => {
         location.href = "/";
     }
-    const member_update=()=>{
-        const id=[[${member.id}]]
+    const member_update = () => {
+        const id = [[${member.id}]]
         axios({
-            method:"put",
-            url:"/member/"+id,
-            data:{
-                id:id
+            method: "put",
+            url: "/member/" + id,
+            data: {
+                id: id
             }
-        }).then(res=>{
+        }).then(res => {
             console.log("수정 성공")
             location.href = "/member/"
-        }).catch(err=>{
+        }).catch(err => {
             alert("실패")
         })
     }
-    const member_delete=()=>{
-        const id=[[${member.id}]]
+    const member_delete = () => {
+        const id = [[${member.id}]]
         axios({
-            method:"delete",
-            url: "/member/delete/"+id
-        }).then(res=>{
-            location.href="/";
-        }).catch(err=>{
+            method: "delete",
+            url: "/member/delete/" + id
+        }).then(res => {
+            location.href = "/";
+        }).catch(err => {
             alert("삭제실패");
         })
     }

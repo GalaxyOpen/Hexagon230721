@@ -70,10 +70,11 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberId(memberDTO.getMemberId());
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+
         memberEntity.setMemberBirth(memberDTO.getMemberBirth());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
-        memberEntity.setTotalPoint(0L);
+        memberEntity.setTotalPoint(1000L);
         return memberEntity;
     }
     public static MemberEntity toUpdateEntity(MemberDTO memberDTO){

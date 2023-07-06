@@ -5,7 +5,12 @@ import com.icia.hexagon.Entity.GameEntity;
 import com.icia.hexagon.Entity.GameFileEntity;
 import com.icia.hexagon.Repository.GameFileRepository;
 import com.icia.hexagon.Repository.GameRepository;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +44,34 @@ public class GameService {
             }
             return dataEntity.getId();
         }
+    }
+    public Page<GameDTO> paging(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber()-1;
+        int pageLimit = 3;
+
+        Page<GameEntity> gameEntities = null;
+        if(type.equals("title")){
+            gameEntities = gameRepository.findByGameTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        }else if(type.equals("distr")){
+            gameEntities = gameRepository.findByGameDistrContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+            // 배급사로 검색
+        }else if(type.equals("creater")){
+            gameEntities = gameRepository.findByGameCreatorContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+            // 제작사로 검색
+        }else{
+            gameEntities = gameRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+
+        }
+        Page<GameDTO> gameDTOS = gameEntities.map(gameEntity -> GameDTO.builder()
+                .id(gameEntity.getId())
+                .gameTitle(gameEntity.getGameTitle())
+                .gameGenre(gameEntity.getGameGenre())
+                .gameCreator(gameEntity.getGameCreator())
+                .gameGrade(gameEntity.getGameGrade())
+                .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                .salesPrice(gameEntity.getSalesPrice())
+                .build());
+        return gameDTOS;
     }
 
 }

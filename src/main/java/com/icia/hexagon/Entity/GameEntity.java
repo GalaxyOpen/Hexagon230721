@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "game_table")
-public class GameEntity {
+public class GameEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,6 @@ public class GameEntity {
 
     @Column(length = 1000, nullable = false)
     private String gameIntro;
-
-    @Column
-    private String createdAt;
 
     @Column
     private Long releasePrice;
@@ -77,7 +74,6 @@ public class GameEntity {
         gameEntity.setGameGrade(gameDTO.getGameGrade());
         gameEntity.setGameIntro(gameDTO.getGameIntro());
         gameEntity.setReleasePrice(gameDTO.getReleasePrice());
-        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setFileAttached(0);
@@ -92,7 +88,6 @@ public class GameEntity {
         gameEntity.setGameGrade(gameDTO.getGameGrade());
         gameEntity.setGameIntro(gameDTO.getGameIntro());
         gameEntity.setReleasePrice(gameDTO.getReleasePrice());
-        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setFileAttached(1);
@@ -109,7 +104,6 @@ public class GameEntity {
         gameEntity.setGameGrade(gameDTO.getGameGrade());
         gameEntity.setGameIntro(gameDTO.getGameIntro());
         gameEntity.setReleasePrice(gameDTO.getReleasePrice());
-        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         return gameEntity;

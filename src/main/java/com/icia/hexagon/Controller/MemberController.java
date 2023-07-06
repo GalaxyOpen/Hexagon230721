@@ -97,19 +97,33 @@ public class MemberController {
         return "/memberPages/memberDetail";
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity updateForm(@PathVariable Long id, Model model) {
-        MemberDTO memberDTO = memberService.findById(id);
-        System.out.println("update = "+ memberDTO);
+//    @PutMapping("/update")
+//    public ResponseEntity updateForm(@PathVariable Long id, Model model) {
+//        MemberDTO memberDTO = memberService.findById(id);
+//        System.out.println("update = "+ memberDTO);
+//        model.addAttribute("user", memberDTO);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/update")
+//    public String update(MemberDTO memberDTO){
+//        memberService.update(memberDTO);
+//        return "redirect:/";
+//    }
+
+    @GetMapping("/update")
+    public String updateForm(@AuthenticationPrincipal User user, Model model) {
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
         model.addAttribute("user", memberDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "/memberPages/memberUpdate";
     }
 
     @PostMapping("/update")
-    public String update(MemberDTO memberDTO){
+    public String update(@ModelAttribute MemberDTO memberDTO){
         memberService.update(memberDTO);
         return "redirect:/";
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id, HttpServletRequest request){

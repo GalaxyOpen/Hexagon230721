@@ -1,24 +1,137 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <head>
-
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/memberUpdate.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
+<div th:replace="/components/header :: header"></div>
+<div id="member-detail-section">
+    <form action="/member/update" method="post">
+        <table class="top-table">
+            <tr>
+                <th>회원정보</th>
+                <th>
+                    <button class="btn-2-cancel" onclick="cancel()"><i class="bi bi-x-lg"></i></button>
+                    <input type="submit" class="btn-2" value="수정완료">
+                </th>
+            </tr>
+        </table>
+        <table class="member-table">
+            <tr style="display: none">
+                <th>가입번호</th>
+                <td><input type="text" th:value="${user.id}" name="id"></td>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <td><input type="text" th:value="${user.memberId}" name="memberId"></td>
+            </tr>
+            <tr>
+                <th>E-mail</th>
+                <td><input type="text" th:value="${user.memberEmail}" name="memberEmail" id="member-email"></td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td th:text="${user.memberPassword}" style="display: none"></td>
+                <td><input type="text" placeholder="변경하실 비밀번호를 입력하세요." name="memberPassword" id="member-passoword"></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><input type="text" th:value="${user.memberName}" name="memberName" id="member-name"></td>
+            </tr>
+            <tr>
+                <th>생년월일</th>
+                <td><input type="date" th:value="${user.memberBirth}" name="memberBirth" id="member-mirth"></td>
+            </tr>
+            <tr>
+                <th>전화번호</th>
+                <td><input type="text" th:value="${user.memberMobile}" name="memberMobile" id="member-mobile"></td>
+            </tr>
+            <tr>
+                <th>회원탈퇴</th>
+                <td><button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button></td>
+            </tr>
+            <tr style="display: none">
+                <th>포인트 어차피 안보여줄거임ㅋ</th>
+                <td><input type="text" th:value="${user.totalPoint}" name="totalPoint"></td>
+            </tr>
+        </table>
+    </form>
 
-<form action="/member/update" method="post">
-    <div id="container">
-        <input type="hidden" name="id" th:value="${user.id}"><br>
-        ID : <input type="text" name="memberId" th:value="${user.memberId}" readonly><br>
-        Email : <input type="text" name="memberEmail" th:value="${user.memberEmail}"><br>
-        Password : <input type="text" name="memberPassword"><br>
-        이름 : <input type="text" name="memberName" th:value="${user.memberName}"><br>
-        생년월일 : <input type="text" name="memberMobile" class="form-control" th:value="${user.memberBirth}" min="yyyy-mm-dd"><br>
-        전화번호 : <input type="text" name="memberMobile" class="form-control" th:value="${user.memberMobile}"><br>
-        <input type="submit" value="정보수정">
-    </div>
-</form>
 
+    <table class="top-table">
+            <th> 포인트 내역</th>
+        </table>
+        <table class="point-table">
+            <tr style="display: none">
+                <th>비밀번호</th>
+                <td th:text="${user.memberPassword}"></td>
+            </tr>
+            <tr>
+                <th id="cash-icon"><i class="bi bi-currency-exchange"></i></th>
+            </tr>
+            <tr>
+                <th id="you-have-n-points">
+                    <span th:text="${user.memberId}"></span> 님이 보유하신 포인트
+                </th>
+            </tr>
+            <tr>
+                <th id="points-amount">
+                    <span th:text="${user.totalPoint}"></span> POINT
+                </th>
+            </tr>
+            <tr>
+                <th id="charge-list">
+                    <button class="btn-3" onclick="member_list()">충전하기</button>
+                    <button class="btn-3" onclick="member_update()">내역보기</button>
+                </th>
+            </tr>
+        </table>
+        <div class="pass-check">
+        </div>
+</div>
+<div th:replace="/components/footer :: footer"></div>
 </body>
+<script>
+    // const req_update = () => {
+    //     const password = document.querySelector('input[name="memberPassword"]').value;
+    //     const id = document.querySelector('input[name="id"]').value;
+    //     const memberId = document.querySelector('input[name="memberPassword"]').value;
+    //     const memberEmail = document.querySelector('input[name="memberEmail"]').value;
+    //     const memberName = document.querySelector('input[name="memberName"]').value;
+    //     const memberBirth = document.querySelector('input[name="memberBirth"]').value;
+    //     const memberMobile = document.querySelector('input[name="memberMobile"]').value;
+    //
+    //         axios({
+    //             method: "put",
+    //             url: "/member/update",
+    //             data: {
+    //                 id: id,
+    //                 memberId: memberId,
+    //                 memberPassword: password,
+    //                 memberEmail: memberEmail,
+    //                 memberName: memberName,
+    //                 memberBirth: memberBirth,
+    //                 memberMobile: memberMobile
+    //             }
+    //         }).then(res => {
+    //             location.href = "redirect:/member/detail";
+    //         }).catch(err => {
+    //             alert("비밀번호를 확인하세요");
+    //             password.focus();
+    //         });
+    // }
+
+    const cancel = () => {
+        history.back();
+    }
+</script>
 </html>

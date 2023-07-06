@@ -18,9 +18,9 @@
         <tr>
             <th>회원정보</th>
             <th>
-                <button class="btn-2" onclick="member_list()">목록</button>
-                <button class="btn-2" onclick="member_update()">수정</button>
-                <button class="btn-2" onclick="member_delete()">삭제</button>
+                <button class="btn-2" onclick="member_update()"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn-2" onclick="member_list()" th:if="${user.memberId} == 'admin'">회원목록</button>
+                <button class="btn-2" onclick="member_delete()" th:if="${user.memberId} == 'admin'">회원삭제</button>
             </th>
         </tr>
     </table>
@@ -54,6 +54,10 @@
         <tr>
             <th>전화번호</th>
             <td th:text="${user.memberMobile}"></td>
+        </tr>
+        <tr>
+            <th>회원탈퇴</th>
+            <td><button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button></td>
         </tr>
     </table>
 
@@ -97,20 +101,7 @@
         location.href = "/member/";
     }
     const member_update = () => {
-        const id = [[${user.id}]];
-        axios({
-            method: "put",
-            url: "/member/update/" + id,
-            data: {
-                id: id
-            },
-            withCredentials: true // 인증 정보 포함
-        }).then(res => {
-            console.log("수정 성공");
-            location.href = "/member/";
-        }).catch(err => {
-            alert("실패");
-        });
+        location.href = "/member/update"
     };
 
     const member_delete = () => {

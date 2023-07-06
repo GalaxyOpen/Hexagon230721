@@ -44,7 +44,20 @@
     outline: none;
     border-radius: 1px;
     color: white;
-    font-size: 10px;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+
+}
+
+.btn-2-cancel {
+    margin-right: 10px;
+    float: right;
+    background: linear-gradient(to right, #c40038, #c7005f) ;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    color: white;
+    font-size: 15px;
     padding: 5px 10px 5px 10px;
 
 }
@@ -62,5 +75,15 @@
 
 .btn-3:hover {
     background: linear-gradient(to right, #0065fc, #00bbff) ;
+}
 
+.btn-3-danger {
+    margin-right: 10px;
+    background: linear-gradient(to right, #c40038, #c7005f) ;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
 }

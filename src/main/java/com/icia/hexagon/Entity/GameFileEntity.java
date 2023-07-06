@@ -25,4 +25,11 @@ public class GameFileEntity {
     @JoinColumn(name = "game_id")
     private GameEntity gameEntity;
 
+    public static GameFileEntity toSaveGameFileEntity(GameEntity gameEntity, String originalFileName, String storedFileName){
+        GameFileEntity gameFileEntity = new GameFileEntity();
+        gameFileEntity.setGameEntity(gameEntity);
+        gameFileEntity.setOriginalFileName(originalFileName);
+        gameFileEntity.setStoredFileName(storedFileName);
+        return gameFileEntity;
+    }
 }

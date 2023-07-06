@@ -40,7 +40,7 @@ public class MemberService {
     @Transactional
     public Page<MemberDTO> paging(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber()-1;
-        int pageLimit =5;
+        int pageLimit = 10;
         Page<MemberEntity> memberEntities = null;
         if(type.equals("memberId")){
             memberEntities=memberRepository.findByMemberIdContaining(q,PageRequest.of(page,pageLimit, Sort.by(Sort.Direction.DESC,"id")));

@@ -49,7 +49,7 @@ public class MemberController {
     }
 
     @Transactional
-    @GetMapping("/")
+    @GetMapping
     public String findAll(@PageableDefault(page=1)Pageable pageable,
                           @RequestParam(value="type", required=false, defaultValue = "")String type,
                           @RequestParam(value="q", required = false, defaultValue = "")String q,
@@ -60,7 +60,7 @@ public class MemberController {
         }else{
             model.addAttribute("memberList", memberDTOPage);
         }
-        int blockLimit=3;
+        int blockLimit=5;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < memberDTOPage.getTotalPages()) ? startPage + blockLimit - 1 : memberDTOPage.getTotalPages();
 

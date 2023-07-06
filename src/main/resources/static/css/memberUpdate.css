@@ -1,0 +1,8 @@
+.member-table input[type="text"],
+.member-table input[type="date"] {
+    width: 100%;
+    border: none;
+    background-color: #341d34;
+    color: white;
+
+}

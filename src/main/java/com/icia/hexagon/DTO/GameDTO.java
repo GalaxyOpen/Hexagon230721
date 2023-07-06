@@ -24,7 +24,7 @@ public class GameDTO {
     private Long releasePrice;
     private int discountRate;
     private Long salesPrice;
-    private String CreatedAt;
+    private String createdAt;
     private List<MultipartFile> gameFile;
     private int fileAttached;
     private List<String> originalFileName;

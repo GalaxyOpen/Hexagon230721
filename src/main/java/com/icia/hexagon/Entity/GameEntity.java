@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 
+import com.icia.hexagon.DTO.GameDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "game_table")
-public class GameEntity extends BaseEntity {
+public class GameEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +28,16 @@ public class GameEntity extends BaseEntity {
     private String gameCreator;
 
     @Column(length = 50, nullable = false)
-    private String gameDistr;
+    private String gameDistr; // 배급사
 
     @Column(length = 10, nullable = false)
     private String gameGrade;
 
     @Column(length = 1000, nullable = false)
     private String gameIntro;
+
+    @Column
+    private String createdAt;
 
     @Column
     private Long releasePrice;
@@ -64,7 +68,52 @@ public class GameEntity extends BaseEntity {
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SalesEntity> salesEntityList = new ArrayList<>();
 
+    public static GameEntity toSaveEntity(GameDTO gameDTO) {
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setGameTitle(gameDTO.getGameTitle());
+        gameEntity.setGameGenre(gameDTO.getGameGenre());
+        gameEntity.setGameCreator(gameDTO.getGameCreator());
+        gameEntity.setGameDistr(gameDTO.getGameDistr());
+        gameEntity.setGameGrade(gameDTO.getGameGrade());
+        gameEntity.setGameIntro(gameDTO.getGameIntro());
+        gameEntity.setReleasePrice(gameDTO.getReleasePrice());
+        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
+        gameEntity.setDiscountRate(gameDTO.getDiscountRate());
+        gameEntity.setSalesPrice(gameDTO.getSalesPrice());
+        gameEntity.setFileAttached(0);
+        return gameEntity;
+    }
+    public static GameEntity toSaveEntityWithFile(GameDTO gameDTO){
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setGameTitle(gameDTO.getGameTitle());
+        gameEntity.setGameGenre(gameDTO.getGameGenre());
+        gameEntity.setGameCreator(gameDTO.getGameCreator());
+        gameEntity.setGameDistr(gameDTO.getGameDistr());
+        gameEntity.setGameGrade(gameDTO.getGameGrade());
+        gameEntity.setGameIntro(gameDTO.getGameIntro());
+        gameEntity.setReleasePrice(gameDTO.getReleasePrice());
+        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
+        gameEntity.setDiscountRate(gameDTO.getDiscountRate());
+        gameEntity.setSalesPrice(gameDTO.getSalesPrice());
+        gameEntity.setFileAttached(1);
+        return gameEntity;
+    }
 
+    public static GameEntity toUpdateEntity(GameDTO gameDTO){
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setId(gameDTO.getId());
+        gameEntity.setGameTitle(gameDTO.getGameTitle());
+        gameEntity.setGameGenre(gameDTO.getGameGenre());
+        gameEntity.setGameCreator(gameDTO.getGameCreator());
+        gameEntity.setGameDistr(gameDTO.getGameDistr());
+        gameEntity.setGameGrade(gameDTO.getGameGrade());
+        gameEntity.setGameIntro(gameDTO.getGameIntro());
+        gameEntity.setReleasePrice(gameDTO.getReleasePrice());
+        gameEntity.setCreatedAt(gameDTO.getCreatedAt());
+        gameEntity.setDiscountRate(gameDTO.getDiscountRate());
+        gameEntity.setSalesPrice(gameDTO.getSalesPrice());
+        return gameEntity;
+    }
 
 
 }

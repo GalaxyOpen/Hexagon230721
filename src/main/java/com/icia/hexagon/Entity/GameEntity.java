@@ -108,6 +108,21 @@ public class GameEntity extends BaseEntity {
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         return gameEntity;
     }
+    public static GameEntity toUpdateWithFileEntity(GameDTO gameDTO){
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setId(gameDTO.getId());
+        gameEntity.setGameTitle(gameDTO.getGameTitle());
+        gameEntity.setGameGenre(gameDTO.getGameGenre());
+        gameEntity.setGameCreator(gameDTO.getGameCreator());
+        gameEntity.setGameDistr(gameDTO.getGameDistr());
+        gameEntity.setGameGrade(gameDTO.getGameGrade());
+        gameEntity.setGameIntro(gameDTO.getGameIntro());
+        gameEntity.setReleasePrice(gameDTO.getReleasePrice());
+        gameEntity.setDiscountRate(gameDTO.getDiscountRate());
+        gameEntity.setSalesPrice(gameDTO.getSalesPrice());
+        gameEntity.setFileAttached(1);
+        return gameEntity;
+    }
 
 
 }

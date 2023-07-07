@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private String resourcePath="/upload/**";
-    private String savePath="file:///D:/springboot_img/";
+    private String savePath="file:///D:/Hexagon/";
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler(resourcePath)

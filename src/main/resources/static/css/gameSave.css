@@ -15,6 +15,9 @@ body {
 #game-save-form h2 {
     margin-top: 10px;
     margin-bottom: 30px;
+    padding: 10px;
+    font-weight: bold;
+    background: linear-gradient(60deg, #000000, #280021) ;
 }
 
 #game-info-table {
@@ -32,7 +35,7 @@ body {
 #game-info-table input[type="date"],
 #game-info-table select {
     width: 50%;
-    padding: 5px;
+    padding: 8px;
     border: none;
     background-color: #341d34;
     color: white;
@@ -45,6 +48,13 @@ body {
 }
 
 #game-intro-table th {
+    margin-top: 10px;
+    font-size: 24px;
+    padding: 10px;
+}
+
+#game-intro-table td {
+    float: left;
     padding: 10px;
 }
 
@@ -53,13 +63,23 @@ body {
     width: 100%;
 }
 
-.panel-heading {
-    color: #fff;
+.note-btn.btn.btn-default {
+    background-color: transparent;
+    border: none;
+    color: #000000;
+}
+
+.panel-heading .note-toolbar {
+    color: #cccccc;
     background-color: #000000;
     border-color: #ddd;
 }
 
-.note-btn.btn.btn-default {
-    background-color: transparent;
-    color: #cccccc;
+#game-intro-table input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+
 }

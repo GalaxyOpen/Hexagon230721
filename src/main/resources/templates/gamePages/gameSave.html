@@ -27,6 +27,12 @@
             <h2>게임 등록</h2>
             <table id="game-info-table">
                 <tr>
+                    <th>게임명</th>
+                    <td>
+                        <input type="text" name="gameTitle" id="game-title" placeholder="제목">
+                    </td>
+                </tr>
+                <tr>
                     <th>게임장르</th>
                     <td>
                         <select name="gameGenre" id="gameGenre">
@@ -102,6 +108,12 @@
                 <tr>
                     <td><input type="file" name="gameFile" multiple></td>
                 </tr>
+                <tr>
+                    <th>소개영상</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="youtubeUrl" placeholder="url을 입력하세요"></td>
+                </tr>
             </table>
             <input type="submit" class="btn-1" value="게임 등록">
         </form>
@@ -122,8 +134,9 @@
         $('.summernote').summernote({
             placeholder: "당신의 게임을 소개하세요!(1000자 이내)",
             width: 1000,
-            height: 1000,
-            disableResizeEditor: true
+            height: 500,
+            disableResizeEditor: true,
+            lang: 'ko-KR'
         })
     });
 

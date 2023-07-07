@@ -79,7 +79,7 @@ public class GameController {
         }
     }
     @Transactional
-    @GetMapping("/game/update/{id}")
+    @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") Long id, Model model){
         GameDTO gameDTO = gameService.findById(id);
         model.addAttribute("game", gameDTO);
@@ -87,12 +87,12 @@ public class GameController {
     }
 
     @Transactional
-    @PostMapping("/game/update/{id}")
+    @PostMapping("/update/{id}")
     public String update(@ModelAttribute GameDTO gameDTO) throws IOException{
         gameService.update(gameDTO);
         return "redirect:/game";
     }
-    @GetMapping("/game/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
         gameService.delete(id);
         return "redirect:/game";

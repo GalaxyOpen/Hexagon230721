@@ -48,6 +48,18 @@
                 <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
             </td>
         </tr>
+        <tr th:if="${game.youtubeUrl != ''}">
+            <td>영상</td>
+            <td>
+                <div id="youtubeContainer">
+                    <p th:value="${game.youtubeUrl}"></p>
+                    <iframe id="youtubeIframe" type="text/html" width="720" height="405"
+                            th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"
+                            frameborder="0" allowfullscreen>
+                    </iframe>
+                </div>
+            </td>
+        </tr>
     </table>
     <div class="container">
         <button onclick="game_List()">목록</button>
@@ -141,5 +153,26 @@
         const id=[[${game.id}]]
         location.href="/game/delete/"+id;
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const youtubeUrl = 'https://www.youtube.com/embed/' + [[${game.youtubeUrl}]];
+        const youtubeIframe = document.getElementById("youtubeIframe");
+
+        // 비디오의 유효성을 확인하고 숨깁니다.
+        if (isYouTubeVideoValid(youtubeUrl)) {
+            youtubeIframe.style.display = "block";
+        } else {
+            youtubeIframe.style.display = "none";
+        }
+    });
+
+    function isYouTubeVideoValid(url) {
+        // 유효한 유튜브 URL인지 확인하는 로직을 구현합니다.
+        // 정규식을 사용하여 URL의 유효성을 확인합니다.
+        // 유효한 URL 패턴: https://www.youtube.com/embed/xxxxxxxxxxx (x는 알파벳 대소문자와 숫자)
+        const youtubePattern = /^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}$/;
+        return youtubePattern.test(url);
+    }
+
 </script>
 </html>

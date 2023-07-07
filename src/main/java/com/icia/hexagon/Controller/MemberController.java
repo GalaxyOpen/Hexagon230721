@@ -34,7 +34,7 @@ public class MemberController {
 
     @GetMapping("/save")
     public String saveForm(@AuthenticationPrincipal User user) {
-        if (user.getUsername() == null) {
+        if (user == null) {
             return "/memberPages/memberSave";
         } else {
             return "redirect:/";
@@ -82,8 +82,12 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginForm(){
-        return "/memberPages/memberLogin";
+    public String loginForm(@AuthenticationPrincipal User user){
+        if(user == null) {
+            return "/memberPages/memberLogin";
+        } else {
+            return "redirect:/";
+        }
     }
 
 

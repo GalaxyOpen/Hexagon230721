@@ -34,6 +34,7 @@ public class GameDTO {
     private List<String> originalFileName;
     private List<String> storedFileName;
     private Long memberId;
+    private String youtubeUrl;
 
     public static GameDTO toDTO(GameEntity gameEntity) {
         GameDTO gameDTO = new GameDTO();
@@ -48,6 +49,7 @@ public class GameDTO {
         gameDTO.setCreatedAt(UtilClass.dateFormat(gameEntity.getCreatedAt()));
         gameDTO.setDiscountRate(gameEntity.getDiscountRate());
         gameDTO.setSalesPrice(gameEntity.getSalesPrice());
+        gameDTO.setYoutubeUrl(gameEntity.getYoutubeUrl());
 
         if(gameEntity.getFileAttached()==1){
             gameDTO.setFileAttached(1);

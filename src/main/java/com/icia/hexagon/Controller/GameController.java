@@ -1,6 +1,7 @@
 package com.icia.hexagon.Controller;
 
 import com.icia.hexagon.DTO.GameDTO;
+import com.icia.hexagon.DTO.GameReviewDTO;
 import com.icia.hexagon.Service.GameReviewService;
 import com.icia.hexagon.Service.GameService;
 import lombok.RequiredArgsConstructor;
@@ -8,13 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,8 +52,30 @@ public class GameController {
         model.addAttribute("type", type);
         model.addAttribute("q", q);
         return "/gamePages/gamePagingList";
-
-
+    }
+    @Transactional
+    @GetMapping("/game/{id}")
+    public String findById(@PathVariable Long id,
+                           @RequestParam(value="page", required = false, defaultValue = "0") int page,
+                           @RequestParam("type") String type,
+                           @RequestParam("q") String q,
+                           Model model){
+        model.addAttribute("page",page);
+        model.addAttribute("type",type);
+        model.addAttribute("q",q);
+        try{
+            GameDTO gameDTO = gameService.findById(id);
+            model.addAttribute("game", gameDTO);
+            List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
+            if(gameReviewDTOList.size() > 0) {
+                model.addAttribute("gameReviewList", gameReviewDTOList);
+            }else{
+                model.addAttribute("gameReviewList", null);
+            }
+            return "/gamePages/gameDetail";
+        }catch(NoSuchElementException e){
+            return "/gamepages/gameNotFound";
+        }
     }
 
 }

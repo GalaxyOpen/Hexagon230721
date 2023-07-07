@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 
+import com.icia.hexagon.DTO.GameReviewDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,5 +29,11 @@ public class GameReviewEntity extends BaseEntity{
     @JoinColumn(name = "game_id")
     private GameEntity gameEntity;
 
-
+    public static GameReviewEntity toSaveEntity(GameEntity gameEntity, GameReviewDTO gameReviewDTO){
+        GameReviewEntity gameReviewEntity = new GameReviewEntity();
+        gameReviewEntity.setReviewWriter(gameReviewDTO.getReviewWriter());
+        gameReviewEntity.setReviewContents(gameReviewDTO.getReviewContents());
+        gameReviewEntity.setGameEntity(gameEntity);
+        return gameReviewEntity;
+    }
 }

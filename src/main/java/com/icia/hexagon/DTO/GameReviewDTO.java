@@ -1,9 +1,8 @@
 package com.icia.hexagon.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.icia.hexagon.Entity.GameReviewEntity;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class GameReviewDTO {
@@ -12,4 +11,18 @@ public class GameReviewDTO {
     private String reviewContents;
     private Long memberId;
     private Long gameId;
+    private String createdAt;
+    private String updateAt;
+
+    public static GameReviewDTO toDTO(GameReviewEntity gameReviewEntity) {
+        GameReviewDTO gameReviewDTO = new GameReviewDTO();
+        gameReviewDTO.setId(gameReviewEntity.getId());
+        gameReviewDTO.setReviewWriter(gameReviewEntity.getReviewWriter());
+        gameReviewDTO.setReviewContents(gameReviewEntity.getReviewContents());
+        gameReviewDTO.setMemberId(gameReviewEntity.getMemberEntity().getId());
+        gameReviewDTO.setGameId(gameReviewEntity.getGameEntity().getId());
+        gameReviewDTO.setCreatedAt(UtilClass.dateFormat(gameReviewEntity.getCreatedAt()));
+        gameReviewDTO.setUpdateAt(UtilClass.dateFormat(gameReviewEntity.getUpdatedAt()));
+        return gameReviewDTO;
+    }
 }

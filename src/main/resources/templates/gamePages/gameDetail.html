@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div id="section">
+    <table>
+        <tr>
+            <th>등록 번호</th>
+            <td th:text="${game.id}"></td>
+        </tr>
+        <tr>
+            <th>게임 제목</th>
+            <td th:text="${game.gameTitle}"></td>
+        </tr>
+        <tr>
+            <th>게임 장르</th>
+            <td th:text="${game.gameGenre}"></td>
+        </tr>
+        <tr>
+            <td>게임 제작사</td>
+            <td th:text="${game.gameCreator}"></td>
+        </tr>
+        <tr>
+            <td>게임 배급사</td>
+            <td th:text="${game.gameDistr}"></td>
+        </tr>
+        <tr>
+            <td>게임 설명</td>
+            <td th:text="${game.gameIntro}"></td>
+        </tr>
+        <tr>
+            <td>게임 배급사</td>
+            <td th:text="${game.gameDistr}"></td>
+        </tr>
+        <tr>
+            <td>출시 가격</td>
+            <td th:text="${game.releasePrice}"></td>
+        </tr>
+        <tr>
+            <td>할인율</td>
+            <td th:text="${game.discountRate}"></td>
+        </tr>
+        <tr>
+            <td>판매 가격</td>
+            <td th:text="${game.salesPrice}"></td>
+        </tr>
+        <tr th:if="${game.fileAttached==1}">
+            <th>사진</th>
+            <td th:each="fileName: ${game.storedFileName}">
+                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+            </td>
+        </tr>
+    </table>
+    <div class="container">
+        <button onclick="game_List()">목록</button>
+        <button onclick="game_Update()">수정</button>
+        <button onclick="game_Delete()">삭제</button>
+    </div>
+    <div id="pass-check">
+    </div>
+    <div class="container" id="review-write">
+        <input type="text" id="review-writer" placeholder="작성자">
+        <input type="text" id="review-contents" placeholder="내용">
+        <button onclick="review_write()">리뷰작성</button>
+    </div>
+    <div class="container" id="review-list">
+        <div th:if="${gameReviewList == null}">
+            <p>작성된 리뷰가 없습니다.</p>
+        </div>
+        <div th:unless="${gameReviewList==null}">
+            <table class="table">
+                <tr>
+                    <th>리뷰번호</th>
+                    <th>작성자</th>
+                    <th>리뷰내용</th>
+                    <th>작성날짜</th>
+                </tr>
+                <tr th:each="gameReview:${gameReviewList}">
+                    <td th:text="${gameReview.id}"></td>
+                    <td th:text="${gameReview.reviewWriter}"></td>
+                    <td th:text="${gameReview.reviewContents}"></td>
+                    <td th:text="${gameReview.createdAt}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:inline="javascript">
+    const review_list=(gameReviewList)=>{
+        const resultArea=document.querySelector("#review-list");
+        let output="<table class=\"table table-primary\">\n" +
+            "    <tr>\n" +
+            "        <th>글 번호</th>\n" +
+            "        <th>제목</th>\n" +
+            "        <th>작성자</th>\n" +
+            "        <th>작성 일자</th>\n" +
+            "    </tr>"
+        for(let i in gameReviewList) {
+            output += "<tr>\n" +
+                "                    <td>"+gameReviewList[i].id+"</td>\n" +
+                "                    <td>"+gameReviewList[i].reviewWriter+"</td>\n" +
+                "                    <td>"+gameReviewList[i].reviewContents+"</td>\n" +
+                "                    <td>"+gameReviewList[i].createdAt+"</td>\n" +
+                "                </tr>";
+        }
+        output+= "</table>";
+        resultArea.innerHTML = output;
+    }
+    const review_write =()=>{
+        const writer = document.querySelector("#review-writer").value;
+        const contents = document.querySelector("#review-contents").value;
+        const gameId = [[${game.id}]]
+        axios({
+            method:"post",
+            url:"/review/save",
+            data: {
+                reviewWriter: writer,
+                reviewContents: contents,
+                gameId: gameId
+            }
+        }).then(res=>{
+            document.querySelector("#review-writer").value="";
+            document.querySelector("#review-contents").value="";
+            review_list(res.data);
+        }).catch(err=>{
+            console.log("err",err);
+        });
+
+        }
+    const game_List = () =>{
+        const page = [[${page}]];
+        const type = [[${type}]];
+        const  q = [[${q}]]
+        location.href="/game?page="+page+"&type="+type+"&q="+q;
+    }
+    const game_Update = () =>{
+        const id= [[${game.id}]]
+        location.href="/game/update/"+id;
+    }
+    const game_Delete = () =>{
+        const id=[[${game.id}]]
+        axios({
+            method:"delete",
+            url: "/game/delete/"+id
+        }).then(res=>{
+            location.href='/';
+        }).catch(err=>{
+            alert("삭제실패");
+        })
+    }
+</script>
+</html>

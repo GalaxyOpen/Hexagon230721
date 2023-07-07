@@ -27,10 +27,20 @@ import java.io.IOException;
 public class MemberController {
     private final MemberService memberService;
 
+//    @GetMapping("/save")
+//    public String saveForm(){
+//        return "/memberPages/memberSave";
+//    }
+
     @GetMapping("/save")
-    public String saveForm(){
-        return "/memberPages/memberSave";
+    public String saveForm(@AuthenticationPrincipal User user) {
+        if (user.getUsername() == null) {
+            return "/memberPages/memberSave";
+        } else {
+            return "redirect:/";
+        }
     }
+
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) {
         String encodedPassword = PasswordUtils.encryptPassword(memberDTO.getMemberPassword());  // 비밀번호 암호화

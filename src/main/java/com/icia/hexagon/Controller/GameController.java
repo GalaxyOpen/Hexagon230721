@@ -19,20 +19,21 @@ import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/game")
 public class GameController {
     private final GameService gameService;
     private final GameReviewService gameReviewService;
 
-    @GetMapping("/game/save")
+    @GetMapping("/save")
     public String saveForm(){
         return "/gamePages/gameSave";
     }
-    @PostMapping("/game/save")
+    @PostMapping("/save")
     public String save(@ModelAttribute GameDTO gameDTO) throws IOException {
        gameService.save(gameDTO);
        return "redirect:/game";
     }
-    @GetMapping("/game")
+    @GetMapping
     public String findAll(@PageableDefault(page=1) Pageable pageable,
                           @RequestParam(value="type", required = false, defaultValue = "")String type,
                           @RequestParam(value="q", required = false, defaultValue = "")String q,
@@ -54,7 +55,7 @@ public class GameController {
         return "/gamePages/gamePagingList";
     }
     @Transactional
-    @GetMapping("/game/{id}")
+    @GetMapping("/{id}")
     public String findById(@PathVariable Long id,
                            @RequestParam(value="page", required = false, defaultValue = "0") int page,
                            @RequestParam("type") String type,

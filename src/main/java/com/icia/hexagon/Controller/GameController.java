@@ -78,5 +78,19 @@ public class GameController {
             return "/gamepages/gameNotFound";
         }
     }
+    @Transactional
+    @GetMapping("/game/update/{id}")
+    public String updateForm(@PathVariable("id") Long id, Model model){
+        GameDTO gameDTO = gameService.findById(id);
+        model.addAttribute("game", gameDTO);
+        return "/gamePages/gameUpdate";
+    }
+
+    @Transactional
+    @PostMapping("/game/update/{id}")
+    public String update(@ModelAttribute GameDTO gameDTO) throws IOException{
+        gameService.update(gameDTO);
+        return "redirect:/game";
+    }
 
 }

@@ -25,7 +25,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**", "/game").permitAll()  // 인증(로그인) 없이 접근 허용
+                .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**", "/game", "/game/{id}", "/upload/**").permitAll()  // 인증(로그인) 없이 접근 허용
                 .antMatchers(HttpMethod.PUT, "/member/update/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/member/delete/**").authenticated()
                 .anyRequest().authenticated()  // 나머지 요청은 인증된 사용자만 접근 가능

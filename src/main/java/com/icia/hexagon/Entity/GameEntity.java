@@ -79,7 +79,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setReleasePrice(gameDTO.getReleasePrice());
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
-        gameEntity.setYoutubeUrl(gameEntity.getYoutubeUrl());
+        gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
         gameEntity.setFileAttached(0);
         return gameEntity;
     }

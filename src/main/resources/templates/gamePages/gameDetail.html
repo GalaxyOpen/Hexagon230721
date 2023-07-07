@@ -44,8 +44,10 @@
         </tr>
         <tr th:if="${game.fileAttached==1}">
             <th>사진</th>
-            <td th:each="fileName: ${game.storedFileName}">
+            <td>
+            <div th:each="fileName: ${game.storedFileName}">
                 <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+            </div>
             </td>
         </tr>
         <tr th:if="${game.youtubeUrl != ''}">

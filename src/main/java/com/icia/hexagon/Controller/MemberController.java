@@ -63,7 +63,8 @@ public class MemberController {
     public String findAll(@PageableDefault(page=1)Pageable pageable,
                           @RequestParam(value="type", required=false, defaultValue = "")String type,
                           @RequestParam(value="q", required = false, defaultValue = "")String q,
-                          Model model){
+                          Model model,
+                          @AuthenticationPrincipal User user){
         Page<MemberDTO> memberDTOPage = memberService.paging(pageable, type, q);
         if(memberDTOPage.getTotalElements()==0){
             model.addAttribute("memberList", null);
@@ -78,7 +79,11 @@ public class MemberController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
-        return "/memberPages/memberList";
+        if(user.getUsername() == "admin") {
+            return "/memberPages/memberList";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/login")

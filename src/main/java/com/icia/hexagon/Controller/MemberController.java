@@ -97,6 +97,15 @@ public class MemberController {
         return "/memberPages/memberDetail";
     }
 
+    @GetMapping("/{id}")
+    public String membersDetail(@PathVariable Long id, Model model){
+        System.out.println("======= " + id);
+        MemberDTO memberDTO = memberService.findById(id);
+        System.out.println("============" + memberDTO );
+        model.addAttribute("user", memberDTO);
+        return "/memberPages/memberDetail";
+    }
+
 //    @PutMapping("/update")
 //    public ResponseEntity updateForm(@PathVariable Long id, Model model) {
 //        MemberDTO memberDTO = memberService.findById(id);

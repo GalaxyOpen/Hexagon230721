@@ -27,12 +27,15 @@
                     <th scope="col">가입일시</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 <tr th:each="member: ${memberList}">
                     <td th:text="${member.id}"></td>
-                    <td th:text="${member.memberId}"></td>
-                    <td><a th:href="@{|/member/${member.id}?page=${memberList.number+1}&type=${type}&q=${q}|}"
-                           th:text="${member.memberName}">이름</a></td>
+                    <td>
+                        <a th:href="@{|/member/${member.id}?page=${memberList.number+1}&type=${type}&q=${q}|}"
+                           th:text="${member.memberId}"></a>
+                    </td>
+                    <td th:text="${member.memberName}"></td>
                     <td th:text="${member.memberMobile}"></td>
                     <td th:text="${member.createdAt}"></td>
                 </tr>

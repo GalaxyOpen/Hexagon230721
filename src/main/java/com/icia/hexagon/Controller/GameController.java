@@ -85,7 +85,6 @@ public class GameController {
         model.addAttribute("game", gameDTO);
         return "/gamePages/gameUpdate";
     }
-
     @Transactional
     @PostMapping("/update/{id}")
     public String update(@ModelAttribute GameDTO gameDTO) throws IOException{

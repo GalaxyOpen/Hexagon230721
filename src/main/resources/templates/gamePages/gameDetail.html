@@ -139,14 +139,7 @@
     }
     const game_Delete = () =>{
         const id=[[${game.id}]]
-        axios({
-            method:"delete",
-            url: "/game/delete/"+id
-        }).then(res=>{
-            location.href='/';
-        }).catch(err=>{
-            alert("삭제실패");
-        })
+        location.href="/game/delete/"+id;
     }
 </script>
 </html>

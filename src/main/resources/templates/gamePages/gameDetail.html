@@ -16,12 +16,12 @@
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
 <div id="game-detail-section">
+    <h2 th:text="${game.gameTitle}"></h2>
     <!-- Container for the image gallery -->
     <div class="container">
-
         <!-- Full-width images with number text -->
         <div th:each="fileName: ${game.storedFileName}" class="mySlides">
-            <img id="thumbnail" th:src="@{|/upload/${fileName}}" style="width: 1154px; height: 725px; object-fit: cover">
+            <img id="thumbnail" th:src="@{|/upload/${fileName}}" style="width:101%; height: 560px; object-fit: cover">
         </div>
 
 <!--        <div class="mySlides">-->
@@ -54,14 +54,14 @@
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         <!-- Image text -->
-        <div class="caption-container">
-            <p id="caption"></p>
-        </div>
+<!--        <div class="caption-container">-->
+<!--            <p id="caption"></p>-->
+<!--        </div>-->
 
         <!-- Thumbnail images -->
         <div class="row">
             <div th:each="fileName: ${game.storedFileName}" class="column">
-                <img class="demo cursor" th:src="@{|/upload/${fileName}}" style="width:200px; height: 122px; object-fit:fill" onclick="currentSlide(i)" alt="">
+                <img class="demo cursor" th:src="@{|/upload/${fileName}}" style="width:100px; height: 56px; object-fit:cover" onclick="currentSlide(i)" alt="">
             </div>
 <!--            <div class="column">-->
 <!--                <img class="demo cursor" src="img_5terre.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">-->

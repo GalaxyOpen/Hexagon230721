@@ -2,8 +2,10 @@ package com.icia.hexagon.Controller;
 
 import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.GameReviewDTO;
+import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.Service.GameReviewService;
 import com.icia.hexagon.Service.GameService;
+import com.icia.hexagon.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/game")
 public class GameController {
     private final GameService gameService;
+    private final MemberService memberService;
     private final GameReviewService gameReviewService;
 
     @GetMapping("/save")
@@ -64,19 +67,23 @@ public class GameController {
         model.addAttribute("page",page);
         model.addAttribute("type",type);
         model.addAttribute("q",q);
-        try{
-            GameDTO gameDTO = gameService.findById(id);
-            model.addAttribute("game", gameDTO);
-            List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
-            if(gameReviewDTOList.size() > 0) {
-                model.addAttribute("gameReviewList", gameReviewDTOList);
-            }else{
-                model.addAttribute("gameReviewList", null);
-            }
-            return "/gamePages/gameDetail";
-        }catch(NoSuchElementException e){
-            return "/gamepages/gameNotFound";
+
+        GameDTO gameDTO = gameService.findById(id);
+        MemberDTO memberDTO = memberService.findById(id);
+        GameReviewDTO gameReviewDTO = gameReviewService.findById(id);
+
+        model.addAttribute("game", gameDTO);
+        model.addAttribute("member", memberDTO);
+        model.addAttribute("gameReview", gameReviewDTO);
+
+        System.out.println("gameReviewDTO = " + gameReviewDTO);
+        List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
+        if(gameReviewDTOList.size() > 0) {
+            model.addAttribute("gameReviewList", gameReviewDTOList);
+        }else{
+            model.addAttribute("gameReviewList", null);
         }
+        return "/gamePages/gameDetail";
     }
     @Transactional
     @GetMapping("/update/{id}")

@@ -33,7 +33,7 @@ public class GameEntity extends BaseEntity {
     @Column(length = 10, nullable = false)
     private String gameGrade;
 
-    @Column(length = 1000, nullable = false)
+    @Column(nullable = false)
     private String gameIntro;
 
     @Column

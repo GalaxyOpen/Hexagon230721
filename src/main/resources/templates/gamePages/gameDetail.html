@@ -21,7 +21,7 @@
     <div class="container">
         <!-- Full-width images with number text -->
         <div th:each="fileName: ${game.storedFileName}" class="mySlides">
-            <img id="thumbnail" th:src="@{|/upload/${fileName}}" style="width:101%; height: 560px; object-fit: cover">
+            <img th:src="@{|/upload/${fileName}}" style="width:101%; height: 605px; object-fit: cover">
         </div>
 
 <!--        <div class="mySlides">-->
@@ -80,66 +80,77 @@
 <!--            </div>-->
         </div>
     </div>
+    <h3>상세정보</h3>
+    <table id="game-detail-table">
+        <tr style="display: none">
+            <th>등록 번호</th>
+            <td th:text="${game.id}"></td>
+        </tr>
+        <tr>
+            <th>게임명</th>
+            <td th:text="${game.gameTitle}"></td>
+        </tr>
+        <tr>
+            <th>장르</th>
+            <td th:text="${game.gameGenre}"></td>
+        </tr>
+        <tr>
+            <td>제작자</td>
+            <td th:text="${game.gameCreator}"></td>
+        </tr>
+        <tr>
+            <td>배급사</td>
+            <td th:text="${game.gameDistr}"></td>
+        </tr>
+    </table>
+
+    <table id="game-price-info">
+        <tr>
+            <td>출시 가격</td>
+            <td th:text="${game.releasePrice}"></td>
+        </tr>
+        <tr>
+            <td>할인율</td>
+            <td th:text="${game.discountRate}"></td>
+        </tr>
+        <tr>
+            <td>판매 가격</td>
+            <td th:text="${game.salesPrice}"></td>
+        </tr>
+
+    </table>
+
+    <table id="game-intro">
+        <tr>
+            <td>게임 설명</td>
+            <td th:utext="${game.gameIntro}"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr th:if="${game.fileAttached==1}">
+            <th>사진</th>
+            <td>
+                <div th:each="fileName: ${game.storedFileName}">
+                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${game.youtubeUrl != ''}">
+            <td>영상</td>
+            <td>
+                <div id="youtubeContainer">
+                    <p th:value="${game.youtubeUrl}"></p>
+                    <iframe id="youtubeIframe" type="text/html" width="720" height="405"
+                            th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"
+                            frameborder="0" allowfullscreen>
+                    </iframe>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
-<table>
-    <tr>
-        <th>등록 번호</th>
-        <td th:text="${game.id}"></td>
-    </tr>
-    <tr>
-        <th>게임 제목</th>
-        <td th:text="${game.gameTitle}"></td>
-    </tr>
-    <tr>
-        <th>게임 장르</th>
-        <td th:text="${game.gameGenre}"></td>
-    </tr>
-    <tr>
-        <td>게임 제작사</td>
-        <td th:text="${game.gameCreator}"></td>
-    </tr>
-    <tr>
-        <td>게임 배급사</td>
-        <td th:text="${game.gameDistr}"></td>
-    </tr>
-    <tr>
-        <td>게임 설명</td>
-        <td th:utext="${game.gameIntro}"></td>
-    </tr>
-    <tr>
-        <td>출시 가격</td>
-        <td th:text="${game.releasePrice}"></td>
-    </tr>
-    <tr>
-        <td>할인율</td>
-        <td th:text="${game.discountRate}"></td>
-    </tr>
-    <tr>
-        <td>판매 가격</td>
-        <td th:text="${game.salesPrice}"></td>
-    </tr>
-    <tr th:if="${game.fileAttached==1}">
-        <th>사진</th>
-        <td>
-            <div th:each="fileName: ${game.storedFileName}">
-                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
-            </div>
-        </td>
-    </tr>
-    <tr th:if="${game.youtubeUrl != ''}">
-        <td>영상</td>
-        <td>
-            <div id="youtubeContainer">
-                <p th:value="${game.youtubeUrl}"></p>
-                <iframe id="youtubeIframe" type="text/html" width="720" height="405"
-                        th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"
-                        frameborder="0" allowfullscreen>
-                </iframe>
-            </div>
-        </td>
-    </tr>
-</table>
 <div class="container">
     <button onclick="game_List()">목록</button>
     <button onclick="game_Update()">수정</button>

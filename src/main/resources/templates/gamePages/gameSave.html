@@ -47,9 +47,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>제작사</th>
+                    <th>제작자</th>
                     <td>
-                        <input type="text" name="gameCreator" id="gameCreator" placeholder="제작사" required>
+                        <input type="text" name="gameCreator" id="gameCreator" placeholder="제작사" th:value="${session.loginId}" required>
                     </td>
                 </tr>
                 <tr>
@@ -84,13 +84,13 @@
                 <tr>
                     <th>할인율</th>
                     <td>
-                        <input type="text" name="discountRate" id="discountRate" oninput="calculateSalesPrice()" value="0"><br>
+                        <input type="text" name="discountRate" id="discountRate" placeholder="할인을 적용하지 않을 경우 0을 입력하세요" oninput="calculateSalesPrice()"><br>
                     </td>
                 </tr>
                 <tr>
                     <th>판매가격</th>
                     <td>
-                        <input type="text" name="salesPrice" id="salesPrice" placeholder="가격과 할인율을 입력해주세요" readonly><br>
+                        <input type="text" name="salesPrice" id="salesPrice" placeholder="가격과 할인율을 입력하세요" readonly><br>
                     </td>
                 </tr>
             </table>
@@ -130,15 +130,122 @@
         document.getElementById("salesPrice").value = salesPrice.toFixed(0);
     }
 
+    // $(document).ready(function () {
+    //     $('.summernote').summernote({
+    //         placeholder: "당신의 게임을 소개하세요!(1000자 이내)",
+    //         width: 1000,
+    //         height: 500,
+    //         disableResizeEditor: true,
+    //         lang: 'ko-KR'
+    //     })
+    // });
+
     $(document).ready(function () {
         $('.summernote').summernote({
-            placeholder: "당신의 게임을 소개하세요!(1000자 이내)",
-            width: 1000,
-            height: 500,
+            placeholder: "당신의 게임을 소개하세요!",
             disableResizeEditor: true,
-            lang: 'ko-KR'
+            codeviewFilter: false, // 코드 보기 필터 비활성화
+            codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+
+            height: 500, // 에디터 높이
+            minHeight: null, // 최소 높이
+            maxHeight: null, // 최대 높이
+            focus: true, // 에디터 로딩 후 포커스 설정
+            lang: 'ko-KR', // 언어 설정 (한국어)
+
+            toolbar: [
+                // 글꼴 설정
+                ['fontname', ['fontname']],
+                // 글자 크기 설정
+                ['fontsize', ['fontsize']],
+                // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+                ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+                // 글자색
+                ['color', ['forecolor','color']],
+                // 표만들기
+                ['table', ['table']],
+                // 글머리 기호, 번호매기기, 문단정렬
+                ['para', ['ul', 'ol', 'paragraph']],
+                // 줄간격
+                ['height', ['height']],
+                // 그림첨부, 링크만들기, 동영상첨부
+                ['insert',['picture','link','video']],
+                // 코드보기, 확대해서보기, 도움말
+                ['view', ['codeview','fullscreen', 'help']]
+            ],
+
+            fontSizes: [
+                '8', '9', '10', '11', '12', '14', '16', '18',
+                '20', '22', '24', '28', '30', '36', '50', '72',
+            ], // 글꼴 크기 옵션
+
+            styleTags: [
+                'p',  // 일반 문단 스타일 옵션
+                {
+                    title: 'Blockquote',
+                    tag: 'blockquote',
+                    className: 'blockquote',
+                    value: 'blockquote',
+                },  // 인용구 스타일 옵션
+                'pre',  // 코드 단락 스타일 옵션
+                {
+                    title: 'code_light',
+                    tag: 'pre',
+                    className: 'code_light',
+                    value: 'pre',
+                },  // 밝은 코드 스타일 옵션
+                {
+                    title: 'code_dark',
+                    tag: 'pre',
+                    className: 'code_dark',
+                    value: 'pre',
+                },  // 어두운 코드 스타일 옵션
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+            ],
+
+            callbacks: {
+                onImageUpload: function (files, editor, welEditable) {
+                    // 파일 업로드 (다중 업로드를 위해 반복문 사용)
+                    for (let i = files.length - 1; i >= 0; i--) {
+                        let fileName = files[i].name
+
+                        // 이미지 alt 속성 삽일을 위한 설정
+                        let caption = prompt('이미지 설명 :', fileName)
+                        if (caption == '') {
+                            caption = '이미지'
+                        }
+                        uploadSummernoteImageFile(files[i], this, caption)
+                    }
+                },
+            },
         })
-    });
+    })
+
+    // 이미지 업로드 함수 ajax 활용
+    function uploadSummernoteImageFile(file, el, caption) {
+        data = new FormData()
+        data.append('file', file)
+        $.ajax({
+            data: data,
+            type: 'POST',
+            url: 'uploadSummernoteImageFile',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (data) {
+                $(el).summernote(
+                    'editor.insertImage',
+                    data.url,
+                    function ($image) {
+                        $image.attr('alt', caption) // 캡션 정보를 이미지의 alt 속성에 설정
+                    }
+                )
+            },
+        })
+    }
+
+    $("#content").html(data.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g,'"').replace(/&#40;/g,'(').replace(/&#41;/g,')').replace(/&#35;/g,'#'));
+</script>
 
 </script>
 </html>

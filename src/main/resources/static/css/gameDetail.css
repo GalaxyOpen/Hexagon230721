@@ -1,0 +1,285 @@
+/*슬라이드쇼 스타일 여기서부터*/
+* {box-sizing: border-box}
+
+body {
+    margin: 0;
+    background: linear-gradient(#201425, #341d34);
+    background-size: cover;
+    position: center;
+    height: auto;
+}
+
+#game-detail-section {
+    width: 66%;
+    margin-top: 50px;
+    margin-bottom: 150px;
+    color: #cccccc;
+}
+
+#game-detail-section h2 {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding: 10px;
+    font-weight: bold;
+    background: linear-gradient(60deg, #000000, #211526) ;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+    width: 100%;
+    /*padding: 30px;*/
+    position: relative;
+}
+
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+    width: 100%;
+    height: 56%;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+    cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* Container for image text */
+.caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Six columns side by side */
+.column {
+    text-align: center;
+    /*float: left;*/
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.row {
+    margin: auto;
+    float: left;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+    opacity: 0.6;
+}
+
+.demo:hover {
+    opacity: 1;
+}
+
+.active {
+    opacity: 1;
+    border: 2px solid #bc3265;
+    border-radius: 5px;
+}
+
+#game-detail-section h3 {
+    float: left;
+    display: block;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 15px;
+    font-weight: bold;
+    border-bottom: 2px solid #8400ff;
+}
+
+#game-detail-area {
+    display: block;
+}
+
+#release-info {
+    display: inline-block;
+    float: left;
+    width: 40%;
+}
+
+#release-info-title {
+    float: left;
+    width: 100%;
+    background-color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px;
+    color: #cccccc;
+}
+
+#release-info-table {
+    float: left;
+    width: 100%;
+}
+
+#release-info-table th,
+#release-info-table td {
+    padding: 10px;
+    background-color: #181018;
+}
+
+.price-info-dsc {
+    display: inline-block;
+    float: left;
+    width: 60%;
+    margin-top: 5%;
+}
+
+.price-info {
+    display: inline-block;
+    float: left;
+    width: 60%;
+    margin-top: 8%;
+}
+
+.discount {
+    width: 100%;
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.discount .released-price {
+    float: right;
+    display: inline-block;
+    text-align: right;
+    font-size: 30px;
+    text-decoration: line-through;
+    color: #595959;
+}
+
+.discount .discount-rate {
+    float: right;
+    display: inline-block;
+    text-align: center;
+    background: linear-gradient(to right, #c40038, #c7005f);
+    width: 8%;
+    font-weight: bold;
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.discount .released-price-none,
+.discount .discount-rate-none {
+    display: none;
+}
+
+.sales-price {
+    display: block;
+    float: right;
+    text-align: right;
+    font-size: 48px;
+    width: 100%;
+}
+
+.purchase-button {
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+#game-intro-area {
+
+}
+
+#introduction {
+    margin-top: 30px;
+    padding: 10px;
+}
+
+
+.lower-buttons {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+#review {
+    display: inline-block;
+    width: 100%;
+}
+
+#review-write {
+    background: linear-gradient(45deg, #230f23, #301b31);
+    width: 99%;
+    padding: 30px;
+}
+
+#review-write input[type="text"] {
+    width: 50%;
+    padding: 8px;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: inherit;
+    color: white;
+    margin-bottom: 5px;
+}
+
+#review-write textarea {
+    background-color: inherit;
+    padding: 8px;
+    margin-top: 30px;
+    width: 100%;
+    height: 225px;
+    resize: none;
+    border: none;
+}
+
+#review-write textarea:focus {
+    outline: none;
+}
+
+#review-list {
+    width: 99%;
+    padding: 30px;
+}
+
+#review-list p {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #cccccc;
+}

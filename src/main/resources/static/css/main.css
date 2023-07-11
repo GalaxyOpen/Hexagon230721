@@ -20,6 +20,7 @@
 }
 
 #header ul li {
+    /*width: 10%;*/
     float: right;
     margin: auto;
 }

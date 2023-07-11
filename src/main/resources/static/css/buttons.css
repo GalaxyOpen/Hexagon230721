@@ -15,7 +15,7 @@
 .btn-1-search {
     /*margin-top: 30px;*/
     background: linear-gradient(to right, #bc3265, #672873) ;
-    width: 150px;
+    width: 20%;
     color: white;
     padding: 10px;
     border: none;
@@ -46,7 +46,18 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
 
+.btn-2-left {
+    margin-right: 10px;
+    float: left;
+    background: linear-gradient(to right, #692577, #4a2577) ;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
 }
 
 .btn-2-cancel {
@@ -59,7 +70,18 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
 
+.btn-2-cancel-left {
+    margin-right: 10px;
+    float: left;
+    background: linear-gradient(to right, #c40038, #c7005f) ;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
 }
 
 .btn-3 {
@@ -73,8 +95,25 @@
     padding: 5px 10px 5px 10px;
 }
 
-.btn-3:hover {
+.btn-3-review {
+    margin-right: 10px;
+    background: linear-gradient(to right, #692577, #4a2577) ;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+}
+
+.btn-3:hover,
+.btn-3-bucket:hover {
     background: linear-gradient(to right, #0065fc, #00bbff) ;
+}
+
+.btn-3-review:hover {
+    background: linear-gradient(to right, #88309a, #6936ad) ;
+
 }
 
 .btn-3-danger {
@@ -86,4 +125,26 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
+
+.btn-4 {
+    float: right;
+    margin-top: 20px;
+    width: 70%;
+    background: linear-gradient(to right, #bc3265, #672873) ;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-4:hover {
+    background: linear-gradient(to right, #e02c6f, #692577) ;
+}
+
+#review-write. #review-list {
+    float: left;
 }

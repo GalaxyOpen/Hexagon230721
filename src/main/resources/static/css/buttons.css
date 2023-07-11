@@ -46,7 +46,18 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
 
+.btn-2-left {
+    margin-right: 10px;
+    float: left;
+    background: linear-gradient(to right, #692577, #4a2577) ;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
 }
 
 .btn-2-cancel {
@@ -59,7 +70,18 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
 
+.btn-2-cancel-left {
+    margin-right: 10px;
+    float: left;
+    background: linear-gradient(to right, #c40038, #c7005f) ;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    color: white;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
 }
 
 .btn-3 {
@@ -105,4 +127,8 @@
 
 .btn-4:hover {
     background: linear-gradient(to right, #e02c6f, #692577) ;
+}
+
+#review-write. #review-list {
+    float: left;
 }

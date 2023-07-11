@@ -124,7 +124,7 @@ body {
     margin-bottom: 30px;
     padding: 15px;
     font-weight: bold;
-    border-bottom: 2px solid #bc3265;
+    border-bottom: 2px solid #8400ff;
 }
 
 #game-detail-area {
@@ -225,4 +225,52 @@ body {
 
 #introduction {
     margin-top: 30px;
+    padding: 10px;
+}
+
+
+.lower-buttons {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+#review {
+    display: inline-block;
+    width: 100%;
+}
+
+#review-write {
+    background: linear-gradient(45deg, #230f23, #301b31);
+    width: 99%;
+    padding: 30px;
+}
+
+#review-write input[type="text"] {
+    width: 50%;
+    padding: 8px;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: inherit;
+    color: white;
+    margin-bottom: 5px;
+}
+
+#review-write input[type="text"]:focus {
+    border-bottom: 2px solid #c68aff;
+}
+
+#review-write textarea {
+    background-color: inherit;
+    margin-top: 30px;
+    width: 100%;
+    height: 225px;
+    resize: none;
+    border: none;
+}
+
+#review-write textarea:focus {
+    outline: none;
 }

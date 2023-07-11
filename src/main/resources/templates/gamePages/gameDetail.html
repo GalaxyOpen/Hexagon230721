@@ -139,66 +139,50 @@
         </div>
         <div id="introduction">
             <div th:utext="${game.gameIntro}">
+            </div>
+        </div>
+        <div class="lower-button">
+            <button class="btn-2-left" onclick="game_List()">목록</button>
+            <button th:if="${session.loginId} == ${game.gameCreator}" class="btn-2-left" onclick="game_Update()">수정</button>
+            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId} == 'admin'" class="btn-2-cancel-left" onclick="game_Delete()">삭제</button>
         </div>
     </div>
 
-<!--    <table>-->
-<!--        <tr th:if="${game.fileAttached==1}">-->
-<!--            <th>사진</th>-->
-<!--            <td>-->
-<!--                <div th:each="fileName: ${game.storedFileName}">-->
-<!--                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr th:if="${game.youtubeUrl != ''}">-->
-<!--            <td>영상</td>-->
-<!--            <td>-->
-<!--                <div id="youtubeContainer">-->
-<!--                    <p th:value="${game.youtubeUrl}"></p>-->
-<!--                    <iframe id="youtubeIframe" type="text/html" width="720" height="405"-->
-<!--                            th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"-->
-<!--                            frameborder="0" allowfullscreen>-->
-<!--                    </iframe>-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-</div>
+    <div id="pass-check">
 
-<div class="container">
-    <button onclick="game_List()">목록</button>
-    <button onclick="game_Update()">수정</button>
-    <button onclick="game_Delete()">삭제</button>
-</div>
-<div id="pass-check">
-</div>
-<div class="container" id="review-write">
-    <input type="text" id="review-writer" placeholder="작성자">
-    <input type="text" id="review-contents" placeholder="내용">
-    <button onclick="review_write()">리뷰작성</button>
-</div>
-<div class="container" id="review-list">
-    <div th:if="${gameReviewList == null}">
-        <p>작성된 리뷰가 없습니다.</p>
     </div>
-    <div th:unless="${gameReviewList==null}">
-        <table class="table">
-            <tr>
-                <th>리뷰번호</th>
-                <th>작성자</th>
-                <th>리뷰내용</th>
-                <th>작성날짜</th>
-            </tr>
-            <tr th:each="gameReview:${gameReviewList}">
-                <td th:text="${gameReview.id}"></td>
-                <td th:text="${gameReview.reviewWriter}"></td>
-                <td th:text="${gameReview.reviewContents}"></td>
-                <td th:text="${gameReview.createdAt}"></td>
-            </tr>
-        </table>
+
+    <h3>리뷰</h3>
+
+    <div id="review">
+        <div id="review-write">
+            <input type="text" id="review-writer" placeholder="작성자" th:value="${session.loginId}"><br>
+            <textarea id="review-contents" placeholder="내용"></textarea>
+            <button onclick="review_write()">리뷰작성</button>
+        </div>
+        <div id="review-list">
+            <div th:if="${gameReviewList == null}">
+                <p>작성된 리뷰가 없습니다.</p>
+            </div>
+            <div th:unless="${gameReviewList==null}">
+                <table class="table">
+                    <tr>
+                        <th>리뷰번호</th>
+                        <th>작성자</th>
+                        <th>리뷰내용</th>
+                        <th>작성날짜</th>
+                    </tr>
+                    <tr th:each="gameReview:${gameReviewList}">
+                        <td th:text="${gameReview.id}"></td>
+                        <td th:text="${gameReview.reviewWriter}"></td>
+                        <td th:text="${gameReview.reviewContents}"></td>
+                        <td th:text="${gameReview.createdAt}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
@@ -315,25 +299,9 @@
         captionText.innerHTML = dots[slideIndex - 1].alt;
     }
 
-
-    // const gameGenre = document.getElementById("game-genre").value;
-    // const genre = gameGenre.textContent.trim();
-    //
-    // if (genre === '0') {
-    //     gameGenre.innerHTML = "RTS";
-    // } else if (genre === '1') {
-    //     gameGenre.innerHTML = "슈팅";
-    // } else if (genre === '2') {
-    //     gameGenre.innerHTML = "퍼즐";
-    // } else if (genre === '3') {
-    //     gameGenre.innerHTML = "공포";
-    // } else if (genre === '4') {
-    //     gameGenre.innerHTML = "액션";
-    // } else if (genre === '5') {
-    //     gameGenre.innerHTML = "모험";
-    // } else if (genre === '6') {
-    //     gameGenre.innerHTML = "RPG";
-    // };
+    const bucket = () => {
+        location.href = "/bucket/save"
+    }
 
 </script>
 </html>

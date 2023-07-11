@@ -36,13 +36,13 @@
                     <th>게임장르</th>
                     <td>
                         <select name="gameGenre" id="gameGenre">
-                            <option value="RTS">RTS</option>
-                            <option value="슈팅">슈팅</option>
-                            <option value="퍼즐">퍼즐</option>
-                            <option value="공포">공포</option>
-                            <option value="액션">액션</option>
-                            <option value="모험">모험</option>
-                            <option value="RPG">RPG</option>
+                            <option value="0">RTS</option>
+                            <option value="1">슈팅</option>
+                            <option value="2">퍼즐</option>
+                            <option value="3">공포</option>
+                            <option value="4">액션</option>
+                            <option value="5">모험</option>
+                            <option value="6">RPG</option>
                         </select>
                     </td>
                 </tr>
@@ -62,17 +62,17 @@
                     <th>게임 등급</th>
                     <td>
                         <select name="gameGrade" id="gameGrade">
-                            <option value="전체">전체 이용가</option>
-                            <option value="12세">12세 이용가</option>
-                            <option value="15세">15세 이용가</option>
-                            <option value="18세">18세 이용가</option>
+                            <option value="0">전체 이용가</option>
+                            <option value="1">12세 이용가</option>
+                            <option value="2">15세 이용가</option>
+                            <option value="3">18세 이용가</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th>출시일</th>
                     <td>
-                        <input type="date" name="createdAt"><br>
+                        <input type="date" name="createdAt" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" /><br>
                     </td>
                 </tr>
                 <tr>
@@ -84,7 +84,7 @@
                 <tr>
                     <th>할인율</th>
                     <td>
-                        <input type="text" name="discountRate" id="discountRate" oninput="calculateSalesPrice()"><br>
+                        <input type="text" name="discountRate" id="discountRate" oninput="calculateSalesPrice()" value="0"><br>
                     </td>
                 </tr>
                 <tr>

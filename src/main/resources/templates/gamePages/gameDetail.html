@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/gameNav.css}">
     <link rel="stylesheet" th:href="@{/css/gameDetail.css}">
     <link rel="stylesheet" th:href="@{/css/buttons.css}">
-<!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -21,124 +21,113 @@
     <div class="container">
         <!-- Full-width images with number text -->
         <div th:each="fileName: ${game.storedFileName}" class="mySlides">
-            <img th:src="@{|/upload/${fileName}}" style="width:101%; height: 605px; object-fit: cover">
+            <img th:src="@{|/upload/${fileName}}" style="width:101%; height: 725px; object-fit: fill">
         </div>
-
-<!--        <div class="mySlides">-->
-<!--            <div class="numbertext">2 / 6</div>-->
-<!--            <img src="img_5terre_wide.jpg" style="width:100%">-->
-<!--        </div>-->
-
-<!--        <div class="mySlides">-->
-<!--            <div class="numbertext">3 / 6</div>-->
-<!--            <img src="img_mountains_wide.jpg" style="width:100%">-->
-<!--        </div>-->
-
-<!--        <div class="mySlides">-->
-<!--            <div class="numbertext">4 / 6</div>-->
-<!--            <img src="img_lights_wide.jpg" style="width:100%">-->
-<!--        </div>-->
-
-<!--        <div class="mySlides">-->
-<!--            <div class="numbertext">5 / 6</div>-->
-<!--            <img src="img_nature_wide.jpg" style="width:100%">-->
-<!--        </div>-->
-
-<!--        <div class="mySlides">-->
-<!--            <div class="numbertext">6 / 6</div>-->
-<!--            <img src="img_snow_wide.jpg" style="width:100%">-->
-<!--        </div>-->
 
         <!-- Next and previous buttons -->
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-        <!-- Image text -->
-<!--        <div class="caption-container">-->
-<!--            <p id="caption"></p>-->
-<!--        </div>-->
-
         <!-- Thumbnail images -->
         <div class="row">
             <div th:each="fileName: ${game.storedFileName}" class="column">
-                <img class="demo cursor" th:src="@{|/upload/${fileName}}" style="width:100px; height: 56px; object-fit:cover" onclick="currentSlide(i)" alt="">
+                <img class="demo cursor" th:src="@{|/upload/${fileName}}"
+                     style="width:100px; height: 56px; object-fit:fill" onclick="currentSlide(i)" alt="">
             </div>
-<!--            <div class="column">-->
-<!--                <img class="demo cursor" src="img_5terre.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">-->
-<!--            </div>-->
-<!--            <div class="column">-->
-<!--                <img class="demo cursor" src="img_mountains.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">-->
-<!--            </div>-->
-<!--            <div class="column">-->
-<!--                <img class="demo cursor" src="img_lights.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">-->
-<!--            </div>-->
-<!--            <div class="column">-->
-<!--                <img class="demo cursor" src="img_nature.jpg" style="width:100%" onclick="currentSlide(5)" alt="Nature and sunrise">-->
-<!--            </div>-->
-<!--            <div class="column">-->
-<!--                <img class="demo cursor" src="img_snow.jpg" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">-->
-<!--            </div>-->
         </div>
     </div>
+
     <h3>상세정보</h3>
-    <table id="game-detail-table">
-        <tr style="display: none">
-            <th>등록 번호</th>
-            <td th:text="${game.id}"></td>
-        </tr>
-        <tr>
-            <th>게임명</th>
-            <td th:text="${game.gameTitle}"></td>
-        </tr>
-        <tr>
-            <th>장르</th>
-            <td th:text="${game.gameGenre}"></td>
-        </tr>
-        <tr>
-            <td>제작자</td>
-            <td th:text="${game.gameCreator}"></td>
-        </tr>
-        <tr>
-            <td>배급사</td>
-            <td th:text="${game.gameDistr}"></td>
-        </tr>
-    </table>
 
-    <table id="game-price-info">
-        <tr>
-            <td>출시 가격</td>
-            <td th:text="${game.releasePrice}"></td>
-        </tr>
-        <tr>
-            <td>할인율</td>
-            <td th:text="${game.discountRate}"></td>
-        </tr>
-        <tr>
-            <td>판매 가격</td>
-            <td th:text="${game.salesPrice}"></td>
-        </tr>
+    <div id="game-detail-area">
+        <div id="release-info">
+            <div id="release-info-title">
+                <span>출시정보</span>
+            </div>
+            <table id="release-info-table">
+                <tr style="display: none">
+                    <th class="th">등록 번호</th>
+                    <td th:text="${game.id}"></td>
+                </tr>
+                <tr>
+                    <th>게임명</th>
+                    <td th:text="${game.gameTitle}"></td>
+                </tr>
+                <tr>
+                    <th>장르</th>
+                    <td th:if="${game.gameGenre == '0'}">RTS</td>
+                    <td th:if="${game.gameGenre == '1'}">슈팅</td>
+                    <td th:if="${game.gameGenre == '2'}">퍼즐</td>
+                    <td th:if="${game.gameGenre == '3'}">공포</td>
+                    <td th:if="${game.gameGenre == '4'}">액션</td>
+                    <td th:if="${game.gameGenre == '5'}">모험</td>
+                    <td th:if="${game.gameGenre == '6'}">RPG</td>
+                </tr>
+                <tr>
+                    <th>이용등급</th>
+                    <td th:if="${game.gameGrade == '0'}">전체이용가</td>
+                    <td th:if="${game.gameGrade == '1'}">12세 이용가</td>
+                    <td th:if="${game.gameGrade == '2'}">15세 이용가</td>
+                    <td th:if="${game.gameGrade == '3'}">18세 이용가</td>
+                </tr>
+                <tr>
+                    <th>제작자</th>
+                    <td th:text="${game.gameCreator}"></td>
+                </tr>
+                <tr>
+                    <th>배급사</th>
+                    <td th:text="${game.gameDistr}"></td>
+                </tr>
+                <tr>
+                    <th>출시일</th>
+                    <td th:text="${game.createdAt}"></td>
+                </tr>
+            </table>
+        </div>
 
-    </table>
-
-    <table id="game-intro">
-        <tr>
-            <td>게임 설명</td>
-            <td th:utext="${game.gameIntro}"></td>
-        </tr>
-    </table>
-
-    <table>
-        <tr th:if="${game.fileAttached==1}">
-            <th>사진</th>
-            <td>
-                <div th:each="fileName: ${game.storedFileName}">
-                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        <!--할인 O-->
+        <div class="price-info-dsc" th:if="${game.discountRate != 0}">
+            <div class="discount">
+                <div class="released-price">
+                    <span>&#8361; </span><span th:text="${game.releasePrice}"></span><br>
                 </div>
-            </td>
-        </tr>
-        <tr th:if="${game.youtubeUrl != ''}">
-            <td>영상</td>
-            <td>
+                <div class="discount-rate">
+                    <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                </div>
+            </div>
+            <div class="sales-price">
+                <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+            </div>
+            <div class="purchase-button">
+                <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+            </div>
+        </div>
+
+        <!-- 할인 X -->
+        <div class="price-info" th:unless="${game.discountRate != 0}">
+            <div class="discount">
+                <div class="released-price-none" style="color: #27172a;">
+                    <span>&#8361; </span><span th:text="${game.releasePrice}"></span><br>
+                </div>
+                <div class="discount-rate-none">
+                    <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                </div>
+            </div>
+            <div class="sales-price">
+                <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+            </div>
+            <div class="purchase-button">
+                <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <h3>게임소개</h3>
+
+    <div id="game-intro-area">
+        <div id="video">
+            <div th:if="${game.youtubeUrl != ''}">
                 <div id="youtubeContainer">
                     <p th:value="${game.youtubeUrl}"></p>
                     <iframe id="youtubeIframe" type="text/html" width="720" height="405"
@@ -146,9 +135,35 @@
                             frameborder="0" allowfullscreen>
                     </iframe>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+        <div id="introduction">
+            <div th:utext="${game.gameIntro}">
+        </div>
+    </div>
+
+<!--    <table>-->
+<!--        <tr th:if="${game.fileAttached==1}">-->
+<!--            <th>사진</th>-->
+<!--            <td>-->
+<!--                <div th:each="fileName: ${game.storedFileName}">-->
+<!--                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr th:if="${game.youtubeUrl != ''}">-->
+<!--            <td>영상</td>-->
+<!--            <td>-->
+<!--                <div id="youtubeContainer">-->
+<!--                    <p th:value="${game.youtubeUrl}"></p>-->
+<!--                    <iframe id="youtubeIframe" type="text/html" width="720" height="405"-->
+<!--                            th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"-->
+<!--                            frameborder="0" allowfullscreen>-->
+<!--                    </iframe>-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
 </div>
 
 <div class="container">
@@ -283,20 +298,42 @@
         let slides = document.getElementsByClassName("mySlides");
         let dots = document.getElementsByClassName("demo");
         let captionText = document.getElementById("caption");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
         for (i = 0; i < dots.length; i++) {
             dots[i].className = dots[i].className.replace(" active", "");
         }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        captionText.innerHTML = dots[slideIndex-1].alt;
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
     }
 
 
+    // const gameGenre = document.getElementById("game-genre").value;
+    // const genre = gameGenre.textContent.trim();
+    //
+    // if (genre === '0') {
+    //     gameGenre.innerHTML = "RTS";
+    // } else if (genre === '1') {
+    //     gameGenre.innerHTML = "슈팅";
+    // } else if (genre === '2') {
+    //     gameGenre.innerHTML = "퍼즐";
+    // } else if (genre === '3') {
+    //     gameGenre.innerHTML = "공포";
+    // } else if (genre === '4') {
+    //     gameGenre.innerHTML = "액션";
+    // } else if (genre === '5') {
+    //     gameGenre.innerHTML = "모험";
+    // } else if (genre === '6') {
+    //     gameGenre.innerHTML = "RPG";
+    // };
 
 </script>
 </html>

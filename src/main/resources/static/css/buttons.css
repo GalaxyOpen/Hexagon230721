@@ -15,7 +15,7 @@
 .btn-1-search {
     /*margin-top: 30px;*/
     background: linear-gradient(to right, #bc3265, #672873) ;
-    width: 150px;
+    width: 20%;
     color: white;
     padding: 10px;
     border: none;
@@ -73,7 +73,8 @@
     padding: 5px 10px 5px 10px;
 }
 
-.btn-3:hover {
+.btn-3:hover,
+.btn-3-bucket:hover {
     background: linear-gradient(to right, #0065fc, #00bbff) ;
 }
 
@@ -86,4 +87,22 @@
     color: white;
     font-size: 15px;
     padding: 5px 10px 5px 10px;
+}
+
+.btn-4 {
+    float: right;
+    margin-top: 20px;
+    width: 70%;
+    background: linear-gradient(to right, #bc3265, #672873) ;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-4:hover {
+    background: linear-gradient(to right, #e02c6f, #692577) ;
 }

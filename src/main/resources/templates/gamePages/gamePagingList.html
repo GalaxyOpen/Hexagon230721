@@ -23,7 +23,7 @@
             <tr th:each="game: ${gameList}">
                 <td th:text="${game.id}"></td>
                 <td th:text="${game.gameGenre}"></td>
-                <td><a th:href="@{|/game/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                <td><a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
                        th:text="${game.gameTitle}">제목</a></td>
                 <td th:text="${game.gameCreator}"></td>
                 <td th:text="${game.salesPrice}"></td>

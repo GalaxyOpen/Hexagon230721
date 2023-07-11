@@ -35,4 +35,9 @@ public class GameReviewService {
         });
         return gameReviewDTOList;
     }
+
+    public GameReviewDTO findById(Long id) {
+        GameReviewEntity gameReviewEntity = gameReviewRepository.findById(id).orElseThrow(()->new NoSuchElementException());
+        return GameReviewDTO.toDTO(gameReviewEntity);
+    }
 }

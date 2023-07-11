@@ -130,7 +130,7 @@
             <div th:if="${game.youtubeUrl != ''}">
                 <div id="youtubeContainer">
                     <p th:value="${game.youtubeUrl}"></p>
-                    <iframe id="youtubeIframe" type="text/html" width="720" height="405"
+                    <iframe id="youtubeIframe" type="text/html" width="520" height="335"
                             th:src="'https://www.youtube.com/embed/' + ${game.youtubeUrl}"
                             frameborder="0" allowfullscreen>
                     </iframe>
@@ -151,7 +151,7 @@
     <div id="pass-check">
 
     </div>
-
+  
     <h3>리뷰</h3>
 
     <div id="review">
@@ -191,10 +191,10 @@
         const resultArea = document.querySelector("#review-list");
         let output = "<table class=\"table table-primary\">\n" +
             "    <tr>\n" +
-            "        <th>글 번호</th>\n" +
-            "        <th>제목</th>\n" +
+            "        <th>작성번호</th>\n" +
             "        <th>작성자</th>\n" +
-            "        <th>작성 일자</th>\n" +
+            "        <th>리뷰내용</th>\n" +
+            "        <th>작성날짜</th>\n" +
             "    </tr>"
         for (let i in gameReviewList) {
             output += "<tr>\n" +

@@ -72,7 +72,7 @@
                 <tr>
                     <th>출시일</th>
                     <td>
-                        <input type="date" name="createdAt"><br>
+                        <input type="date" name="createdAt" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" /><br>
                     </td>
                 </tr>
                 <tr>

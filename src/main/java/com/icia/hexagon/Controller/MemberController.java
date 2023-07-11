@@ -27,11 +27,8 @@ import java.io.IOException;
 public class MemberController {
     private final MemberService memberService;
 
-//    @GetMapping("/save")
-//    public String saveForm(){
-//        return "/memberPages/memberSave";
-//    }
 
+    // 회원가입 화면출력
     @GetMapping("/save")
     public String saveForm(@AuthenticationPrincipal User user) {
         if (user == null) {
@@ -41,6 +38,7 @@ public class MemberController {
         }
     }
 
+    // 회원가입 정보처리
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) {
         String encodedPassword = PasswordUtils.encryptPassword(memberDTO.getMemberPassword());  // 비밀번호 암호화
@@ -48,6 +46,8 @@ public class MemberController {
         memberService.save(memberDTO);
         return "redirect:/";
     }
+
+    // 회원가입 아이디 중복체크
     @PostMapping("/dup-check")
     public ResponseEntity IDCheck(@RequestBody MemberDTO memberDTO){
         boolean result = memberService.IDCheck(memberDTO.getMemberEmail());
@@ -58,6 +58,7 @@ public class MemberController {
         }
     }
 
+    // 회원목록 (관리자만 접근가능)
     @Transactional
     @GetMapping
     public String findAll(@PageableDefault(page=1)Pageable pageable,
@@ -79,34 +80,32 @@ public class MemberController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
-        if(user.getUsername() == "admin") {
+        if(user.getUsername().equals("admin")) {
             return "/memberPages/memberList";
         } else {
             return "redirect:/";
         }
     }
 
+    // 로그인 화면
     @GetMapping("/login")
     public String loginForm(@AuthenticationPrincipal User user){
-        if(user == null) {
-            return "/memberPages/memberLogin";
-        } else {
+        if(user != null) {
             return "redirect:/";
+        } else {
+            return "/memberPages/memberLogin";
         }
     }
 
 
+    // 마이페이지
     @GetMapping("/myPage")
     public String myPage(){
         return "/memberPages/memberMain";
     }
 
-//    @GetMapping("/axios/{id}")
-//    public ResponseEntity detailAxios(@PathVariable Long id){
-//        MemberDTO memberDTO= memberService.findById(id);
-//        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
-//    }
 
+    // 회원상세 정보
     @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal User user, Model model){
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
@@ -114,29 +113,16 @@ public class MemberController {
         return "/memberPages/memberDetail";
     }
 
+    // 회원상세 정보 (관리자만 접근가능)
     @GetMapping("/{id}")
     public String membersDetail(@PathVariable Long id, Model model){
-        System.out.println("======= " + id);
         MemberDTO memberDTO = memberService.findById(id);
-        System.out.println("============" + memberDTO );
         model.addAttribute("user", memberDTO);
         return "/memberPages/memberDetail";
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity updateForm(@PathVariable Long id, Model model) {
-//        MemberDTO memberDTO = memberService.findById(id);
-//        System.out.println("update = "+ memberDTO);
-//        model.addAttribute("user", memberDTO);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/update")
-//    public String update(MemberDTO memberDTO){
-//        memberService.update(memberDTO);
-//        return "redirect:/";
-//    }
 
+    // 회원정보 수정화면
     @GetMapping("/update")
     public String updateForm(@AuthenticationPrincipal User user, Model model) {
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
@@ -144,6 +130,8 @@ public class MemberController {
         return "/memberPages/memberUpdate";
     }
 
+
+    // 회원정보 수정처리
     @PostMapping("/update")
     public String update(@ModelAttribute MemberDTO memberDTO){
         memberService.update(memberDTO);
@@ -151,6 +139,8 @@ public class MemberController {
     }
 
 
+
+    // 회원정보 삭제
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Long id, HttpServletRequest request){
         MemberDTO memberDTO = memberService.findById(id);

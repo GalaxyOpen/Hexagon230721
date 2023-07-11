@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 
+import com.icia.hexagon.DTO.PointDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,13 +32,13 @@ public class PointEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-//    public static PointEntity toPointSaveEntity(PointDTO pointDTO){
-//        PointEntity pointEntity = new PointEntity();
-//        pointEntity.setUsedPoint(pointDTO.getUsedPoint);
-//        pointEntity.setChargedPoint(pointDTO.getChargedPoint);
-//        pointEntity.setTotalPoint(pointDTO.getTotalPoint);
-//        pointEntity.setMemberEntity(pointDTO.getMemberEntity);
-//        return pointEntity;
-//    }
+    public static PointEntity toPointSaveEntity(PointDTO pointDTO, MemberEntity memberEntity){
+        PointEntity pointEntity = new PointEntity();
+        pointEntity.setUsedPoint(pointDTO.getUsedPoint());
+        pointEntity.setChargedPoint(pointDTO.getChargedPoint());
+        pointEntity.setTotalPoint(pointDTO.getTotalPoint());
+        pointEntity.setMemberEntity(memberEntity);
+        return pointEntity;
+    }
 
 }

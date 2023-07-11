@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 import com.icia.hexagon.DTO.MemberDTO;
+import com.icia.hexagon.DTO.PointDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -89,6 +90,20 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setTotalPoint(memberDTO.getTotalPoint());
         return memberEntity;
     }
+
+    public static MemberEntity toPointEntity(MemberDTO memberDTO, PointDTO pointDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberId(memberDTO.getMemberId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setTotalPoint(memberDTO.getTotalPoint()+pointDTO.getChargedPoint());
+        return memberEntity;
+    }
+
 
     public String getRoles() {
         // 멤버의 권한(role) 정보를 반환하는 로직 작성

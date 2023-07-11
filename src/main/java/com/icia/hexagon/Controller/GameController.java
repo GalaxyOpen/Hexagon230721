@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -89,31 +87,6 @@ public class GameController {
         return "/gamePages/gameRelease";
     }
 
-    // 할인 게임 리스트
-    @GetMapping("/discount")
-    public String discount(@PageableDefault(page = 1) Pageable pageable,
-                           @RequestParam(value = "type", required = false, defaultValue = "") String type,
-                           @RequestParam(value = "q", required = false, defaultValue = "") String q,
-                           Model model) {
-        Page<GameDTO> gameDTOS = gameService.discount(pageable, type, q);
-        if (gameDTOS.getTotalElements() == 0) {
-            model.addAttribute("gameList", null);
-        } else {
-            model.addAttribute("gameList", gameDTOS);
-        }
-        int blockLimit = 3;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("type", type);
-        model.addAttribute("q", q);
-        GameDTO firstGame = gameDTOS.getContent().get(0);
-        System.out.println("===discount===" + firstGame);
-        return "/gamePages/gameDiscount";
-    }
-
     // 게임 상세조회
     @Transactional
     @GetMapping("/detail/{id}")
@@ -128,7 +101,6 @@ public class GameController {
 
         GameDTO gameDTO = gameService.findById(id);
         model.addAttribute("game", gameDTO);
-
 
         List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
         if(gameReviewDTOList.size() > 0) {

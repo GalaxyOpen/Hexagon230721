@@ -45,9 +45,9 @@
         <tr th:if="${game.fileAttached==1}">
             <th>사진</th>
             <td>
-            <div th:each="fileName: ${game.storedFileName}">
-                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
-            </div>
+                <div th:each="fileName: ${game.storedFileName}">
+                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+                </div>
             </td>
         </tr>
         <tr th:if="${game.youtubeUrl != ''}">
@@ -71,7 +71,7 @@
     <div id="pass-check">
     </div>
     <div class="container" id="review-write">
-        <input type="hidden" name="reviewWriter" id="review-writer" th:value="${member.memberId}">
+        <input type="hidden" name="reviewWriter" id="review-writer" th:value="${#httpServletRequest.remoteUser}">
         <input type="text" name="reviewContents" id="review-contents" placeholder="내용">
         <button onclick="review_write()">리뷰작성</button>
     </div>
@@ -100,63 +100,72 @@
 
 </body>
 <script th:inline="javascript">
-    const review_list=(gameReviewList)=>{
-        const resultArea=document.querySelector("#review-list");
-        let output="<table class=\"table table-primary\">\n" +
+    const review_list = (gameReviewList) => {
+        const resultArea = document.querySelector("#review-list");
+        let output = "<table class=\"table table-primary\">\n" +
             "    <tr>\n" +
             "        <th>작성번호</th>\n" +
             "        <th>작성자</th>\n" +
             "        <th>리뷰내용</th>\n" +
             "        <th>작성날짜</th>\n" +
             "    </tr>"
-        for(let i in gameReviewList) {
+        for (let i in gameReviewList) {
             output += "<tr>\n" +
-                "                    <td>"+gameReviewList[i].id+"</td>\n" +
-                "                    <td>"+gameReviewList[i].reviewWriter+"</td>\n" +
-                "                    <td>"+gameReviewList[i].reviewContents+"</td>\n" +
-                "                    <td>"+gameReviewList[i].createdAt+"</td>\n" +
+                "                    <td>" + gameReviewList[i].id + "</td>\n" +
+                "                    <td>" + gameReviewList[i].reviewWriter + "</td>\n" +
+                "                    <td>" + gameReviewList[i].reviewContents + "</td>\n" +
+                "                    <td>" + gameReviewList[i].createdAt + "</td>\n" +
                 "                </tr>";
         }
-        output+= "</table>";
+        output += "</table>";
         resultArea.innerHTML = output;
     }
-    const review_write =()=>{
+    const review_write = () => {
         const writer = document.querySelector("#review-writer").value;
         const contents = document.querySelector("#review-contents").value;
-        const gameId = [[${game.id}]]
-        axios({
-            method:"post",
-            url:"/review/save",
-            data: {
-                reviewWriter: writer,
-                reviewContents: contents,
-                gameId: gameId
-            }
-        }).then(res=>{
-            document.querySelector("#review-writer").value="";
-            document.querySelector("#review-contents").value="";
-            review_list(res.data);
-        }).catch(err=>{
-            console.log("err",err);
-        });
+
+        if (writer == null || writer.length == 0) {
+            console.log(writer)
+            console.log("실패")
+            location.href = "/member/login";
+        } else {
+            console.log(writer)
+            console.log("성공")
+            axios({
+                method: "post",
+                url: "/review/save",
+                data: {
+                    reviewWriter: writer,
+                    reviewContents: contents,
+                    gameId: gameId
+                }
+            }).then(res => {
+                document.querySelector("#review-writer").value = "";
+                document.querySelector("#review-contents").value = "";
+                review_list(res.data);
+            }).catch(err => {
+                console.log("err", err);
+            });
 
         }
-    const game_List = () =>{
-        const page = [[${page}]];
-        const type = [[${type}]];
-        const  q = [[${q}]]
-        location.href="/game?page="+page+"&type="+type+"&q="+q;
-    }
-    const game_Update = () =>{
-        const id= [[${game.id}]]
-        location.href="/game/update/"+id;
-    }
-    const game_Delete = () =>{
-        const id=[[${game.id}]]
-        location.href="/game/delete/"+id;
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    const game_List = () => {
+        const page = [[${page}]];
+        const type = [[${type}]];
+        const q = [[${q}]]
+        location.href = "/game?page=" + page + "&type=" + type + "&q=" + q;
+    }
+    const game_Update = () => {
+        const id = [[${game.id}]]
+        location.href = "/game/update/" + id;
+    }
+    const game_Delete = () => {
+        const id = [[${game.id}]]
+        location.href = "/game/delete/" + id;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
         const youtubeUrl = 'https://www.youtube.com/embed/' + [[${game.youtubeUrl}]];
         const youtubeIframe = document.getElementById("youtubeIframe");
 

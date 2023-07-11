@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -114,7 +116,7 @@ public class GameController {
 
     // 게임 상세조회
     @Transactional
-    @GetMapping("/{id}")
+    @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id,
                            @RequestParam(value="page", required = false, defaultValue = "0") int page,
                            @RequestParam("type") String type,
@@ -125,14 +127,9 @@ public class GameController {
         model.addAttribute("q",q);
 
         GameDTO gameDTO = gameService.findById(id);
-        MemberDTO memberDTO = memberService.findById(id);
-        GameReviewDTO gameReviewDTO = gameReviewService.findById(id);
-
         model.addAttribute("game", gameDTO);
-        model.addAttribute("member", memberDTO);
-        model.addAttribute("gameReview", gameReviewDTO);
 
-        System.out.println("gameReviewDTO = " + gameReviewDTO);
+
         List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
         if(gameReviewDTOList.size() > 0) {
             model.addAttribute("gameReviewList", gameReviewDTOList);

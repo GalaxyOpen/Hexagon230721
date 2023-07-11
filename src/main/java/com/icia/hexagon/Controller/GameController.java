@@ -87,6 +87,29 @@ public class GameController {
         return "/gamePages/gameRelease";
     }
 
+    // 할인 게임 리스트
+    @GetMapping("/discount")
+    public String discount(@PageableDefault(page = 1) Pageable pageable,
+                           @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                           @RequestParam(value = "q", required = false, defaultValue = "") String q,
+                           Model model) {
+        Page<GameDTO> gameDTOS = gameService.discount(pageable, type, q);
+        if (gameDTOS.getTotalElements() == 0) {
+            model.addAttribute("gameList", null);
+        } else {
+            model.addAttribute("gameList", gameDTOS);
+        }
+        int blockLimit = 3;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
+        GameDTO firstGame = gameDTOS.getContent().get(0);
+        return "/gamePages/gameDiscount";
+    }
+
     // 게임 상세조회
     @Transactional
     @GetMapping("/detail/{id}")

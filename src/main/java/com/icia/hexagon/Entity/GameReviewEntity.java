@@ -29,11 +29,16 @@ public class GameReviewEntity extends BaseEntity{
     @JoinColumn(name = "game_id")
     private GameEntity gameEntity;
 
+    @Column
+    private int star;
+
     public static GameReviewEntity toSaveEntity(GameEntity gameEntity, GameReviewDTO gameReviewDTO){
         GameReviewEntity gameReviewEntity = new GameReviewEntity();
         gameReviewEntity.setReviewWriter(gameReviewDTO.getReviewWriter());
         gameReviewEntity.setReviewContents(gameReviewDTO.getReviewContents());
         gameReviewEntity.setGameEntity(gameEntity);
+        gameReviewEntity.setStar(gameReviewDTO.getStar());
+
         return gameReviewEntity;
     }
 }

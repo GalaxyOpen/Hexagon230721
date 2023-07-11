@@ -13,6 +13,8 @@ public class GameReviewDTO {
     private String createdAt;
     private String updateAt;
 
+    private int star;
+
     public static GameReviewDTO toDTO(GameReviewEntity gameReviewEntity) {
         GameReviewDTO gameReviewDTO = new GameReviewDTO();
         gameReviewDTO.setId(gameReviewEntity.getId());
@@ -21,6 +23,7 @@ public class GameReviewDTO {
         gameReviewDTO.setGameId(gameReviewEntity.getGameEntity().getId());
         gameReviewDTO.setCreatedAt(UtilClass.dateFormat(gameReviewEntity.getCreatedAt()));
         gameReviewDTO.setUpdateAt(UtilClass.dateFormat(gameReviewEntity.getUpdatedAt()));
+        gameReviewDTO.setStar(gameReviewEntity.getStar());
         return gameReviewDTO;
     }
 }

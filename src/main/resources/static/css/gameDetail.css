@@ -272,6 +272,10 @@ body {
     outline: none;
 }
 
+#star-area {
+    margin-top: 10px;
+}
+
 #review-list {
     width: 99%;
     padding: 30px;
@@ -282,4 +286,36 @@ body {
     font-size: 30px;
     font-weight: bold;
     color: #cccccc;
+}
+
+#star-area {
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+
+#star-area legend{
+    text-align: right;
+}
+
+#review-write input[type=radio]{
+    display: none;
+}
+
+#review-write label{
+    font-size: 1.5em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+
+#review-write label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#review-write label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#review-write input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }

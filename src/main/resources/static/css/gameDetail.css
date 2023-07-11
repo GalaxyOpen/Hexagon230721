@@ -258,12 +258,9 @@ body {
     margin-bottom: 5px;
 }
 
-#review-write input[type="text"]:focus {
-    border-bottom: 2px solid #c68aff;
-}
-
 #review-write textarea {
     background-color: inherit;
+    padding: 8px;
     margin-top: 30px;
     width: 100%;
     height: 225px;
@@ -273,4 +270,16 @@ body {
 
 #review-write textarea:focus {
     outline: none;
+}
+
+#review-list {
+    width: 99%;
+    padding: 30px;
+}
+
+#review-list p {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #cccccc;
 }

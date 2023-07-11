@@ -158,10 +158,10 @@
         <div id="review-write">
             <input type="text" id="review-writer" placeholder="작성자" th:value="${session.loginId}"><br>
             <textarea id="review-contents" placeholder="내용"></textarea>
-            <button onclick="review_write()">리뷰작성</button>
+            <button class="btn-3-review" onclick="review_write()">리뷰작성</button>
         </div>
         <div id="review-list">
-            <div th:if="${gameReviewList == null}">
+            <div class="" th:if="${gameReviewList == null}">
                 <p>작성된 리뷰가 없습니다.</p>
             </div>
             <div th:unless="${gameReviewList==null}">

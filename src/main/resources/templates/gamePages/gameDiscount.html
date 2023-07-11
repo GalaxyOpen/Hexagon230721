@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div id="section">
+  <div class="container" id="paging-list">
+    <div th:if="${gameList !=null}" id="game-list">
+      <table class="table-primary">
+        <thead>
+        <tr>
+          <th scope="col">등록번호</th>
+          <th scope="col">게임장르</th>
+          <th scope="col">게임제목</th>
+          <th scope="col">크리에이터</th>
+          <th scope="col">판매가격</th>
+          <th scope="col">할인률</th>
+          <th scope="col">출시일</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game: ${gameList}">
+          <td th:text="${game.id}"></td>
+          <td th:text="${game.gameGenre}"></td>
+          <td><a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                 th:text="${game.gameTitle}">제목</a></td>
+          <td th:text="${game.gameCreator}"></td>
+          <td th:text="${game.salesPrice}"></td>
+          <td th:text="${game.discountRate} + '%'"></td>
+          <td th:text="${game.createdAt}"></td>
+
+        </tr>
+        </tbody>
+      </table>
+      <div class="container">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" th:href="@{/game(page=1, type=${type}, q=${q})}">
+              <span>첫 페이지</span>
+            </a>
+          </li>
+          <li th:class="${gameList.first} ? 'disabled'" class="page-item">
+            <a class="page-link"
+               th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, tyep=${type}, q=${q})}">
+              <span><</span>
+            </a>
+          </li>
+          <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+              th:class="${page == gameList.number+1}?'page-item active'" class="page-item">
+            <a th:href="@{/game(page=${page}, type=${type}, q=${q})}" class="page-link"
+               th:text="${page}"></a>
+          </li>
+          <li th:class="${gameList.last}?'disabled'">
+            <a class="page-link"
+               th:href="${gameList.last}?'#':@{/game(page=${gameList.number+2}, type=${type}, q=${q})}">
+              <span>&gt;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" th:href="@{/game(page=${gameList.totalPages}, type=${type}, q=${q})}">
+              <span>끝 페이지</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div th:unless="${gameList!=null}">
+      <h1>검색결과가 없습니다!!</h1>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

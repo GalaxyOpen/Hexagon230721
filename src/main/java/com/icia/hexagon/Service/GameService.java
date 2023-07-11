@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -76,6 +77,71 @@ public class GameService {
                 .build());
         return gameDTOS;
     }
+
+    public Page<GameDTO> release(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+
+        LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
+        Page<GameEntity> gameEntities = null;
+        if (type.equals("title")) {
+            gameEntities = gameRepository.findByGameTitleContainingAndCreatedAtAfter(q, oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else if (type.equals("distr")) {
+            gameEntities = gameRepository.findByGameDistrContainingAndCreatedAtAfter(q, oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else if (type.equals("creater")) {
+            gameEntities = gameRepository.findByGameCreatorContainingAndCreatedAtAfter(q, oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            gameEntities = gameRepository.findAllByCreatedAtAfter(oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        }
+
+        Page<GameDTO> gameDTOS = gameEntities.map(gameEntity -> GameDTO.builder()
+                .id(gameEntity.getId())
+                .gameTitle(gameEntity.getGameTitle())
+                .gameGenre(gameEntity.getGameGenre())
+                .gameCreator(gameEntity.getGameCreator())
+                .gameGrade(gameEntity.getGameGrade())
+                .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                .salesPrice(gameEntity.getSalesPrice())
+                .build());
+
+        return gameDTOS;
+    }
+
+    public Page<GameDTO> discount(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+
+        Page<GameEntity> gameEntities = null;
+        if (type.equals("title")) {
+            gameEntities = gameRepository.findByGameTitleContainingAndDiscountRateGreaterThanOrderByDiscountRateDesc(q, 0, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "discountRate")));
+        } else if (type.equals("distr")) {
+            gameEntities = gameRepository.findByGameDistrContainingAndDiscountRateGreaterThanOrderByDiscountRateDesc(q, 0, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "discountRate")));
+        } else if (type.equals("creater")) {
+            gameEntities = gameRepository.findByGameCreatorContainingAndDiscountRateGreaterThanOrderByDiscountRateDesc(q, 0, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "discountRate")));
+        } else {
+            gameEntities = gameRepository.findByDiscountRateGreaterThanOrderByDiscountRateDesc(0, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "discountRate")));
+        }
+
+        Page<GameDTO> gameDTOS = gameEntities.map(gameEntity -> {
+            GameDTO gameDTO = GameDTO.builder()
+                    .id(gameEntity.getId())
+                    .gameTitle(gameEntity.getGameTitle())
+                    .gameGenre(gameEntity.getGameGenre())
+                    .gameCreator(gameEntity.getGameCreator())
+                    .gameGrade(gameEntity.getGameGrade())
+                    .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                    .salesPrice(gameEntity.getSalesPrice())
+                    .build();
+
+            // 할인률 값을 가져와서 설정
+            gameDTO.setDiscountRate(gameEntity.getDiscountRate());
+
+            return gameDTO;
+        });
+
+        return gameDTOS;
+    }
+
     public GameDTO findById(Long id) {
         GameEntity gameEntity = gameRepository.findById(id).orElseThrow(()->new NoSuchElementException());
         return GameDTO.toDTO(gameEntity);

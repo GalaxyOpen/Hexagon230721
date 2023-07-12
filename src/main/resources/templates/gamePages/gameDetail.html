@@ -147,13 +147,13 @@
     </div>
 
 
-    <h3>리뷰</h3>
+    <h3>리뷰 & 평가</h3>
 
     <div id="review">
         <div id="review-write">
             <input type="text" id="review-writer" placeholder="작성자" th:value="${session.loginId}"><br>
             <div id="star-area">
-                <p class="text-bold">별점을 선택해주세요</p>
+                <span class="eval-this-game"> 이 게임을 평가해주세요 </span>
                 <input type="radio" name="star" value="5" id="rate1"><label
                     for="rate1">★</label>
                 <input type="radio" name="star" value="4" id="rate2"><label
@@ -196,20 +196,20 @@
                         <p th:text="${gameReview.reviewContents}"></p>
                     </div>
                 </div>
-                <table class="table">
-                    <tr>
-                        <th>리뷰번호</th>
-                        <th>작성자</th>
-                        <th>리뷰내용</th>
-                        <th>작성날짜</th>
-                    </tr>
-                    <tr th:each="gameReview:${gameReviewList}">
-                        <td th:text="${gameReview.id}"></td>
-                        <td th:text="${gameReview.reviewWriter}"></td>
-                        <td th:text="${gameReview.reviewContents}"></td>
-                        <td th:text="${gameReview.createdAt}"></td>
-                    </tr>
-                </table>
+<!--                <table class="table">-->
+<!--                    <tr>-->
+<!--                        <th>리뷰번호</th>-->
+<!--                        <th>작성자</th>-->
+<!--                        <th>리뷰내용</th>-->
+<!--                        <th>작성날짜</th>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="gameReview:${gameReviewList}">-->
+<!--                        <td th:text="${gameReview.id}"></td>-->
+<!--                        <td th:text="${gameReview.reviewWriter}"></td>-->
+<!--                        <td th:text="${gameReview.reviewContents}"></td>-->
+<!--                        <td th:text="${gameReview.createdAt}"></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
             </div>
         </div>
     </div>
@@ -239,22 +239,34 @@
     // }
     const review_list = (gameReviewList) => {
         const resultArea = document.querySelector("#review-list");
-        let output = "<table class=\"table table-primary\">\n" +
-            "    <tr>\n" +
-            "        <th>작성번호</th>\n" +
-            "        <th>작성자</th>\n" +
-            "        <th>리뷰내용</th>\n" +
-            "        <th>작성날짜</th>\n" +
-            "    </tr>"
+
+        let output = "";
         for (let i in gameReviewList) {
-            output += "<tr>\n" +
-                "                    <td>" + gameReviewList[i].id + "</td>\n" +
-                "                    <td>" + gameReviewList[i].reviewWriter + "</td>\n" +
-                "                    <td>" + gameReviewList[i].reviewContents + "</td>\n" +
-                "                    <td>" + gameReviewList[i].createdAt + "</td>\n" +
-                "                </tr>";
+            let stars = "";
+            for (let j=0; j < gameReviewList[i].star; j++) {
+                stars += "⭐";
+            }
+            output +=
+                "                <div class=\"review-box\">\n" +
+                "                    <div class=\"review-writer-box\">\n" +
+                "                        <div id=\"person-icon\">\n" +
+                "                            <p style=\"display: none\">" + gameReviewList[i].id + "</p>\n" +
+                "                            <i class=\"bi bi-person-circle\"></i>\n" +
+                "                        </div>\n" +
+                "                        <div id=\"wrt-cr\">\n" +
+                "                            <span>" + gameReviewList[i].reviewWriter +"</span>\n" +
+                "                            <p>" + gameReviewList[i].createdAt + "</p>\n" +
+                "                        </div>\n" +
+                "                        <div>\n" +
+                "                            <span>" + stars + "</span>\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"review-contents-box\">\n" +
+                "                        <p>" + gameReviewList[i].reviewContents + "</p>\n" +
+                "                    </div>\n" +
+                "                </div>\n"
         }
-        output += "</table>";
+        output += "</div>";
         resultArea.innerHTML = output;
     }
     const review_write = () => {

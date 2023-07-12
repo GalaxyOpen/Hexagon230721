@@ -147,6 +147,7 @@
         const salesPrice = document.querySelector('input[name="salesPrice"]').value;
         const gameIntro = document.querySelector('#gameIntro').value;
         const gameFile = document.querySelector('input[name="gameFile"]').value;
+        const youtubeUrl = document.querySelector('input[name="youtubeUrl"]')
 
         axios({
             method:"put",
@@ -163,7 +164,8 @@
                 discountRate: discountRate,
                 salesPrice: salesPrice,
                 gameIntro: gameIntro,
-                gameFile: gameFile
+                gameFile: gameFile,
+                youtubeUrl: youtubeUrl
             }
         }).then(res=>{
             location.href="/game"+id;

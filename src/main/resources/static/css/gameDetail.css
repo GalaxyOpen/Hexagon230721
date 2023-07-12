@@ -124,7 +124,7 @@ body {
     margin-bottom: 30px;
     padding: 15px;
     font-weight: bold;
-    border-bottom: 2px solid #8400ff;
+    border-bottom: 2px solid #cccccc;
 }
 
 #game-detail-area {
@@ -240,9 +240,15 @@ body {
 }
 
 #review-write {
-    background: linear-gradient(45deg, #230f23, #301b31);
-    width: 99%;
+    background-color: #230f23;
+    width: 100%;
     padding: 30px;
+}
+
+.eval-this-game {
+    font-weight: bold;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 #review-write input[type="text"] {
@@ -252,7 +258,7 @@ body {
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 2px solid #cccccc;
+    border-bottom: 2px solid #8400ff;
     background-color: inherit;
     color: white;
     margin-bottom: 5px;
@@ -263,7 +269,7 @@ body {
     padding: 8px;
     margin-top: 30px;
     width: 100%;
-    height: 225px;
+    height: 200px;
     resize: none;
     border: none;
 }
@@ -278,10 +284,11 @@ body {
 
 #review-list {
     width: 99%;
-    padding: 30px;
+    padding: 30px 0px 30px 30px;
+
 }
 
-#review-list p {
+#no-review {
     text-align: center;
     font-size: 30px;
     font-weight: bold;
@@ -318,4 +325,42 @@ body {
 
 #review-write input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+.review-box {
+    display: inline-block;
+    width: 100%;
+    margin: 10px;
+    border-top: 1px solid #8400ff;
+}
+
+.review-writer-box {
+    background-color: #261026;
+    padding: 10px;
+}
+
+.review-contents-box {
+    background-color: #230f23;
+    padding: 30px;
+}
+
+#person-icon {
+    float: left;
+    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+    padding: 20px 30px 30px 30px;
+}
+
+#wrt-cr {
+    display: inline-block;
+}
+
+#wrt-cr span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.review-contents-box {
+    min-height: 50px;
 }

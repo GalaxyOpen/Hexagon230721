@@ -5,7 +5,8 @@ body {
     height: auto;
 }
 
-#game-save-form {
+#game-save-form,
+#game-update-form {
     width: 66%;
     margin-top: 50px;
     margin-bottom: 150px;

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+
+<form action="/game/update/{id}" method="post" enctype="multipart/form-data">
+    <h2>등록된 게임 수정</h2>
+    <input type="hidden" name="id" th:value="${game.id}">
+    게임 제목: <input type="text" name="gameTitle" id="gameTitle" placeholder="제목" required>
+    <div class ="Genre-select" >
+        게임 장르:
+        <select th:name="gameGenre" id="gameGenre" th:value="${game.gameGenre}">
+            <option value="0">RTS</option>
+            <option value="1">슈팅</option>
+            <option value="2">퍼즐</option>
+            <option value="3">공포</option>
+            <option value="4">액션</option>
+            <option value="5">모험</option>
+            <option value="6">RPG</option>
+        </select>
+    </div>
+    게임 제작사 : <input type="text" name="gameCreator" id="gameCreator" th:value="${game.gameCreator}" required><br>
+    배급사 : <input type="text" name="gameDistr" id="GameDistr" th:value="${game.gameDistr}">
+    <div class ="Grade-select">
+        게임 등급 :
+        <select th:name="gameGrade" id="gameGrade">
+            <option value="0">전체 이용가</option>
+            <option value="1">12세 이용가</option>
+            <option value="2">15세 이용가</option>
+            <option value="3">18세 이용가</option>
+        </select>
+    </div>
+    출시일 : <input type="date" name="createdAt" th:value="${game.createdAt}"><br>
+    출시가격 : <input type="text" name="releasePrice" id="releasePrice" th:value="${game.releasePrice}" oninput="calculateSalesPrice()"><br>
+    할인율 : <input type="text" name="discountRate" id="discountRate" th:value="${game.discountRate}" oninput="calculateSalesPrice()"><br>
+    판매가격 : <input type="text" name="salesPrice" id="salesPrice" placeholder="가격과 할인율을 확인해주세요" readonly><br>
+    게임 설명 : <textarea name="gameIntro" id="gameIntro" cols="30" rows="10" class="form-control"></textarea><br>
+    파일첨부 : <input type="file" name="gameFile" multiple><br>
+    소개영상 : <input type="text" name="youtubeUrl" placeholder="url을 입력하세요"><br>
+
+    <input type="submit" value="게임 수정" onclick="game_update()">
+</form>
+<a href="/">처음으로</a>
+
+</body>
+<script th:inline="javascript">
+
+    function calculateSalesPrice() {
+        let releasePrice = parseFloat(document.getElementById("releasePrice").value);
+        let discountRate = parseFloat(document.getElementById("discountRate").value);
+        let salesPrice = (releasePrice * (100 - discountRate))/100;
+
+        // 판매가격 필드에 값 설정
+        document.getElementById("salesPrice").value = salesPrice.toFixed(0);
+    }
+
+    const game_update=()=>{
+        const id=document.querySelector('input[name="id"]').value;
+        const title = document.querySelector('input[name="gameTitle"]').value;
+        const genre = document.querySelector('select[name="gameGenre"]').value;
+        const creator = document.querySelector('input[name="gameCreator"]').value;
+        const distr = document.querySelector('input[name="gameDistr"]').value;
+        const grade = document.querySelector('select[name="gameGrade"]').value;
+        const createdAt = document.querySelector('input[name="createdAt"]').value;
+        const releasePrice = document.querySelector('input[name="releasePrice"]').value;
+        const discountRate = document.querySelector('input[name="discountRate"]').value;
+        const salesPrice = document.querySelector('input[name="salesPrice"]').value;
+        const gameIntro = document.querySelector('#gameIntro').value;
+        const gameFile = document.querySelector('input[name="gameFile"]').value;
+        const youtubeUrl = document.querySelector('input[name="youtubeUrl"]')
+
+        axios({
+            method:"put",
+            url:"/game/update/"+id,
+            data:{
+                id:id,
+                title:title,
+                genre:genre,
+                creator:creator,
+                distr:distr,
+                grade:grade,
+                createdAt: createdAt,
+                releasePrice: releasePrice,
+                discountRate: discountRate,
+                salesPrice: salesPrice,
+                gameIntro: gameIntro,
+                gameFile: gameFile,
+                youtubeUrl: youtubeUrl
+            }
+        }).then(res=>{
+            location.href="/game"+id;
+        }).catch(err=>{
+            alert("실패")
+        })
+    }
+</script>
+</html>

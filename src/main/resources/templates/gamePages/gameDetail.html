@@ -137,7 +137,7 @@
             <button class="btn-2-left" onclick="game_List()">목록</button>
             <button th:if="${session.loginId} == ${game.gameCreator}" class="btn-2-left" onclick="game_Update()">수정
             </button>
-            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId} == 'admin'"
+            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId == 'admin'}"
                     class="btn-2-cancel-left" onclick="game_Delete()">삭제
             </button>
         </div>

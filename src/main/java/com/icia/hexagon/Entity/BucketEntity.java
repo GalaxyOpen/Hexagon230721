@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 
+import com.icia.hexagon.DTO.BucketSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +24,19 @@ public class BucketEntity {
     @JoinColumn(name = "game_id")
     private GameEntity gameEntity;
 
-//    public static BucketEntity toBucketSaveEntity(BucketDTO bucketDTO){
-//        BucketEntity bucketEntity = new BucketEntity();
-//        bucketEntity.setMemberEntity(bucketDTO.getMemberEntity());
-//        bucketEntity.setGameEntity(bucketDTO.getGameEntity);
-//        return bucketEntity;
-//    }
+    @Column(nullable = false)
+    private int buyAmount;
+
+    @Column(length = 20, nullable = false)
+    private String payMethod;
+
+    @Column(length = 20, nullable = false)
+    private String status;
+
+    public static BucketEntity toBucketSaveEntity(MemberEntity memberEntity, GameEntity gameEntity){
+        BucketEntity bucketEntity = new BucketEntity();
+        bucketEntity.setMemberEntity(memberEntity);
+        bucketEntity.setGameEntity(gameEntity);
+        return bucketEntity;
+    }
 }

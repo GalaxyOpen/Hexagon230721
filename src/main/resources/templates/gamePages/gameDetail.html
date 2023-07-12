@@ -135,8 +135,11 @@
         </div>
         <div class="lower-button">
             <button class="btn-2-left" onclick="game_List()">목록</button>
-            <button th:if="${session.loginId} == ${game.gameCreator}" class="btn-2-left" onclick="game_Update()">수정</button>
-            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId} == 'admin'" class="btn-2-cancel-left" onclick="game_Delete()">삭제</button>
+            <button th:if="${session.loginId} == ${game.gameCreator}" class="btn-2-left" onclick="game_Update()">수정
+            </button>
+            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId} == 'admin'"
+                    class="btn-2-cancel-left" onclick="game_Delete()">삭제
+            </button>
         </div>
     </div>
     <div id="pass-check">
@@ -162,17 +165,36 @@
                 <input type="radio" name="star" value="1" id="rate5"><label
                     for="rate5">★</label>
             </div>
-            <textarea id="review-contents" placeholder="내용"></textarea>
+            <textarea id="review-contents" placeholder="댓글을 사용할 때에는 타인을 존중하고 커뮤니티 가이드라인을 준수하세요."></textarea>
             <button class="btn-3-review" onclick="review_write()">리뷰작성</button>
         </div>
 
         <div id="review-list">
-            <div class="" th:if="${gameReviewList == null}">
-                <p>작성된 리뷰가 없습니다.</p>
+            <div th:if="${gameReviewList == null}">
+                <p id="no-review">작성된 리뷰가 없습니다.</p>
             </div>
             <div th:unless="${gameReviewList==null}">
-                <div>
-
+                <div class="review-box" th:each="gameReview:${gameReviewList}">
+                    <div class="review-writer-box">
+                        <div id="person-icon">
+                            <p th:text="${gameReview.id}" style="display: none"></p>
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <div id="wrt-cr">
+                            <span th:text="${gameReview.reviewWriter}"></span>
+                            <p th:text="${gameReview.createdAt}"></p>
+                        </div>
+                        <div>
+                            <span th:if="${gameReview.star == 1}">⭐</span>
+                            <span th:if="${gameReview.star == 2}">⭐⭐</span>
+                            <span th:if="${gameReview.star == 3}">⭐⭐⭐</span>
+                            <span th:if="${gameReview.star == 4}">⭐⭐⭐⭐</span>
+                            <span th:if="${gameReview.star == 5}">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="review-contents-box">
+                        <p th:text="${gameReview.reviewContents}"></p>
+                    </div>
                 </div>
                 <table class="table">
                     <tr>
@@ -195,6 +217,26 @@
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
+    // const review_list = (gameReviewList) => {
+    //     const resultArea = document.querySelector("#review-list");
+    //     let output = "<table class=\"table table-primary\">\n" +
+    //         "    <tr>\n" +
+    //         "        <th>작성번호</th>\n" +
+    //         "        <th>작성자</th>\n" +
+    //         "        <th>리뷰내용</th>\n" +
+    //         "        <th>작성날짜</th>\n" +
+    //         "    </tr>"
+    //     for (let i in gameReviewList) {
+    //         output += "<tr>\n" +
+    //             "                    <td>" + gameReviewList[i].id + "</td>\n" +
+    //             "                    <td>" + gameReviewList[i].reviewWriter + "</td>\n" +
+    //             "                    <td>" + gameReviewList[i].reviewContents + "</td>\n" +
+    //             "                    <td>" + gameReviewList[i].createdAt + "</td>\n" +
+    //             "                </tr>";
+    //     }
+    //     output += "</table>";
+    //     resultArea.innerHTML = output;
+    // }
     const review_list = (gameReviewList) => {
         const resultArea = document.querySelector("#review-list");
         let output = "<table class=\"table table-primary\">\n" +
@@ -261,6 +303,7 @@
             youtubeIframe.style.display = "none";
         }
     });
+
     function isYouTubeVideoValid(url) {
         // 유효한 유튜브 URL인지 확인하는 로직을 구현합니다.
         // 정규식을 사용하여 URL의 유효성을 확인합니다.
@@ -268,17 +311,21 @@
         const youtubePattern = /^https?:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9_-]{11}$/;
         return youtubePattern.test(url);
     }
+
     // 이미지 슬라이드쇼
     let slideIndex = 1;
     showSlides(slideIndex);
+
     // Next/previous controls
     function plusSlides(n) {
         showSlides(slideIndex += n);
     }
+
     // Thumbnail image controls
     function currentSlide(n) {
         showSlides(slideIndex = n);
     }
+
     function showSlides(n) {
         let i;
         let slides = document.getElementsByClassName("mySlides");
@@ -300,8 +347,10 @@
         dots[slideIndex - 1].className += " active";
         captionText.innerHTML = dots[slideIndex - 1].alt;
     }
+
     const bucket = () => {
         location.href = "/bucket/save"
     }
+
 </script>
 </html>

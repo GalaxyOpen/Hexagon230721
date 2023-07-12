@@ -281,7 +281,7 @@ body {
     padding: 30px;
 }
 
-#review-list p {
+#no-review {
     text-align: center;
     font-size: 30px;
     font-weight: bold;
@@ -318,4 +318,40 @@ body {
 
 #review-write input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+.review-box {
+    display: inline-block;
+    width: 25%;
+}
+
+.review-writer-box {
+    background-color: #230f23;
+    padding: 10px;
+}
+
+.review-contents-box {
+    background-color: #321c32;
+    padding: 10px;
+}
+
+#person-icon {
+    float: left;
+    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+}
+
+#wrt-cr {
+    display: inline-block;
+}
+
+#wrt-cr span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.review-contents-box {
+    min-height: 50px;
 }

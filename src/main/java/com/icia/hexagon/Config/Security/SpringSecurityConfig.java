@@ -25,7 +25,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**", "/game", "/game/detail/**", "/upload/**", "/game/discount", "/game/release").permitAll()  // 인증(로그인) 없이 접근 허용
+                .antMatchers("/", "/member/save", "/member/login", "/member/dup-check", "/css/**", "/images/**", "/game", "/game/detail/**", "/upload/**", "/game/discount", "/game/release", "/member/login/").permitAll()  // 인증(로그인) 없이 접근 허용
+                .antMatchers("/member/").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/member/update/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/member/delete/**").authenticated()
                 .anyRequest().authenticated()  // 나머지 요청은 인증된 사용자만 접근 가능
@@ -36,6 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("memberId")  // 사용자 이름 파라미터명
                 .passwordParameter("memberPassword")  // 비밀번호 파라미터명
                 .defaultSuccessUrl("/", false)  // 로그인 성공 시 이동할 URL
+                .failureHandler(new CustomAuthenticationFailureHandler())  // 커스텀 실패 핸들러 지정
                 .permitAll()  // 로그인 페이지에 대한 접근 허용
                 .and()
                 .logout()

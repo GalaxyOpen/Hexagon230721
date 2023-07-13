@@ -97,6 +97,23 @@ public class MemberController {
         }
     }
 
+    // 로그인 실패 화면
+    @GetMapping("/login/")
+    public String failLoginForm(HttpServletRequest request, Model model) {
+        // 실패한 아이디를 세션에서 가져오기
+        String memberId = (String) request.getSession().getAttribute("SPRING_SECURITY_LAST_USERNAME");
+        MemberDTO memberDTO = memberService.findByMemberId(memberId);
+
+        System.out.println("실패한 아이디 정보 = " + memberDTO);
+        if (memberDTO != null) {
+            model.addAttribute("member", memberDTO);
+        } else {
+            model.addAttribute("member", null);
+        }
+
+        return "/memberPages/memberLoginFail";
+    }
+
 
     // 마이페이지
     @GetMapping("/myPage")

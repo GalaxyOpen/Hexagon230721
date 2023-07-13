@@ -16,47 +16,70 @@
 <div id="member-save-section">
     <form action="/member/save" method="post" id="save-form">
         <h2>회원가입</h2>
-        <input type="hidden" name="id">
         <div class="input-area">
             <p>ID</p>
-            <input type="text" name="memberId" placeholder="사용하실 ID를 입력하세요." id="member-Id" onblur="email_check()"><br>
-            <p id="check-result">
-            <span id="correct"
-                  style="color:#00d01b; margin-top: 0px; margin-bottom: 20px; display:none"> 사용가능한 아이디입니다. </span>
-                <span id="incorrect"
-                      style="color:red; margin-top: 0px; margin-bottom: 20px; display:none"> 이미 사용중인 아이디입니다. </span>
+            <input type="text" name="memberId" placeholder="사용하실 ID를 입력하세요." id="member-Id" onblur="id_check()"><br>
+            <p id="id-check-result">
+                <span id="id-check" style="color:#00d01b; margin-top: 0px; margin-bottom: 20px; display:none"> </span>
             </p>
         </div>
+
         <div class="input-area">
             <p>이메일 주소</p>
-            <input type="text" name="memberEmail" placeholder="이메일 주소를 입력하세요." id="member-email" class="form-control"><br>
+            <input type="text" name="memberEmail" placeholder="이메일 주소를 입력하세요." id="member-email" onblur="email_check()"><br>
+            <p id="email-check-result">
+                <span id="email-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+            </p>
         </div>
+
         <div class="input-area">
             <p>비밀번호</p>
-            <input type="text" name="memberPassword" placeholder="비밀번호를 입력하세요."><br>
+            <input type="text" name="memberPassword" placeholder="비밀번호를 입력하세요." id="member-password"
+                   onblur="password_check()"><br>
+            <p id="password-check-result">
+                <span id="password-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+            </p>
+
         </div>
+
         <div class="input-area">
             <p>이름</p>
-            <input type="text" name="memberName" placeholder="이름을 입력하세요."><br>
+            <input type="text" name="memberName" placeholder="이름을 입력하세요." id="member-name" onblur="name_check()"><br>
+            <p id="name-check-result">
+                <span id="name-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+            </p>
         </div>
+
         <div class="input-area">
             <p>생년월일</p>
-            <input type="date" name="memberBirth"><br>
+            <input type="date" name="memberBirth" id="member-brith" onblur="brith_check()"><br>
+            <p id="brith-check-result">
+                <span id="brith-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+            </p>
         </div>
+
         <div class="input-area">
             <p>전화번호</p>
-            <input type="text" name="memberMobile" placeholder="010-****-****"><br>
+            <input type="text" name="memberMobile" placeholder="010-****-****" id="member-mobile"
+                   onblur="mobile_check()"><br>
+            <p id="mobile-check-result">
+                <span id="mobile-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+            </p>
         </div>
-        <input type="submit" class="btn-1" value="회원가입">
+
+        <input type="button" class="btn-1" value="회원가입" onclick="save_form()">
     </form>
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    const email_check = () => {
-        document.querySelector("#correct").style.display = "none";
-        document.querySelector("#incorrect").style.display = "none";
+    const id_check = (callback) => {
+        document.querySelector("#id-check").style.display = "none";
         const id = document.querySelector("#member-Id").value;
+        const idCheck = document.querySelector("#id-check");
+
+        const exp = /^[A-Za-z\d]{5,20}$/;
+
         axios({
             method: "post",
             url: "/member/dup-check",
@@ -64,11 +87,214 @@
                 memberId: id
             }
         }).then(res => {
-            document.querySelector("#correct").style.display = "block";
+            if (id.length == 0) {
+                idCheck.innerHTML = "필수정보 입니다.";
+                idCheck.style.color = "red";
+                idCheck.style.display = "block";
+                if (callback) callback(false);
+            } else if (exp.test(id)) {
+                idCheck.innerHTML = "사용가능한 아이디입니다.";
+                idCheck.style.color = "#00d01b";
+                idCheck.style.display = "block";
+                if (callback) callback(true);
+            } else {
+                idCheck.innerHTML = "5~20자의 영문 숫자만 가능합니다.";
+                idCheck.style.color = "red";
+                idCheck.style.display = "block";
+                if (callback) callback(false);
+            }
         }).catch(err => {
-            document.querySelector("#incorrect").style.display = "block";
+            idCheck.innerHTML = "이미 사용중인 아이디입니다.";
+            idCheck.style.color = "red";
+            idCheck.style.display = "block";
+            if (callback) callback(false);
         });
+    };
 
+    const email_check = () => {
+        const email = document.querySelector("#member-email").value;
+        const emailCheck = document.querySelector("#email-check")
+        const exp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        console.log(email)
+
+
+        if (email.length == 0) {
+            emailCheck.innerHTML = "필수정보 입니다."
+            emailCheck.style.color = "red";
+            emailCheck.style.display = "block";
+            return false;
+        } else if (exp.test(email)) {
+            emailCheck.innerHTML = "사용가능한 이메일입니다."
+            emailCheck.style.color = "#00d01b";
+            emailCheck.style.display = "block";
+            return true;
+        } else {
+            emailCheck.innerHTML = "유효한 이메일 주소가 아닙니다. (ex: aaaa@hexagon.com)";
+            emailCheck.style.color = "red";
+            emailCheck.style.display = "block";
+            return false;
+        }
     }
+
+    const password_check = () => {
+        const password = document.querySelector("#member-password").value;
+        const passwordCheck = document.querySelector("#password-check")
+        const exp = /^(?=.*[a-z])(?=.*\d)(?=.*[-_!#])[A-Za-z\d-_!#]{6,20}$/;
+
+
+        if (password.length == 0) {
+            passwordCheck.innerHTML = "필수정보 입니다."
+            passwordCheck.style.color = "red";
+            passwordCheck.style.display = "block";
+            return false;
+        } else if (exp.test(password)) {
+            passwordCheck.innerHTML = "사용가능한 비밀번호입니다."
+            passwordCheck.style.color = "#00d01b";
+            passwordCheck.style.display = "block";
+            return true;
+        } else {
+            passwordCheck.innerHTML = "6~20자의 영문, 숫자, 특수문자(-_!#)가 필수입니다.";
+            passwordCheck.style.color = "red";
+            passwordCheck.style.display = "block";
+            return false;
+        }
+    }
+
+    const name_check = () => {
+        const name = document.querySelector("#member-name").value;
+        const nameCheck = document.querySelector("#name-check")
+        const exp = /^[A-Za-z가-힣]+$/;
+
+
+        if (name.length == 0) {
+            nameCheck.innerHTML = "필수정보 입니다."
+            nameCheck.style.color = "red";
+            nameCheck.style.display = "block";
+            return false;
+        } else if (exp.test(name)) {
+            nameCheck.innerHTML = "이름이 확인되었습니다!"
+            nameCheck.style.color = "#00d01b";
+            nameCheck.style.display = "block";
+            return true;
+        } else {
+            nameCheck.innerHTML = "한글, 영문 대/소문자를 사용해 주세요. (특수기호, 공백 사용 불가)";
+            nameCheck.style.color = "red";
+            nameCheck.style.display = "block";
+            return false;
+        }
+    }
+
+    const brith_check = () => {
+        const brith = document.querySelector("#member-brith").value;
+        const brithCheck = document.querySelector("#brith-check")
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+
+        const brithNow = `${year}-${month}-${day}`;
+
+        console.log(brithNow)
+
+
+        if (brith.length == 0) {
+            brithCheck.innerHTML = "필수정보 입니다."
+            brithCheck.style.color = "red";
+            brithCheck.style.display = "block";
+            return false;
+        } else if (brith >= brithNow) {
+            brithCheck.innerHTML = "생년월일은 현재 날짜 이전이어야 합니다.";
+            brithCheck.style.color = "red";
+            brithCheck.style.display = "block";
+            return false;
+        } else {
+            brithCheck.innerHTML = "생년월일이 확인되었습니다.";
+            brithCheck.style.color = "#00d01b";
+            brithCheck.style.display = "block";
+            return true;
+        }
+    }
+
+    const mobileInput = document.querySelector("#member-mobile");
+    const mobileCheck = document.querySelector("#mobile-check");
+    const exp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+    mobileInput.addEventListener("input", function () {
+        const mobile = mobileInput.value;
+        const formattedMobile = formatMobile(mobile);
+        mobileInput.value = formattedMobile;
+        validateMobile(formattedMobile);
+    });
+
+    const mobile_check = () => {
+        const mobileInput = document.querySelector("#member-mobile");
+        const mobile = mobileInput.value;
+        const mobileCheck = document.querySelector("#mobile-check");
+        const exp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+        if (mobile.length === 0) {
+            mobileCheck.innerHTML = "필수정보 입니다.";
+            mobileCheck.style.color = "red";
+            mobileCheck.style.display = "block";
+            return false;
+        } else if (exp.test(mobile)) {
+            const formattedMobile = formatMobile(mobile);
+            mobileInput.value = formattedMobile;
+            mobileCheck.innerHTML = "전화번호가 확인되었습니다.";
+            mobileCheck.style.color = "#00d01b";
+            mobileCheck.style.display = "block";
+            return true;
+        } else {
+            mobileCheck.innerHTML = "유효한 전화번호 형식이 아닙니다.";
+            mobileCheck.style.color = "red";
+            mobileCheck.style.display = "block";
+            return false;
+        }
+    };
+
+    const formatMobile = (mobile) => {
+        const digits = mobile.replace(/[^0-9]/g, "");
+        let formattedMobile = "";
+        if (digits.length > 2) {
+            formattedMobile += digits.substring(0, 3);
+            if (digits.length > 3) {
+                formattedMobile += "-" + digits.substring(3, 7);
+                if (digits.length > 7) {
+                    formattedMobile += "-" + digits.substring(7, 11);
+                }
+            }
+        } else {
+            formattedMobile = digits;
+        }
+        return formattedMobile;
+    };
+
+    const save_form = () => {
+        const emailValid = email_check();
+        const passwordValid = password_check();
+        const nameValid = name_check();
+        const brithValid = brith_check();
+        const mobileValid = mobile_check();
+
+        id_check((idValid) => {
+            if (!idValid) {
+                document.querySelector("#member-Id").focus();
+            } else {
+                if (!emailValid) {
+                    document.querySelector("#member-email").focus();
+                } else if (!passwordValid) {
+                    document.querySelector("#member-password").focus();
+                } else if (!nameValid) {
+                    document.querySelector("#member-name").focus();
+                } else if (!brithValid) {
+                    document.querySelector("#member-brith").focus();
+                } else if (!mobileValid) {
+                    document.querySelector("#member-mobile").focus();
+                } else {
+                    document.getElementById("save-form").submit();
+                }
+            }
+        });
+    };
 </script>
 </html>

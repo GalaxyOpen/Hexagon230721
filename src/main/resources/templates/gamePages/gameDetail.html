@@ -196,20 +196,6 @@
                         <p th:text="${gameReview.reviewContents}"></p>
                     </div>
                 </div>
-<!--                <table class="table">-->
-<!--                    <tr>-->
-<!--                        <th>리뷰번호</th>-->
-<!--                        <th>작성자</th>-->
-<!--                        <th>리뷰내용</th>-->
-<!--                        <th>작성날짜</th>-->
-<!--                    </tr>-->
-<!--                    <tr th:each="gameReview:${gameReviewList}">-->
-<!--                        <td th:text="${gameReview.id}"></td>-->
-<!--                        <td th:text="${gameReview.reviewWriter}"></td>-->
-<!--                        <td th:text="${gameReview.reviewContents}"></td>-->
-<!--                        <td th:text="${gameReview.createdAt}"></td>-->
-<!--                    </tr>-->
-<!--                </table>-->
             </div>
         </div>
     </div>
@@ -217,26 +203,6 @@
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    // const review_list = (gameReviewList) => {
-    //     const resultArea = document.querySelector("#review-list");
-    //     let output = "<table class=\"table table-primary\">\n" +
-    //         "    <tr>\n" +
-    //         "        <th>작성번호</th>\n" +
-    //         "        <th>작성자</th>\n" +
-    //         "        <th>리뷰내용</th>\n" +
-    //         "        <th>작성날짜</th>\n" +
-    //         "    </tr>"
-    //     for (let i in gameReviewList) {
-    //         output += "<tr>\n" +
-    //             "                    <td>" + gameReviewList[i].id + "</td>\n" +
-    //             "                    <td>" + gameReviewList[i].reviewWriter + "</td>\n" +
-    //             "                    <td>" + gameReviewList[i].reviewContents + "</td>\n" +
-    //             "                    <td>" + gameReviewList[i].createdAt + "</td>\n" +
-    //             "                </tr>";
-    //     }
-    //     output += "</table>";
-    //     resultArea.innerHTML = output;
-    // }
     const review_list = (gameReviewList) => {
         const resultArea = document.querySelector("#review-list");
 

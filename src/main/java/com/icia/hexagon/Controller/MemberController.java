@@ -49,11 +49,14 @@ public class MemberController {
 
     // 회원가입 아이디 중복체크
     @PostMapping("/dup-check")
-    public ResponseEntity IDCheck(@RequestBody MemberDTO memberDTO){
-        boolean result = memberService.IDCheck(memberDTO.getMemberEmail());
-        if (result) {
-            return  new ResponseEntity<>(HttpStatus.OK);
-        }else{
+    public ResponseEntity IDCheck(@RequestBody MemberDTO memberDTO) {
+        System.out.println("이메일 중복체크 : " + memberDTO);
+        MemberDTO byMemberId = memberService.findByMemberId(memberDTO.getMemberId());
+        System.out.println("이메일 중복체크 결과 : " + byMemberId);
+
+        if (byMemberId == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
@@ -61,18 +64,17 @@ public class MemberController {
     // 회원목록 (관리자만 접근가능)
     @Transactional
     @GetMapping
-    public String findAll(@PageableDefault(page=1)Pageable pageable,
-                          @RequestParam(value="type", required=false, defaultValue = "")String type,
-                          @RequestParam(value="q", required = false, defaultValue = "")String q,
-                          Model model,
-                          @AuthenticationPrincipal User user){
+    public String findAll(@PageableDefault(page = 1) Pageable pageable,
+                          @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                          @RequestParam(value = "q", required = false, defaultValue = "") String q,
+                          Model model) {
         Page<MemberDTO> memberDTOPage = memberService.paging(pageable, type, q);
-        if(memberDTOPage.getTotalElements()==0){
+        if (memberDTOPage.getTotalElements() == 0) {
             model.addAttribute("memberList", null);
-        }else{
+        } else {
             model.addAttribute("memberList", memberDTOPage);
         }
-        int blockLimit=5;
+        int blockLimit = 5;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < memberDTOPage.getTotalPages()) ? startPage + blockLimit - 1 : memberDTOPage.getTotalPages();
 
@@ -80,17 +82,13 @@ public class MemberController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
-        if(user.getUsername().equals("admin")) {
-            return "/memberPages/memberList";
-        } else {
-            return "redirect:/";
-        }
+        return "/memberPages/memberList";
     }
 
     // 로그인 화면
     @GetMapping("/login")
-    public String loginForm(@AuthenticationPrincipal User user){
-        if(user != null) {
+    public String loginForm(@AuthenticationPrincipal User user) {
+        if (user != null) {
             return "redirect:/";
         } else {
             return "/memberPages/memberLogin";
@@ -99,7 +97,7 @@ public class MemberController {
 
     // 로그인 실패 화면
     @GetMapping("/login/")
-    public String failLoginForm(HttpServletRequest request, Model model) {
+    public String errorLoginForm(HttpServletRequest request, Model model) {
         // 실패한 아이디를 세션에서 가져오기
         String memberId = (String) request.getSession().getAttribute("SPRING_SECURITY_LAST_USERNAME");
         MemberDTO memberDTO = memberService.findByMemberId(memberId);

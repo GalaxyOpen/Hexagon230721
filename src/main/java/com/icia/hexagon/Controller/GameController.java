@@ -3,6 +3,7 @@ package com.icia.hexagon.Controller;
 import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.GameReviewDTO;
 import com.icia.hexagon.DTO.MemberDTO;
+import com.icia.hexagon.DTO.ThumbnailDTO;
 import com.icia.hexagon.Service.GameReviewService;
 import com.icia.hexagon.Service.GameService;
 import com.icia.hexagon.Service.MemberService;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -47,9 +49,17 @@ public class GameController {
                           @RequestParam(value="q", required = false, defaultValue = "")String q,
                           Model model){
         Page<GameDTO> gameDTOS = gameService.paging(pageable, type, q);
+        List<GameDTO> gameList = gameDTOS.getContent();
+        List<ThumbnailDTO> thumbnailList = new ArrayList<>();
+
+        for (GameDTO game : gameList) {
+            ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
+            thumbnailList.add(thumbnailDTO);
+        }
         if(gameDTOS.getTotalElements()==0){
             model.addAttribute("gameList",null);
         }else{
+            model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
         }
         int blockLimit = 3;

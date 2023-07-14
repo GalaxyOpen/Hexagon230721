@@ -1,6 +1,7 @@
 package com.icia.hexagon.Entity;
 
 import com.icia.hexagon.DTO.GameDTO;
+import com.icia.hexagon.DTO.ThumbnailDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,6 +56,9 @@ public class GameEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
+
+    @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ThumbnailEntity> thumbnailEntities = new ArrayList<>();
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<GameFileEntity> gameFileEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -81,6 +85,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
         gameEntity.setFileAttached(0);
+
         return gameEntity;
     }
     public static GameEntity toSaveEntityWithFile(GameDTO gameDTO){

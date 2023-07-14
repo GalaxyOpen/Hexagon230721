@@ -12,6 +12,11 @@
             <a href="/"><img src="/images/로고%20가로ver.png" width="300" height="70"></a>
         </li>
         <li class="search-area" id="search-area">
+            <select id="type">
+                <option value="title">제목</option>
+                <option value="creator">제작자</option>
+                <option value="distributor">배급사</option>
+            </select>
             <input type="text" placeholder="검색어 입력" id="q">
             <button class="btn-1-search" onclick="search_fx()">검색</button>
         </li>
@@ -30,52 +35,59 @@
             <a th:unless="${#httpServletRequest.remoteUser != null}" href="/" style="display:none;">장바구니</a>
         </li>
     </ul>
-    <script th:inline="javascript">
-        // 드롭다운 메뉴 만들기
-        // const dropdown = () => {
-        //     document.getElementById("dropdown").classList.toggle("show");
-        // }
-        //
-        // window.onclick = function (event) {
-        //     if (!event.target.matches('.drop-btn')) {
-        //         let dropdowns = document.getElementsByClassName("dropdown-contents");
-        //         let i;
-        //         for (i = 0; i < dropdowns.length; i++) {
-        //             let openDropdown = dropdowns[i];
-        //             if (openDropdown.classList.contains('show')) {
-        //                 openDropdown.classList.remove('show');
-        //             }
-        //         }
-        //     }
-        // }
-        // <!--
-        // const loginNav = document.getElementById("login-nav");-->
-        // <!--
-        // const signUpNav = document.getElementById("sign-up-nav");-->
-        // <!--
-        // const rightNav3 = document.getElementById("right-nav3");-->
-        // <!--
-        // const searchArea = document.getElementById("search-area");-->
-        // <!--
-        // const loginId = /*[[${#httpServletRequest.remoteUser != null}]]*/ false;-->
-
-
-        // if (loginId) {-->
-        //     console.log(loginId);-->
-        //     searchArea.style.display = "block";-->
-        //     signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";-->
-        //     rightNav3.style.display = "inline-block";-->
-        // } else {-->
-        //     console.log(loginId);-->
-        //     loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";-->
-        //     signUpNav.innerHTML = "<a href='/member/save'>" + "회원가입" + "</a>";-->
-        // }-->
-
-        // const search_fx = () => {-->
-        //-->
-        // }-->
-
+    <script>
+        const search_fx = () => {
+            const type = document.querySelector('#type').value;
+            const q = document.querySelector('#q').value;
+            location.href = "/game?type="+type+"&q="+q;
+        }
     </script>
+<!--    <script th:inline="javascript">-->
+<!--        // 드롭다운 메뉴 만들기-->
+<!--        // const dropdown = () => {-->
+<!--        //     document.getElementById("dropdown").classList.toggle("show");-->
+<!--        // }-->
+<!--        //-->
+<!--        // window.onclick = function (event) {-->
+<!--        //     if (!event.target.matches('.drop-btn')) {-->
+<!--        //         let dropdowns = document.getElementsByClassName("dropdown-contents");-->
+<!--        //         let i;-->
+<!--        //         for (i = 0; i < dropdowns.length; i++) {-->
+<!--        //             let openDropdown = dropdowns[i];-->
+<!--        //             if (openDropdown.classList.contains('show')) {-->
+<!--        //                 openDropdown.classList.remove('show');-->
+<!--        //             }-->
+<!--        //         }-->
+<!--        //     }-->
+<!--        // }-->
+<!--        // &lt;!&ndash;-->
+<!--        // const loginNav = document.getElementById("login-nav");&ndash;&gt;-->
+<!--        // &lt;!&ndash;-->
+<!--        // const signUpNav = document.getElementById("sign-up-nav");&ndash;&gt;-->
+<!--        // &lt;!&ndash;-->
+<!--        // const rightNav3 = document.getElementById("right-nav3");&ndash;&gt;-->
+<!--        // &lt;!&ndash;-->
+<!--        // const searchArea = document.getElementById("search-area");&ndash;&gt;-->
+<!--        // &lt;!&ndash;-->
+<!--        // const loginId = /*[[${#httpServletRequest.remoteUser != null}]]*/ false;&ndash;&gt;-->
+
+
+<!--        // if (loginId) {&ndash;&gt;-->
+<!--        //     console.log(loginId);&ndash;&gt;-->
+<!--        //     searchArea.style.display = "block";&ndash;&gt;-->
+<!--        //     signUpNav.innerHTML = "<a href='/'>" + "<i class=\'bi bi-person-circle\'>" + "</i>" + "</a>";&ndash;&gt;-->
+<!--        //     rightNav3.style.display = "inline-block";&ndash;&gt;-->
+<!--        // } else {&ndash;&gt;-->
+<!--        //     console.log(loginId);&ndash;&gt;-->
+<!--        //     loginNav.innerHTML = "<a href='/member/login'>" + "로그인" + "</a>";&ndash;&gt;-->
+<!--        //     signUpNav.innerHTML = "<a href='/member/save'>" + "회원가입" + "</a>";&ndash;&gt;-->
+<!--        // }&ndash;&gt;-->
+
+<!--        // const search_fx = () => {&ndash;&gt;-->
+<!--        //&ndash;&gt;-->
+<!--        // }&ndash;&gt;-->
+
+<!--    </script>-->
 </div>
 </body>
 </html>

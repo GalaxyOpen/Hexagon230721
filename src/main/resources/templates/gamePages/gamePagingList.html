@@ -22,20 +22,20 @@
     <div class="mySlides">
         <div class="numbertext">1 / 3</div>
         <a href="/game/discount">
-            <img src="/images/bannerImg-1.png" style="width:100%; height: 525px; object-fit: fill">
+            <img src="/images/dcEvent.png" style="width:100%; height: 525px; object-fit: fill" title="여름 할인 이벤트 둘러보기">
         </a>
     </div>
 
     <div class="mySlides">
         <div class="numbertext">2 / 3</div>
         <a href="/game/release">
-            <img src="/images/bannerImg-3.jpg" style="width:100%; height: 525px; object-fit: fill">
+            <img src="/images/newGames.png" style="width:100%; height: 525px; object-fit: fill" title="이 달의 신작 둘러보기">
         </a>
     </div>
 
     <div class="mySlides">
         <div class="numbertext">3 / 3</div>
-        <img src="/images/bannerImg-2.png" style="width:100%; height: 525px; object-fit: fill">
+        <img src="/images/bannerEtc.jpg" style="width:100%; height: 525px; object-fit: fill">
     </div>
 
     <!-- Next and previous buttons -->
@@ -104,7 +104,7 @@
                 </li>
                 <li th:class="${gameList.first} ? 'none'" : class="page-item">
                     <a class="page-link"
-                       th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, tyep=${type}, q=${q})}">
+                       th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, type=${type}, q=${q})}">
                         <span><</span>
                     </a>
                 </li>

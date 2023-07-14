@@ -29,10 +29,12 @@ public class GameDTO {
     private int discountRate;
     private Long salesPrice;
     private String createdAt;
+    private MultipartFile thumbnail;
     private List<MultipartFile> gameFile;
-    private int fileAttached;
     private List<String> originalFileName;
     private List<String> storedFileName;
+    private int fileAttached;
+
     private Long memberId;
     private String youtubeUrl;
 
@@ -50,6 +52,7 @@ public class GameDTO {
         gameDTO.setDiscountRate(gameEntity.getDiscountRate());
         gameDTO.setSalesPrice(gameEntity.getSalesPrice());
         gameDTO.setYoutubeUrl(gameEntity.getYoutubeUrl());
+        gameDTO.setThumbnail(gameDTO.getThumbnail());
 
         if(gameEntity.getFileAttached()==1){
             gameDTO.setFileAttached(1);
@@ -62,7 +65,7 @@ public class GameDTO {
             }
             gameDTO.setOriginalFileName(originalFileNameList);
             gameDTO.setStoredFileName(storedFileNameList);
-        }else{
+        } else {
             gameDTO.setFileAttached(0);
         }
         return gameDTO;

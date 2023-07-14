@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -51,7 +52,7 @@ public class GameService {
     }
     public Page<GameDTO> paging(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber()-1;
-        int pageLimit = 3;
+        int pageLimit = 10;
 
         Page<GameEntity> gameEntities = null;
         if(type.equals("title")){
@@ -73,8 +74,11 @@ public class GameService {
                 .gameCreator(gameEntity.getGameCreator())
                 .gameGrade(gameEntity.getGameGrade())
                 .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                .releasePrice(gameEntity.getReleasePrice())
+                .discountRate(gameEntity.getDiscountRate())
                 .salesPrice(gameEntity.getSalesPrice())
                 .build());
+
         return gameDTOS;
     }
 
@@ -101,6 +105,8 @@ public class GameService {
                 .gameCreator(gameEntity.getGameCreator())
                 .gameGrade(gameEntity.getGameGrade())
                 .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                .releasePrice(gameEntity.getReleasePrice())
+                .discountRate(gameEntity.getDiscountRate())
                 .salesPrice(gameEntity.getSalesPrice())
                 .build());
 
@@ -130,6 +136,8 @@ public class GameService {
                     .gameCreator(gameEntity.getGameCreator())
                     .gameGrade(gameEntity.getGameGrade())
                     .createdAt(UtilClass.dateFormat(gameEntity.getCreatedAt()))
+                    .releasePrice(gameEntity.getReleasePrice())
+                    .discountRate(gameEntity.getDiscountRate())
                     .salesPrice(gameEntity.getSalesPrice())
                     .build();
 

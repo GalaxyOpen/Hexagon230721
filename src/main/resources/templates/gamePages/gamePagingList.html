@@ -46,10 +46,10 @@
     <span class="dot" onclick="currentSlide(3)"></span>
 </div>
 
-<div id="game-list-section">
-    <div id="paging-list">
+<div class="game-list-section">
+    <div class="paging-list">
         <h3> 모든 게임 </h3>
-        <div th:if="${gameList != null}" id="game-list">
+        <div th:if="${gameList != null}" class="game-list">
             <div th:each="game: ${gameList}" class="game-card">
                 <div class="game-thumbnail">
 
@@ -120,10 +120,270 @@
             </ul>
         </div>
     </div>
+
+    <!--    "RTS" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> RTS </h3>
+        <div th:if="${gameList != null}" th:with="gameListRTS=${gameList.?[gameGenre == '0']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListRTS}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    "슈팅" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> 슈팅/FPS </h3>
+        <div th:if="${gameList != null}" th:with="gameListFps=${gameList.?[gameGenre == '1']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListFps}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    "RPG" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> RPG </h3>
+        <div th:if="${gameList != null}" th:with="gameListRpg=${gameList.?[gameGenre == '6']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListRpg}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--    "퍼즐" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> 퍼즐 </h3>
+        <div th:if="${gameList != null}" th:with="gameListPz=${gameList.?[gameGenre == '2']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListPz}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    "공포" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> 공포 </h3>
+        <div th:if="${gameList != null}" th:with="gameListHr=${gameList.?[gameGenre == '3']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListHr}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    "액션" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> 액션 </h3>
+        <div th:if="${gameList != null}" th:with="gameListAc=${gameList.?[gameGenre == '4']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListAc}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    "모험" 게임 리스트 출력 (5개)-->
+    <div class="paging-list">
+        <h3> 모험 </h3>
+        <div th:if="${gameList != null}" th:with="gameListExp=${gameList.?[gameGenre == '5']}" class="game-list">
+
+            <div th:each="game, iterStat: ${gameListExp}" th:if="${iterStat.index} < 5" class="game-card">
+                <div class="game-thumbnail">
+
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div th:unless="${gameList!=null}">
         <h1>검색결과가 없습니다!!</h1>
     </div>
-</div>
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>

@@ -132,7 +132,6 @@
     <div class="paging-list">
         <h3> RTS </h3>
         <div th:if="${gameList != null}" th:with="gameListRTS=${gameList.?[gameGenre == '0']}" class="game-list">
-
             <div th:each="game, iterStat: ${gameListRTS}" th:if="${iterStat.index} < 5" class="game-card">
                 <div class="game-thumbnail">
                     <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">

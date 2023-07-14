@@ -58,11 +58,13 @@ public class GameController {
         }
         if(gameDTOS.getTotalElements()==0){
             model.addAttribute("gameList",null);
+            System.out.println("gameDTOS = " + gameDTOS);
         }else{
             model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
+            System.out.println("gameDTOS = " + gameDTOS);
         }
-        int blockLimit = 3;
+        int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
 
@@ -70,6 +72,7 @@ public class GameController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
+
         return "/gamePages/gamePagingList";
     }
 
@@ -86,7 +89,7 @@ public class GameController {
         }else{
             model.addAttribute("gameList", gameDTOS);
         }
-        int blockLimit = 3;
+        int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
 
@@ -109,7 +112,7 @@ public class GameController {
         } else {
             model.addAttribute("gameList", gameDTOS);
         }
-        int blockLimit = 3;
+        int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
         model.addAttribute("startPage", startPage);

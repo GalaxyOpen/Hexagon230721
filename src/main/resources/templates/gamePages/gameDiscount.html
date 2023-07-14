@@ -1,75 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/gameNav.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/memberList.css}">
+    <link rel="stylesheet" th:href="@{/css/gameList.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-<div id="section">
-  <div class="container" id="paging-list">
-    <div th:if="${gameList !=null}" id="game-list">
-      <table class="table-primary">
-        <thead>
-        <tr>
-          <th scope="col">등록번호</th>
-          <th scope="col">게임장르</th>
-          <th scope="col">게임제목</th>
-          <th scope="col">크리에이터</th>
-          <th scope="col">판매가격</th>
-          <th scope="col">할인률</th>
-          <th scope="col">출시일</th>
+<div th:replace="/components/header :: header"></div>
+<div th:replace="/components/gameNav :: gameNav"></div>
+<div class="game-list-section">
+    <div class="paging-list">
+        <h3> 🌞 뜨거운 특가로 당신을 초대합니다! </h3>
+        <div th:if="${gameList != null}" class="game-list">
+            <div th:each="game: ${gameList}" class="game-card">
+                <div class="game-thumbnail">
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="game: ${gameList}">
-          <td th:text="${game.id}"></td>
-          <td th:text="${game.gameGenre}"></td>
-          <td><a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
-                 th:text="${game.gameTitle}">제목</a></td>
-          <td th:text="${game.gameCreator}"></td>
-          <td th:text="${game.salesPrice}"></td>
-          <td th:text="${game.discountRate} + '%'"></td>
-          <td th:text="${game.createdAt}"></td>
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                    <p th:if="${game.gameGenre == '0'}">RTS</p>
+                    <p th:if="${game.gameGenre == '1'}">슈팅</p>
+                    <p th:if="${game.gameGenre == '2'}">퍼즐</p>
+                    <p th:if="${game.gameGenre == '3'}">공포</p>
+                    <p th:if="${game.gameGenre == '4'}">액션</p>
+                    <p th:if="${game.gameGenre == '5'}">모험</p>
+                    <p th:if="${game.gameGenre == '6'}">RPG</p>
+                </div>
 
-        </tr>
-        </tbody>
-      </table>
-      <div class="container">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" th:href="@{/game(page=1, type=${type}, q=${q})}">
-              <span>첫 페이지</span>
-            </a>
-          </li>
-          <li th:class="${gameList.first} ? 'disabled'" class="page-item">
-            <a class="page-link"
-               th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, tyep=${type}, q=${q})}">
-              <span><</span>
-            </a>
-          </li>
-          <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
-              th:class="${page == gameList.number+1}?'page-item active'" class="page-item">
-            <a th:href="@{/game(page=${page}, type=${type}, q=${q})}" class="page-link"
-               th:text="${page}"></a>
-          </li>
-          <li th:class="${gameList.last}?'disabled'">
-            <a class="page-link"
-               th:href="${gameList.last}?'#':@{/game(page=${gameList.number+2}, type=${type}, q=${q})}">
-              <span>&gt;</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" th:href="@{/game(page=${gameList.totalPages}, type=${type}, q=${q})}">
-              <span>끝 페이지</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="page-container">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/game/discount(page=1, type=${type}, q=${q})}">
+                        <span>첫 페이지</span>
+                    </a>
+                </li>
+                <li th:class="${gameList.first} ? 'none'" : class="page-item">
+                    <a class="page-link"
+                       th:href="${gameList.first} ? '#' : @{/game/discount(page=${gameList.number}, tyep=${type}, q=${q})}">
+                        <span><</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                    th:class="${page == gameList.number+1}?'page-item-active'" class="page-item">
+                    <a th:href="@{/game/discount(page=${page}, type=${type}, q=${q})}" class="page-link"
+                       th:text="${page}"></a>
+                </li>
+                <li th:class="${gameList.last}?'none'">
+                    <a class="page-link"
+                       th:href="${gameList.last}?'#':@{/game/discount(page=${gameList.number+2}, type=${type}, q=${q})}">
+                        <span>&gt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/game/discount(page=${gameList.totalPages}, type=${type}, q=${q})}">
+                        <span>끝 페이지</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+
     <div th:unless="${gameList!=null}">
-      <h1>검색결과가 없습니다!!</h1>
+        <h1>검색결과가 없습니다!!</h1>
     </div>
-  </div>
+</div>
+</div>
 </div>
 
 </body>

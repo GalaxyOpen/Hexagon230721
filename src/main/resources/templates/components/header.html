@@ -22,7 +22,7 @@
         </li>
         <li class="right" id="sign-up-nav">
             <a th:if="${#httpServletRequest.remoteUser != null}" href="/member/detail">
-                <span th:value="${session.loginId}"></span> <i class='bi bi-person-circle'></i>
+                <span th:value="${session.loginId}"></span> <i class='bi bi-person-circle' title="마이페이지"></i>
             </a>
             <a th:unless="${#httpServletRequest.remoteUser != null}" href="/member/save"> 회원가입 </a>
         </li>

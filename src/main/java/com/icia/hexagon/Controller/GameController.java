@@ -78,17 +78,26 @@ public class GameController {
 
     // 게임 출시일(최근 **일 이내) 목록
     @GetMapping("/release")
-    public String Release(@PageableDefault(page=1) Pageable pageable,
-                          @RequestParam(value="type", required = false, defaultValue = "")String type,
-                          @RequestParam(value="q", required = false, defaultValue = "")String q,
-                          Model model){
+    public String release(@PageableDefault(page = 1) Pageable pageable,
+                          @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                          @RequestParam(value = "q", required = false, defaultValue = "") String q,
+                          Model model) {
         Page<GameDTO> gameDTOS = gameService.release(pageable, type, q);
 
-        if(gameDTOS.getTotalElements()==0){
-            model.addAttribute("gameList",null);
-        }else{
+        if (gameDTOS.getTotalElements() == 0) {
+            model.addAttribute("gameList", null);
+        } else {
+            List<ThumbnailDTO> thumbnailList = new ArrayList<>();
+
+            for (GameDTO game : gameDTOS.getContent()) {
+                ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
+                thumbnailList.add(thumbnailDTO);
+            }
+
+            model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
         }
+
         int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
@@ -97,29 +106,39 @@ public class GameController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
+
         return "/gamePages/gameRelease";
     }
 
-    // 할인 게임 리스트
     @GetMapping("/discount")
-    public String discount(@PageableDefault(page = 1) Pageable pageable,
+    public String discount(@PageableDefault(page = 1, size = 10) Pageable pageable,
                            @RequestParam(value = "type", required = false, defaultValue = "") String type,
                            @RequestParam(value = "q", required = false, defaultValue = "") String q,
                            Model model) {
         Page<GameDTO> gameDTOS = gameService.discount(pageable, type, q);
-        if (gameDTOS.getTotalElements() == 0) {
-            model.addAttribute("gameList", null);
-        } else {
-            model.addAttribute("gameList", gameDTOS);
+
+        if (gameDTOS.hasContent()) {
+            List<ThumbnailDTO> thumbnailList = new ArrayList<>();
+
+            for (GameDTO game : gameDTOS.getContent()) {
+                ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
+                thumbnailList.add(thumbnailDTO);
+            }
+
+            model.addAttribute("thumbnailList", thumbnailList);
         }
+
+        model.addAttribute("gameList", gameDTOS);
+
         int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
-        GameDTO firstGame = gameDTOS.getContent().get(0);
+
         return "/gamePages/gameDiscount";
     }
 

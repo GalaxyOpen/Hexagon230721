@@ -21,7 +21,7 @@
 <body>
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
-<div id="game-save-section">
+<div id="game-save-section" style="margin-top: 200px">
     <div id="saveForm">
         <form action="/game/update/{id}" method="post" enctype="multipart/form-data" id="game-update-form">
             <h2>게임정보 수정</h2>

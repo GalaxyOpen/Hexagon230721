@@ -15,7 +15,7 @@
 </head>
 <body>
 <div th:replace="/components/header :: header"></div>
-<div id="point-list-section">
+<div id="point-list-section" style="margin-top: 150px">
     <h2><span th:text="${session.loginId}"></span><span> 님의 포인트 내역</span></h2>
     <div class="container" id="paging-list">
         <div th:if="${pointList !=null}" id="member-list">

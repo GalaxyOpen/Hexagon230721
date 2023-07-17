@@ -5,6 +5,10 @@
     border-collapse: collapse;
 }
 
+body {
+    margin-top: 150px;
+}
+
 #header {
     top: 0;
     width: 100%;

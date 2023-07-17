@@ -72,7 +72,7 @@ public class GameEntity extends BaseEntity {
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SalesEntity> salesEntityList = new ArrayList<>();
 
-    public static GameEntity toSaveEntity(GameDTO gameDTO) {
+    public static GameEntity toSaveEntity(GameDTO gameDTO, MemberEntity memberEntity) {
         GameEntity gameEntity = new GameEntity();
         gameEntity.setGameTitle(gameDTO.getGameTitle());
         gameEntity.setGameGenre(gameDTO.getGameGenre());
@@ -84,11 +84,12 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(0);
 
         return gameEntity;
     }
-    public static GameEntity toSaveEntityWithFile(GameDTO gameDTO){
+    public static GameEntity toSaveEntityWithFile(GameDTO gameDTO, MemberEntity memberEntity){
         GameEntity gameEntity = new GameEntity();
         gameEntity.setGameTitle(gameDTO.getGameTitle());
         gameEntity.setGameGenre(gameDTO.getGameGenre());
@@ -100,11 +101,12 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(1);
         return gameEntity;
     }
 
-    public static GameEntity toUpdateEntity(GameDTO gameDTO){
+    public static GameEntity toUpdateEntity(GameDTO gameDTO, MemberEntity memberEntity){
         GameEntity gameEntity = new GameEntity();
         gameEntity.setId(gameDTO.getId());
         gameEntity.setGameTitle(gameDTO.getGameTitle());
@@ -117,9 +119,10 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setMemberEntity(memberEntity);
         return gameEntity;
     }
-    public static GameEntity toUpdateWithFileEntity(GameDTO gameDTO){
+    public static GameEntity toUpdateWithFileEntity(GameDTO gameDTO, MemberEntity memberEntity){
         GameEntity gameEntity = new GameEntity();
         gameEntity.setId(gameDTO.getId());
         gameEntity.setGameTitle(gameDTO.getGameTitle());
@@ -132,6 +135,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(1);
         return gameEntity;
     }

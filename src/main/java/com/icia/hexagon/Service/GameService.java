@@ -1,9 +1,12 @@
 package com.icia.hexagon.Service;
 
 import com.icia.hexagon.DTO.GameDTO;
+import com.icia.hexagon.DTO.GameFileDTO;
+import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.DTO.ThumbnailDTO;
 import com.icia.hexagon.Entity.GameEntity;
 import com.icia.hexagon.Entity.GameFileEntity;
+import com.icia.hexagon.Entity.MemberEntity;
 import com.icia.hexagon.Entity.ThumbnailEntity;
 import com.icia.hexagon.Repository.GameFileRepository;
 import com.icia.hexagon.Repository.GameRepository;
@@ -34,14 +37,14 @@ public class GameService {
     private final ThumbnailRepository thumbnailRepository;
 
     @Transactional
-    public Long save(GameDTO gameDTO) throws IOException {
+    public Long save(GameDTO gameDTO, MemberDTO memberDTO) throws IOException {
         GameEntity gameEntity;
         if (gameDTO.getGameFile() == null || gameDTO.getGameFile().get(0).isEmpty()) {
             // 파일이 없는 경우
-            gameEntity = GameEntity.toSaveEntity(gameDTO);
+            gameEntity = GameEntity.toSaveEntity(gameDTO, MemberEntity.toUpdateEntity(memberDTO));
         } else {
             // 게임 파일이 있는 경우
-            gameEntity = GameEntity.toSaveEntityWithFile(gameDTO);
+            gameEntity = GameEntity.toSaveEntityWithFile(gameDTO, MemberEntity.toUpdateEntity(memberDTO));
         }
 
         if (gameDTO.getThumbnail() != null && !gameDTO.getThumbnail().isEmpty()) {
@@ -83,17 +86,18 @@ public class GameService {
         int page = pageable.getPageNumber()-1;
         int pageLimit = 20;
 
+
         Page<GameEntity> gameEntities = null;
-        if(type.equals("title")){
-            gameEntities = gameRepository.findByGameTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
-        }else if(type.equals("distr")){
-            gameEntities = gameRepository.findByGameDistrContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        if (type.equals("title")) {
+            gameEntities = gameRepository.findByGameTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else if (type.equals("distr")) {
+            gameEntities = gameRepository.findByGameDistrContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
             // 배급사로 검색
-        }else if(type.equals("creater")){
-            gameEntities = gameRepository.findByGameCreatorContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        } else if (type.equals("creater")) {
+            gameEntities = gameRepository.findByGameCreatorContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
             // 제작사로 검색
-        }else{
-            gameEntities = gameRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        } else {
+            gameEntities = gameRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
         }
         Page<GameDTO> gameDTOS = gameEntities.map(gameEntity -> GameDTO.builder()
@@ -180,23 +184,27 @@ public class GameService {
     }
 
     public GameDTO findById(Long id) {
-        GameEntity gameEntity = gameRepository.findById(id).orElseThrow(()->new NoSuchElementException());
+        GameEntity gameEntity = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return GameDTO.toDTO(gameEntity);
     }
-    public Long update(GameDTO gameDTO) throws IOException {
+
+    @Transactional
+    public Long update(GameDTO gameDTO, MemberDTO memberDTO) throws IOException {
         GameEntity gameEntity = gameRepository.findById(gameDTO.getId()).orElse(null);
         if (gameEntity == null) {
             return null;
         }
 
-        // 이전에 업로드된 파일 목록을 가져옵니다.
-        List<GameFileEntity> beforeGameFiles = gameEntity.getGameFileEntityList();
-
-        // 이전 파일들을 삭제합니다.
-        deleteBeforeGameFiles(beforeGameFiles);
-
         // 파일 업로드 수행
-        if (gameDTO.getGameFile() != null && !gameDTO.getGameFile().isEmpty()) {
+        List<GameFileEntity> newGameFiles = new ArrayList<>();
+
+        if (gameDTO.getGameFile() != null && !gameDTO.getGameFile().get(0).isEmpty()) {
+            // 기존 파일 목록을 삭제합니다.
+            for (GameFileEntity gameFileEntity : gameEntity.getGameFileEntityList()) {
+                deleteGameFile(gameFileEntity);
+            }
+
+            // 새로운 게임 파일 목록을 생성합니다.
             for (MultipartFile gameFile : gameDTO.getGameFile()) {
                 String originalFileName = gameFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
@@ -205,34 +213,61 @@ public class GameService {
 
                 GameFileEntity gameFileEntity = GameFileEntity.toSaveGameFileEntity(gameEntity, originalFileName, storedFileName);
                 gameFileRepository.save(gameFileEntity);
-                gameEntity.getGameFileEntityList().add(gameFileEntity);
+                newGameFiles.add(gameFileEntity);
             }
+        } else {
+            // 파일을 등록하지 않은 경우, 기존 파일 목록을 유지합니다.
+            newGameFiles.addAll(gameEntity.getGameFileEntityList());
         }
+
+        // 기존 파일 목록을 새로운 파일 목록으로 갱신합니다.
+        gameEntity.getGameFileEntityList().clear();
+        gameEntity.getGameFileEntityList().addAll(newGameFiles);
+
+        // 썸네일 업로드 수행
+        ThumbnailEntity newThumbnailEntity = null;
+        if (gameDTO.getThumbnail() != null && !gameDTO.getThumbnail().isEmpty()) {
+            MultipartFile thumbnailFile = gameDTO.getThumbnail();
+            String thumbnailOriginalFileName = thumbnailFile.getOriginalFilename();
+            String thumbnailStoredFileName = System.currentTimeMillis() + "_" + thumbnailOriginalFileName;
+            String thumbnailSavePath = "D:\\Hexagon\\" + thumbnailStoredFileName;
+            thumbnailFile.transferTo(new File(thumbnailSavePath));
+
+            newThumbnailEntity = new ThumbnailEntity();
+            newThumbnailEntity.setOriginalFileName(thumbnailOriginalFileName);
+            newThumbnailEntity.setStoredFileName(thumbnailStoredFileName);
+
+            // 기존의 썸네일 엔티티를 삭제합니다.
+            ThumbnailEntity existingThumbnail = gameEntity.getThumbnailEntities().stream().findFirst().orElse(null);
+            if (existingThumbnail != null) {
+                deleteThumbnail(existingThumbnail);
+            }
+
+            // 새로운 썸네일 엔티티를 저장합니다.
+            gameEntity.getThumbnailEntities().clear();
+            gameEntity.getThumbnailEntities().add(newThumbnailEntity);
+            newThumbnailEntity.setGameEntity(gameEntity);
+            thumbnailRepository.save(newThumbnailEntity);
+        }
+
         // 필드 값 업데이트
-        GameEntity updatedGameEntity = GameEntity.toUpdateWithFileEntity(gameDTO);
+        GameEntity updatedGameEntity = GameEntity.toUpdateWithFileEntity(gameDTO, MemberEntity.toUpdateEntity(memberDTO));
         gameRepository.save(updatedGameEntity);
 
         return updatedGameEntity.getId();
     }
 
-    private void deleteBeforeGameFiles(List<GameFileEntity> beforeGameFiles){
-        if(beforeGameFiles != null && !beforeGameFiles.isEmpty()){
-            for(GameFileEntity gameFile : beforeGameFiles){
-                String filePath = "D:\\Hexagon\\"+gameFile.getStoredFileName();
-                File file = new File(filePath);
-                if(file.exists()){
-                    if(file.delete()){
-                        System.out.println("파일 삭제 완료"+filePath);
-                        // 데이터베이스에서 파일 정보 삭제
-                        gameFileRepository.delete(gameFile);
-                    }else{
-                        System.out.println("파일 삭제 실패"+filePath);
-                    }
-
-                }
-            }
-        }
+    private void deleteGameFile(GameFileEntity gameFileEntity) {
+        // 기존 파일을 삭제하는 로직을 구현합니다.
+        gameFileRepository.delete(gameFileEntity);
     }
+
+    private void deleteThumbnail(ThumbnailEntity thumbnailEntity) {
+        // 기존 썸네일을 삭제하는 로직을 구현합니다.
+        thumbnailRepository.delete(thumbnailEntity);
+    }
+
+
     @Transactional
     public void delete(Long id) {
         gameRepository.deleteById(id);
@@ -242,5 +277,11 @@ public class GameService {
     public ThumbnailDTO GameThumbnails(Long gameId) {
         Optional<ThumbnailEntity> gameEntity = thumbnailRepository.findByGameEntity_Id(gameId);
         return ThumbnailDTO.toDTO(gameEntity.get());
+    }
+
+    public GameFileDTO fileByGameId(Long id) {
+        GameFileEntity gameFiles = gameFileRepository.findByGameEntity_Id(id).get();
+        GameFileDTO gameFileDTO = GameFileDTO.toDTO(gameFiles);
+        return gameFileDTO;
     }
 }

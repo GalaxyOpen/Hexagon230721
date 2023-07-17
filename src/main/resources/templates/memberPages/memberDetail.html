@@ -13,7 +13,7 @@
 </head>
 <body>
 <div th:replace="/components/header :: header"></div>
-<div id="member-detail-section">
+<div id="member-detail-section" style="margin-top: 150px">
     <table class="top-table">
         <tr>
             <th>회원정보</th>
@@ -85,7 +85,7 @@
         <tr>
             <th id="charge-list">
                 <button class="btn-3" onclick="point_charge()">충전하기</button>
-                <button class="btn-3" onclick="member_update()">내역보기</button>
+                <button class="btn-3" onclick="point_history()">내역보기</button>
             </th>
         </tr>
     </table>
@@ -118,7 +118,15 @@
     };
 
     const point_charge = () => {
-        location.href = "/point/charge";
+        // location.href = "/point/charge";
+        window.open(
+            "/point/charge",
+            "HEXAGON 포인트 충전",
+            "width=530, height=625, top=50, left=50"
+        )
+    }
+    const point_history = () => {
+        location.href = "/point/history";
     }
 
 </script>

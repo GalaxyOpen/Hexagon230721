@@ -17,25 +17,25 @@
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
 <!-- 상단 배너 이미지 -->
-<div class="slideshow-container">
+<div class="slideshow-container" style="top: 150px">
     <!-- Full-width images with number and caption text -->
     <div class="mySlides">
         <div class="numbertext">1 / 3</div>
         <a href="/game/discount">
-            <img src="/images/bannerImg-1.png" style="width:100%; height: 525px; object-fit: fill">
+            <img src="/images/dcEvent.png" style="width:100%; height: 525px; object-fit: fill" title="여름 할인 이벤트 둘러보기">
         </a>
     </div>
 
     <div class="mySlides">
         <div class="numbertext">2 / 3</div>
         <a href="/game/release">
-            <img src="/images/bannerImg-3.jpg" style="width:100%; height: 525px; object-fit: fill">
+            <img src="/images/newGames.png" style="width:100%; height: 525px; object-fit: fill" title="이 달의 신작 둘러보기">
         </a>
     </div>
 
     <div class="mySlides">
         <div class="numbertext">3 / 3</div>
-        <img src="/images/bannerImg-2.png" style="width:100%; height: 525px; object-fit: fill">
+        <img src="/images/bannerEtc.jpg" style="width:100%; height: 525px; object-fit: fill">
     </div>
 
     <!-- Next and previous buttons -->
@@ -50,13 +50,14 @@
     <span class="dot" onclick="currentSlide(3)"></span>
 </div>
 
-<div class="game-list-section">
+<div class="game-list-section" style="margin-top: 150px">
     <div class="paging-list">
         <h3> 모든 게임 </h3>
         <div th:if="${gameList != null}" class="game-list">
             <div th:each="game: ${gameList}" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -91,7 +92,9 @@
                         <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
                     </div>
                 </div>
-
+            </div>
+            <div th:unless="${gameList!=null}">
+                <h1>검색결과가 없습니다!!</h1>
             </div>
         </div>
 
@@ -104,7 +107,7 @@
                 </li>
                 <li th:class="${gameList.first} ? 'none'" : class="page-item">
                     <a class="page-link"
-                       th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, tyep=${type}, q=${q})}">
+                       th:href="${gameList.first} ? '#' : @{/game(page=${gameList.number}, type=${type}, q=${q})}">
                         <span><</span>
                     </a>
                 </li>
@@ -127,14 +130,17 @@
             </ul>
         </div>
     </div>
+</div>
 
+<div class="genre-list-section" style="margin-top: 150px">
     <!--    "RTS" 게임 리스트 출력 (5개)-->
     <div class="paging-list">
         <h3> RTS </h3>
         <div th:if="${gameList != null}" th:with="gameListRTS=${gameList.?[gameGenre == '0']}" class="game-list">
-            <div th:each="game, iterStat: ${gameListRTS}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListRTS}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -172,9 +178,10 @@
         <h3> 슈팅/FPS </h3>
         <div th:if="${gameList != null}" th:with="gameListFps=${gameList.?[gameGenre == '1']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListFps}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListFps}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -212,9 +219,10 @@
         <h3> RPG </h3>
         <div th:if="${gameList != null}" th:with="gameListRpg=${gameList.?[gameGenre == '6']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListRpg}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListRpg}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -253,9 +261,10 @@
         <h3> 퍼즐 </h3>
         <div th:if="${gameList != null}" th:with="gameListPz=${gameList.?[gameGenre == '2']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListPz}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListPz}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -293,9 +302,10 @@
         <h3> 공포 </h3>
         <div th:if="${gameList != null}" th:with="gameListHr=${gameList.?[gameGenre == '3']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListHr}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListHr}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -333,9 +343,10 @@
         <h3> 액션 </h3>
         <div th:if="${gameList != null}" th:with="gameListAc=${gameList.?[gameGenre == '4']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListAc}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListAc}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -363,7 +374,6 @@
                         <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -373,9 +383,10 @@
         <h3> 모험 </h3>
         <div th:if="${gameList != null}" th:with="gameListExp=${gameList.?[gameGenre == '5']}" class="game-list">
 
-            <div th:each="game, iterStat: ${gameListExp}" th:if="${iterStat.index} < 5" class="game-card">
+            <div th:each="game, iterStat: ${gameListExp}" th:if="${iterStat.index} < 1" class="game-card">
                 <div class="game-thumbnail">
-                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
                         <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
                              style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
                     </div>
@@ -408,9 +419,9 @@
         </div>
     </div>
 
-    <div th:unless="${gameList!=null}">
-        <h1>검색결과가 없습니다!!</h1>
-    </div>
+</div>
+
+
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>

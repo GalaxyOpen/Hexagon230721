@@ -5,11 +5,19 @@
     border-collapse: collapse;
 }
 
+body {
+    margin-top: 150px;
+}
+
 #header {
+    top: 0;
+    width: 100%;
     background-color: #000000;
     border: none;
     color: #ffffff;
     height: 100px;
+    position: fixed;
+    z-index: 999;
 }
 
 #header ul {
@@ -39,8 +47,17 @@
     /*padding-bottom: 30px;*/
 }
 
+select#type {
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+    font-weight: bold;
+
+}
+
 #search-area.search-area input[type="text"] {
-    width: 70%;
+    width: 50%;
     padding: 10px;
     border: none;
     background-color: #341d34;

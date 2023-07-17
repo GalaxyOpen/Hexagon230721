@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <link rel="stylesheet" th:href="@{/css/pointCharge.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+<h4>HEXAGON 포인트 충전</h4>
 <div class="card-body bg-white mt-0 shadow">
-    <p style="font-weight: bold">카카오페이 현재 사용가능</p>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="20000"><span>20,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="25000"><span>25,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="30000"><span>30,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="35000"><span>35,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="40000"><span>40,000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="50000"><span>50,000원</span></label>
-    <p  style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 5,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
-    <button type="button" class="btn btn-lg btn-block  btn-custom" id="charge_kakao">충 전 하 기</button>
+    <input type="text" id="how-much" readonly>
+    <div id="check-how-much">
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="20000"><span>20,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="25000"><span>25,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="30000"><span>30,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="35000"><span>35,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="40000"><span>40,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="50000"><span>50,000원</span></label>
+    </div>
+    <p style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 5,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
+    <button type="button" id="charge-kakao">결제</button>
 </div>
 </body>
 <script>
-    $('#charge_kakao').click(function () {
+    $('#charge-kakao').click(function () {
         // getter
         let IMP = window.IMP;
         IMP.init('imp00812478');
@@ -67,12 +72,12 @@
                         totalPoint: parseInt(totalPoint) + parseInt(money),
                     }
                 })
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log("포인트 저장 요청 완료");
                         console.log(response.data); // 응답 데이터 확인
                         location.href = "/member/detail";
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error("포인트 저장 요청 실패:", error);
                         location.href = "/member/detail";
                     });
@@ -81,8 +86,14 @@
                 msg += '에러내용 : ' + rsp.error_msg;
             }
             alert(msg);
-            document.location.href="/user/mypage/home"; //alert창 확인 후 이동할 url 설정
+            document.location.href = "/user/mypage/home"; //alert창 확인 후 이동할 url 설정
         });
     });
+
+    const howMuch = () => {
+        const checked = document.querySelector("input[name='cp_item']:checked").value;
+        const howMuch = document.getElementById("how-much");
+        howMuch.value = checked;
+    }
 </script>
 </html>

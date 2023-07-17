@@ -8,33 +8,43 @@
     <link rel="stylesheet" th:href="@{/css/buttons.css}">
     <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
     <link rel="stylesheet" th:href="@{/css/memberList.css}">
+    <link rel="stylesheet" th:href="@{/css/pointList.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="/components/header :: header"></div>
-<div id="member-detail-section">
+<div id="point-list-section" style="margin-top: 150px">
+    <h2><span th:text="${session.loginId}"></span><span> 님의 포인트 내역</span></h2>
     <div class="container" id="paging-list">
         <div th:if="${pointList !=null}" id="member-list">
-            <table class="table-member-list">
+            <table class="table-point-list">
                 <thead>
                 <tr>
+                    <th scope="col">현재포인트</th>
                     <th scope="col">충전포인트</th>
                     <th scope="col">사용포인트</th>
-                    <th scope="col">현재포인트</th>
+                    <th scope="col">일시</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:each="point: ${pointList}">
-                    <td th:text="${point.chargedPoint}"></td>
-                    <td th:text="${point.usedPoint}"></td>
                     <td th:text="${point.totalPoint}"></td>
+                    <td style="color: #00d01b">
+                        <span>+</span>
+                        <span th:text="${point.chargedPoint}"></span>
+                    </td>
+                    <td style="color: #ff0000">
+                        <span>-</span>
+                        <span th:text="${point.usedPoint}"></span>
+                    </td>
+                    <td th:text="${point.createdAt}"></td>
                 </tr>
                 </tbody>
             </table>
-            <div class="page-container">
+
+            <div class="point-page-container">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a class="page-link" th:href="@{/member(page=1)}">
@@ -71,6 +81,5 @@
         </div>
     </div>
 </div>
-<div th:replace="/components/footer :: footer"></div>
 </body>
 </html>

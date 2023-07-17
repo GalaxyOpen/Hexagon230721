@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 
-public class PointEntity {
-
+public class PointEntity extends BaseEntity{
+// BaseEntity에서 createdAt 상속 (7.17. 이문정)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

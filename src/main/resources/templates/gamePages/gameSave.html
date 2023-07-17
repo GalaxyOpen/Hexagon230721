@@ -21,7 +21,7 @@
 <body>
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
-<div id="game-save-section">
+<div id="game-save-section" style="margin-top: 200px">
     <div id="saveForm">
         <form action="/game/save" method="post" enctype="multipart/form-data" id="game-save-form">
             <h2>게임 등록</h2>
@@ -62,7 +62,7 @@
                 <tr>
                     <th>게임 등급</th>
                     <td>
-                        <select name="gameGrade" id="gameGrade">
+                        <select name="gameGrade" id="gameGrade" th:default="전체">
                             <option value="전체">전체 이용가</option>
                             <option value="12">12세 이용가</option>
                             <option value="15">15세 이용가</option>
@@ -202,6 +202,7 @@
             codeviewFilter: false, // 코드 보기 필터 비활성화
             codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
 
+            width: 1000, // 에디터 너비 (7.17. 이문정)
             height: 500, // 에디터 높이
             minHeight: null, // 최소 높이
             maxHeight: null, // 최대 높이

@@ -17,4 +17,5 @@ public class PointDTO {
     private Long ChargedPoint; // 충전 포인트
     private Long totalPoint; // 현재 포인트
     private Long memberId; // 회원번호
+    private String createdAt; // 포인트 내역 발생일시 (7.17. 이문정)
 }

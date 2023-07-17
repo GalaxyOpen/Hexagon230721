@@ -10,6 +10,7 @@ body {
     height: auto;
     /*padding-bottom: 300px;*/
     overflow: hidden;
+    margin-top: 100px;
 }
 
 .top-table {
@@ -50,7 +51,7 @@ body {
 .point-table {
     width: 33%;
     color: white;
-    margin-bottom: 50px;
+    margin-bottom: 500px;
     border: none;
     outline: none;
     background-color: #181018;

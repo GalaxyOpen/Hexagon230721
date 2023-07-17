@@ -21,7 +21,7 @@
 <body>
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
-<div id="game-save-section">
+<div id="game-save-section" style="margin-top: 200px">
     <div id="saveForm">
         <form action="/game/update" method="post" enctype="multipart/form-data" id="game-update-form">
             <h2>게임정보 수정</h2>
@@ -157,6 +157,46 @@
 
         // 판매가격 필드에 값 설정
         document.getElementById("salesPrice").value = salesPrice.toFixed(0);
+    }
+
+    const game_update=()=>{
+        const id=document.querySelector('input[name="id"]').value;
+        const title = document.querySelector('input[name="gameTitle"]').value;
+        const genre = document.querySelector('select[name="gameGenre"]').value;
+        const creator = document.querySelector('input[name="gameCreator"]').value;
+        const distr = document.querySelector('input[name="gameDistr"]').value;
+        const grade = document.querySelector('select[name="gameGrade"]').value;
+        const createdAt = document.querySelector('input[name="createdAt"]').value;
+        const releasePrice = document.querySelector('input[name="releasePrice"]').value;
+        const discountRate = document.querySelector('input[name="discountRate"]').value;
+        const salesPrice = document.querySelector('input[name="salesPrice"]').value;
+        const gameIntro = document.querySelector('#gameIntro').value;
+        const gameFile = document.querySelector('input[name="gameFile"]').value;
+        const youtubeUrl = document.querySelector('input[name="youtubeUrl"]')
+
+        axios({
+            method:"put",
+            url:"/game/update/"+id,
+            data:{
+                id:id,
+                title:title,
+                genre:genre,
+                creator:creator,
+                distr:distr,
+                grade:grade,
+                createdAt: createdAt,
+                releasePrice: releasePrice,
+                discountRate: discountRate,
+                salesPrice: salesPrice,
+                gameIntro: gameIntro,
+                gameFile: gameFile,
+                youtubeUrl: youtubeUrl
+            }
+        }).then(res=>{
+        }).catch(err=>{            location.href="/game"+id;
+
+            alert("실패")
+        })
     }
 
 

@@ -23,7 +23,7 @@
 <div th:replace="/components/gameNav :: gameNav"></div>
 <div id="game-save-section">
     <div id="saveForm">
-        <form action="/game/update/{id}" method="post" enctype="multipart/form-data" id="game-update-form">
+        <form action="/game/update" method="post" enctype="multipart/form-data" id="game-update-form">
             <h2>게임정보 수정</h2>
             <table id="game-info-table">
                 <tr style="display: none">
@@ -32,7 +32,8 @@
                 <tr>
                     <th>게임명</th>
                     <td>
-                        <input type="text" name="gameTitle" id="game-title" placeholder="제목" th:value="${game.gameTitle}" required>
+                        <input type="text" name="gameTitle" id="game-title" placeholder="제목"
+                               th:value="${game.gameTitle}" readonly>
                     </td>
                 </tr>
                 <tr>
@@ -52,13 +53,14 @@
                 <tr>
                     <th>제작자</th>
                     <td>
-                        <input type="text" name="gameCreator" id="gameCreator" placeholder="제작사" th:value="${game.gameCreator}" required>
+                        <input type="text" name="gameCreator" id="gameCreator" placeholder="제작사"
+                               th:value="${game.gameCreator}" required>
                     </td>
                 </tr>
                 <tr>
                     <th>배급사</th>
                     <td>
-                        <input type="text" name="gameDistr" id="GameDistr" th:value="${game.gameDistr}">
+                        <input type="text" name="gameDistr" id="gameDistr" th:value="${game.gameDistr}">
                     </td>
                 </tr>
                 <tr>
@@ -73,27 +75,24 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>출시일</th>
-                    <td>
-                        <input type="date" name="createdAt" th:value="${game.createdAt}" /><br>
-                    </td>
-                </tr>
-                <tr>
                     <th>출시가격</th>
                     <td>
-                        <input type="text" name="releasePrice" id="releasePrice" oninput="calculateSalesPrice()" th:value="${game.releasePrice}">
+                        <input type="text" name="releasePrice" id="releasePrice" oninput="calculateSalesPrice()"
+                               th:value="${game.releasePrice}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <th>할인율</th>
                     <td>
-                        <input type="text" name="discountRate" id="discountRate" placeholder="할인을 적용하지 않을 경우 0을 입력하세요" oninput="calculateSalesPrice()" th:value="${game.discountRate}"><br>
+                        <input type="text" name="discountRate" id="discountRate" placeholder="할인을 적용하지 않을 경우 0을 입력하세요"
+                               oninput="calculateSalesPrice()" th:value="${game.discountRate}"><br>
                     </td>
                 </tr>
                 <tr>
                     <th>판매가격</th>
                     <td>
-                        <input type="text" name="salesPrice" id="salesPrice" placeholder="가격과 할인율을 입력하세요" th:value="${game.salesPrice}" readonly ><br>
+                        <input type="text" name="salesPrice" id="salesPrice" placeholder="가격과 할인율을 입력하세요"
+                               th:value="${game.salesPrice}" readonly><br>
                     </td>
                 </tr>
             </table>
@@ -106,73 +105,60 @@
                     <td><textarea name="gameIntro" class="summernote" th:text="${game.gameIntro}"></textarea></td>
                 </tr>
                 <tr>
+                    <th>썸네일</th>
+                </tr>
+                <tr>
+                    <td><input type="file" name="thumbnail" multiple accept="image/jpeg, image/png, image/gif"></td>
+                </tr>
+                <tr>
                     <th>파일첨부</th>
                 </tr>
                 <tr>
-                    <td><input type="file" name="gameFile" multiple></td>
+                    <td><input type="file" name="gameFile" multiple accept="image/jpeg, image/png, image/gif"></td>
                 </tr>
                 <tr>
                     <th>소개영상</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="youtubeUrl" placeholder="url을 입력하세요" th:value="${game.youtubeUrl}"></td>
+                    <td><input type="text" name="youtubeUrl" placeholder="url을 입력하세요" th:value="${game.youtubeUrl}">
+                    </td>
                 </tr>
             </table>
-            <input type="submit" class="btn-1" value="수정 완료" onclick="game_update()">
+            <input type="button" class="btn-1" value="수정 완료" onclick="update_game()">
         </form>
     </div>
 </div>
 </body>
 <script th:inline="javascript">
+    const update_game = () => {
+        const gameCreator = document.querySelector('#gameCreator').value;
+        const gameDistr = document.querySelector('#gameDistr').value;
+        const discountRate = document.querySelector('#discountRate').value;
+
+
+        if(gameCreator.length == 0) {
+            document.querySelector('#gameCreator').focus()
+            alert("제작자명을 입력해주세요");
+        } else if (gameDistr.length == 0) {
+            document.querySelector('#gameDistr').focus()
+            alert("배급사를 입력해주세요");
+        } else if (discountRate > 100 || discountRate < 0 || isNaN(discountRate)) {
+            document.querySelector('#discountRate').focus()
+            alert("숫자만 입력가능합니다.(0이상 100이하만 가능)")
+        } else {
+            document.getElementById("game-update-form").submit();
+        }
+    }
 
     function calculateSalesPrice() {
         let releasePrice = parseFloat(document.getElementById("releasePrice").value);
         let discountRate = parseFloat(document.getElementById("discountRate").value);
-        let salesPrice = (releasePrice * (100 - discountRate))/100;
+        let salesPrice = (releasePrice * (100 - discountRate)) / 100;
 
         // 판매가격 필드에 값 설정
         document.getElementById("salesPrice").value = salesPrice.toFixed(0);
     }
 
-    const game_update=()=>{
-        const id=document.querySelector('input[name="id"]').value;
-        const title = document.querySelector('input[name="gameTitle"]').value;
-        const genre = document.querySelector('select[name="gameGenre"]').value;
-        const creator = document.querySelector('input[name="gameCreator"]').value;
-        const distr = document.querySelector('input[name="gameDistr"]').value;
-        const grade = document.querySelector('select[name="gameGrade"]').value;
-        const createdAt = document.querySelector('input[name="createdAt"]').value;
-        const releasePrice = document.querySelector('input[name="releasePrice"]').value;
-        const discountRate = document.querySelector('input[name="discountRate"]').value;
-        const salesPrice = document.querySelector('input[name="salesPrice"]').value;
-        const gameIntro = document.querySelector('#gameIntro').value;
-        const gameFile = document.querySelector('input[name="gameFile"]').value;
-        const youtubeUrl = document.querySelector('input[name="youtubeUrl"]')
-
-        axios({
-            method:"put",
-            url:"/game/update/"+id,
-            data:{
-                id:id,
-                title:title,
-                genre:genre,
-                creator:creator,
-                distr:distr,
-                grade:grade,
-                createdAt: createdAt,
-                releasePrice: releasePrice,
-                discountRate: discountRate,
-                salesPrice: salesPrice,
-                gameIntro: gameIntro,
-                gameFile: gameFile,
-                youtubeUrl: youtubeUrl
-            }
-        }).then(res=>{
-            location.href="/game"+id;
-        }).catch(err=>{
-            alert("실패")
-        })
-    }
 
     $(document).ready(function () {
         $('.summernote').summernote({
@@ -193,9 +179,9 @@
                 // 글자 크기 설정
                 ['fontsize', ['fontsize']],
                 // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-                ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
                 // 글자색
-                ['color', ['forecolor','color']],
+                ['color', ['forecolor', 'color']],
                 // 표만들기
                 ['table', ['table']],
                 // 글머리 기호, 번호매기기, 문단정렬
@@ -203,9 +189,9 @@
                 // 줄간격
                 ['height', ['height']],
                 // 그림첨부, 링크만들기, 동영상첨부
-                ['insert',['picture','link','video']],
+                ['insert', ['picture', 'link', 'video']],
                 // 코드보기, 확대해서보기, 도움말
-                ['view', ['codeview','fullscreen', 'help']]
+                ['view', ['codeview', 'fullscreen', 'help']]
             ],
 
             fontSizes: [
@@ -278,7 +264,7 @@
         })
     }
 
-    $("#content").html(data.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g,'"').replace(/&#40;/g,'(').replace(/&#41;/g,')').replace(/&#35;/g,'#'));
+    $("#content").html(data.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#40;/g, '(').replace(/&#41;/g, ')').replace(/&#35;/g, '#'));
 
 </script>
 </html>

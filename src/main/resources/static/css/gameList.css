@@ -87,6 +87,18 @@
     to {opacity: 1}
 }
 /* 여기까지 */
+.game-list-section {
+    display: inline-block;
+    float: left;
+    width: 74%;
+}
+
+.genre-list-section {
+    display: inline-block;
+    width: 25%;
+}
+
+
 .paging-list {
     width: 80%;
     margin-top: 50px;
@@ -100,10 +112,29 @@
     font-weight: bold;
 }
 
-.game-card {
+.game-list-section .game-card {
+    display: inline-block;
+    justify-content: center;
+    width: 24.5%;
+    color: #cccccc;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.game-release-section .game-card,
+.game-discount-section .game-card {
     display: inline-block;
     justify-content: center;
     width: 19.5%;
+    color: #cccccc;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.genre-list-section .game-card {
+    display: inline-block;
+    justify-content: center;
+    width: 100%;
     color: #cccccc;
     padding: 5px;
     margin-bottom: 10px;
@@ -124,10 +155,8 @@
 
 .game-info {
     background-color: #1c1a1c;
-    padding-top: 5px;
-    padding-bottom : 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    border-top: 3px solid #8400ff;
+    padding: 5px 10px 5px 10px;
 }
 
 .game-info a {

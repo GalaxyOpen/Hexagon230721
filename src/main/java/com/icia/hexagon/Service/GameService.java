@@ -81,7 +81,7 @@ public class GameService {
 
     public Page<GameDTO> paging(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber()-1;
-        int pageLimit = 10;
+        int pageLimit = 20;
 
         Page<GameEntity> gameEntities = null;
         if(type.equals("title")){

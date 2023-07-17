@@ -85,7 +85,7 @@
         <tr>
             <th id="charge-list">
                 <button class="btn-3" onclick="point_charge()">충전하기</button>
-                <button class="btn-3" onclick="member_update()">내역보기</button>
+                <button class="btn-3" onclick="point_history()">내역보기</button>
             </th>
         </tr>
     </table>
@@ -119,6 +119,9 @@
 
     const point_charge = () => {
         location.href = "/point/charge";
+    }
+    const point_history = () => {
+        location.href = "/point/history";
     }
 
 </script>

@@ -6,6 +6,7 @@ import com.icia.hexagon.Entity.MemberEntity;
 import com.icia.hexagon.Entity.PointEntity;
 import com.icia.hexagon.Repository.MemberRepository;
 import com.icia.hexagon.Repository.PointRepository;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +43,7 @@ public class PointService {
                 .ChargedPoint(pointEntity.getChargedPoint())
                 .UsedPoint(pointEntity.getUsedPoint())
                 .totalPoint(pointEntity.getTotalPoint())
+                .createdAt(UtilClass.dateFormat(pointEntity.getCreatedAt())) // point 내역 발생일시 (7.17. 이문정)
                 .build());
         return pointDTOS;
     }

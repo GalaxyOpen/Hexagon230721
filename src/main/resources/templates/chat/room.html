@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/style.css">
+        <div class="container">
+            <div>
+                <h1>[[${room.roomName}]]</h1>
+            </div>
+            <div>
+                <div class="chatting-list" id="msgArea"></div>
+                <div>
+                    <div>
+                        <textarea type="text" id="msg"></textarea>
+                        <div>
+                            <button type="button" id="button-send">전송</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div></div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script th:inline="javascript">
+        $(document).ready(function() {
+
+            let roomName = [[${room.roomName}]];
+            let roomId = [[${room.roomId}]];
+            let username = [[${#authentication.principal.username}]];
+
+            console.log(roomName + ", " + roomId+ ", " + username );
+
+
+            let sockJs = new SockJS("/stomp/chat");
+            //1. SockJS를 내부에 들고있는 stomp를 내어줌
+            let stomp = Stomp.over(sockJs);
+
+            function receiveMessage(chat) {
+                console.log("Received message:", chat.body);
+
+                let content = JSON.parse(chat.body);
+                let writer = content.writer;
+                let message = content.message;
+                let str = '';
+
+                if (writer === username) {
+                    str = "<div>";
+                    str += "<div>";
+                    str += "<b>" + writer + " : " + message + "</b>";
+                    str += "</div></div>";
+                    $("#msgArea").append(str);
+                }
+            }
+
+            function connectStomp() {
+                stomp.connect({}, function () {
+                    console.log("STOMP Connection");
+                    stomp.subscribe('/sub/chat/room/' + roomId, receiveMessage);
+                });
+            }
+
+            connectStomp();
+
+            $("#button-send").on("click", function (e) {
+                let msg = document.getElementById("msg");
+
+                console.log(username + ":" + msg.value);
+                stomp.send('/pub/chat/message', {}, JSON.stringify({
+                    roomId: roomId,
+                    message: msg.value,
+                    writer: username
+                }));
+                msg.value = '';
+            });
+
+            function sendMessage() {
+                let messageInput = document.getElementById("msg");
+                let message = messageInput.value.trim();
+
+                if (message !== "") {
+                    stomp.send('/pub/chat/message', {}, JSON.stringify({
+                        roomId: roomId,
+                        message: message,
+                        writer: username
+                    }));
+                    messageInput.value = '';
+                }
+            }
+
+            document.getElementById("msg").addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</html>

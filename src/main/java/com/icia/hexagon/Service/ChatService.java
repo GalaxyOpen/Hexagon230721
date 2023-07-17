@@ -1,55 +1,76 @@
 package com.icia.hexagon.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.icia.hexagon.DTO.ChatRoomDTO;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
+import com.icia.hexagon.DTO.ChatMessageDetailDTO;
+
+import com.icia.hexagon.DTO.ChatRoomDetailDTO;
+import com.icia.hexagon.Entity.ChatMessageEntity;
+import com.icia.hexagon.Entity.ChatRoomEntity;
+import com.icia.hexagon.Entity.MemberEntity;
+import com.icia.hexagon.Repository.ChatRepository;
+import com.icia.hexagon.Repository.ChatRoomRepository;
+import com.icia.hexagon.Repository.MemberRepository;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 
-@Slf4j
-@Data
 @Service
+@RequiredArgsConstructor
 public class ChatService {
-    private final ObjectMapper mapper;
-    private Map<String, ChatRoomDTO> chatRooms;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRepository chatRepository;
+    private final MemberRepository memberRepository;
 
-    @PostConstruct
-    private void init(){
-        chatRooms = new LinkedHashMap<>();
+    public List<ChatRoomEntity> findAllRooms() {
+        return chatRoomRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+    }
+    //    채팅방 개설
+    public void createChatRoom(String roomName, String memberId) {
+        String roomId = UUID.randomUUID().toString();
+        Optional<MemberEntity> memberOptional = memberRepository.findByMemberId(memberId);
+        MemberEntity memberEntity = memberOptional.orElse(null);
+        ChatRoomEntity chatRoomEntity = new ChatRoomEntity();
+        chatRoomEntity.setMemberEntity(memberEntity);
+        chatRoomEntity.setRoomName(roomName);
+        chatRoomEntity.setRoomId(roomId);
+        System.out.println("name = " + roomName + ", memberId = " + memberId);
+        System.out.println("roomId"+roomId);
+        chatRoomRepository.save(chatRoomEntity);
     }
 
-    public List<ChatRoomDTO> findAllRoom(){
-        return new ArrayList<>(chatRooms.values());
-    }
-    public ChatRoomDTO findRoomById(String roomId){
-        return chatRooms.get(roomId);
-    }
-
-    public ChatRoomDTO createRoom(String name){
-        String roomId = UUID.randomUUID().toString(); // 랜덤한 방 아이디 생성
-
-        // Builder 패턴을 이용해서 ChatRoom 을 빌딩함.
-        ChatRoomDTO room = ChatRoomDTO.builder()
-                .roomId(roomId)
-                .name(name)
-                .build();
-
-        chatRooms.put(roomId, room); // 랜덤 아이디와 room 정보를 Map에 저장
-        return room;
+    // 채팅룸 생성
+//    public void createChatRoom(String roomName){
+//        ChatRoomDTO room = ChatRoomDTO.create(roomName);
+//        ChatRoomEntity chatRoomEntity = ChatRoomEntity.toChatRoomEntity(room.getRoomName(), room.getRoomId());
+//        chatRoomRepository.save(chatRoomEntity);
+//    }
+    //채팅 방 지우기
+    public void deleteById(Long chatRoomId){
+        chatRoomRepository.deleteById(chatRoomId);
     }
 
-    public <T> void sendMessage(WebSocketSession session, T message){
-        try{
-            session.sendMessage(new TextMessage(mapper.writeValueAsString(message)));
-        }catch(IOException e){
-            log.error(e.getMessage(), e);
+    //채팅 이력 보기
+    public List<ChatMessageDetailDTO> findAllChatByRoomId(String roomId) {
+        List<ChatMessageEntity> chatMessageEntityList = chatRepository.findAllByChatRoomEntity_RoomId(roomId);
+        List<ChatMessageDetailDTO> chatMessageList = new ArrayList<>();
+        for (ChatMessageEntity c:chatMessageEntityList){
+            chatMessageList.add(ChatMessageDetailDTO.toChatMessageDetailDTO(c));
         }
+        return chatMessageList;
     }
+
+
+
+
+    public ChatRoomDetailDTO findRoomById(String roomId){
+        ChatRoomEntity chatRoomEntity = chatRoomRepository.findByRoomId(roomId);
+        ChatRoomDetailDTO chatRoomDetailDTO = ChatRoomDetailDTO.toChatRoomDetailDTO(chatRoomEntity);
+        return chatRoomDetailDTO;
+    }
+
 
 }

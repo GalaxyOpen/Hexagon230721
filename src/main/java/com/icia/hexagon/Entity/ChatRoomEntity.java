@@ -14,16 +14,13 @@ import java.util.List;
 public class ChatRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name="chatRoom_id")
     private Long id;
 
-    @Column(length=100, nullable = false)
+    @Column(length = 50)
     private String roomName;
 
-    @Column(length = 20, nullable = false)
-    private String roomReceiver;
-
-    @Column(length = 20, nullable = false)
+    @Column(length=100)
     private String roomId;
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -33,4 +30,12 @@ public class ChatRoomEntity {
 
     @OneToMany(mappedBy="chatRoomEntity", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChatMessageEntity> chatMessageEntityList = new ArrayList<>();
+
+    public static ChatRoomEntity toChatRoomEntity(String roomName,String roomId){
+        ChatRoomEntity chatRoomEntity = new ChatRoomEntity();
+        chatRoomEntity.setRoomName(roomName);
+        chatRoomEntity.setRoomId(roomId);
+
+        return chatRoomEntity;
+    }
 }

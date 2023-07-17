@@ -1,5 +1,10 @@
 #game-nav {
+    top: 0;
     background: linear-gradient(to right, #bc3265, #672873) ;
+    width: 100%;
+    position: fixed;
+    margin-top: 100px;
+    z-index: 999;
 }
 
 #game-nav ul {

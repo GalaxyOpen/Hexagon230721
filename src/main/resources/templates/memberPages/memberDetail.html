@@ -118,7 +118,12 @@
     };
 
     const point_charge = () => {
-        location.href = "/point/charge";
+        // location.href = "/point/charge";
+        window.open(
+            "/point/charge",
+            "HEXAGON 포인트 충전",
+            "width=530, height=625, top=50, left=50"
+        )
     }
     const point_history = () => {
         location.href = "/point/history";

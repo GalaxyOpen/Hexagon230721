@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -37,9 +39,11 @@ public class GameController {
 
     // 게임등록 처리
     @PostMapping("/save")
-    public String save(@ModelAttribute GameDTO gameDTO) throws IOException {
-       gameService.save(gameDTO);
-       return "redirect:/game";
+    public String save(@ModelAttribute GameDTO gameDTO,
+                       @AuthenticationPrincipal User user) throws IOException {
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+        gameService.save(gameDTO, memberDTO);
+        return "redirect:/game";
     }
 
     // 게임목록
@@ -58,11 +62,11 @@ public class GameController {
         }
         if(gameDTOS.getTotalElements()==0){
             model.addAttribute("gameList",null);
-            System.out.println("gameDTOS = " + gameDTOS);
+
         }else{
             model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
-            System.out.println("gameDTOS = " + gameDTOS);
+
         }
         int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
@@ -177,9 +181,11 @@ public class GameController {
 
     // 게임정보 수정처리
     @Transactional
-    @PostMapping("/update/{id}")
-    public String update(@ModelAttribute GameDTO gameDTO) throws IOException{
-        gameService.update(gameDTO);
+    @PostMapping("/update")
+    public String update(@ModelAttribute GameDTO gameDTO,
+                         @AuthenticationPrincipal User user) throws IOException{
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+        gameService.update(gameDTO, memberDTO);
         return "redirect:/game";
     }
 

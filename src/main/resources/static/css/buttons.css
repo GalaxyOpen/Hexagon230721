@@ -180,3 +180,19 @@
 .btn-5:hover{
     background: linear-gradient(to right, #e02c6f, #692577) ;
 }
+
+.btn-chat {
+    display: inline-block;
+    margin-top: 3px;
+    background: linear-gradient(to right, #bc3265, #672873) ;
+    width: 40%;
+    color: white;
+    padding: 10px 3px 10px 3px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-chat:hover{
+    background: linear-gradient(to right, #e02c6f, #692577) ;
+}

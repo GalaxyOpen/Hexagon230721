@@ -1,0 +1,72 @@
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("../images/chatLb wallpaper.jpg");
+    background-size: cover;
+    position: center;
+    height: 100%;
+}
+
+#chat-room-header {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    color: #cccccc;
+    padding: 30px;
+}
+
+#chat-room-header span {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
+    padding: 5px;
+}
+
+#chat-room-container {
+    margin-top: 110px;
+    height: 100%;
+}
+
+#msgArea {
+    height: 600px;
+    min-height: 100%;
+    position: relative;
+}
+
+#chat-room-input {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    transform: translateY(-100%);
+}
+
+#chat-room-input textarea {
+    background-color: black;
+    width: 95%;
+    height: 100px;
+    resize: none;
+    position: relative;
+    color: #cccccc;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#btn-send {
+    position: absolute;
+    right: 25px;
+    top: 3px;
+    background-color: inherit;
+    border: none;
+    color: #cccccc;
+    font-size: 24px;
+}
+
+#btn-send:hover {
+    color: white;
+}
+

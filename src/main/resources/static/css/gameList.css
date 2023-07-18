@@ -98,6 +98,11 @@
     width: 25%;
 }
 
+.page-container-n-r {
+    position: relative;
+    transform: translateY(400%);
+}
+
 
 .paging-list {
     width: 80%;

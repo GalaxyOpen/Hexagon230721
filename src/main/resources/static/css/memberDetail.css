@@ -51,7 +51,7 @@ body {
 .point-table {
     width: 33%;
     color: white;
-    margin-bottom: 500px;
+    margin-bottom: 50px;
     border: none;
     outline: none;
     background-color: #181018;
@@ -81,4 +81,23 @@ body {
     padding-top: 30px;
     padding-bottom: 50px;
     margin: auto;
+}
+
+.messenger-table {
+    width: 33%;
+    color: white;
+    margin-bottom: 500px;
+    border: none;
+    outline: none;
+    background-color: #181018;
+    text-align: center;
+}
+
+.messenger-table th {
+    text-align: center;
+    padding: 30px;
+}
+
+.messenger-table td {
+    padding-bottom: 30px;
 }

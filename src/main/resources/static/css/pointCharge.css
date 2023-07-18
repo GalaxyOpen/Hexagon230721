@@ -1,5 +1,5 @@
 .card-body {
-    width: 90%;
+    width: 95%;
 }
 
 h4 {
@@ -22,6 +22,7 @@ h4 {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 10px;
+    text-align: right;
 }
 
 #how-much:focus {
@@ -37,6 +38,31 @@ input[type="radio"] {
     display: none;
 }
 
+#bill {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+#bill th {
+    text-align: left;
+    color: #a1a1a1;
+}
+
+#bill td {
+    text-align: right;
+}
+
+#how-much-pay {
+    color: #bc3265;
+    font-weight: bold;
+}
+
+#how-much-charge {
+    color: black;
+    font-weight: bold;
+}
+
 .box-radio-input {
     display: inline-block;
     width: 25%;
@@ -48,5 +74,6 @@ input[type="radio"] {
     color: #cccccc;
     font-weight: bold;
     margin: 1px;
+    cursor: pointer;
 }
 

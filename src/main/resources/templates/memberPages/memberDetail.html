@@ -18,7 +18,8 @@
         <tr>
             <th>회원정보</th>
             <th>
-                <button class="btn-2" onclick="member_update()"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn-2" onclick="member_update()" title="정보수정"><i class="bi bi-pencil-square"></i>
+                </button>
                 <button class="btn-2" onclick="member_list()" th:if="${user.memberId} == 'admin'">회원목록</button>
                 <button class="btn-2" onclick="member_delete()" th:if="${user.memberId} == 'admin'">회원삭제</button>
             </th>
@@ -57,7 +58,9 @@
         </tr>
         <tr>
             <th>회원탈퇴</th>
-            <td><button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button></td>
+            <td>
+                <button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button>
+            </td>
         </tr>
     </table>
 
@@ -89,6 +92,17 @@
             </th>
         </tr>
     </table>
+    <table class="top-table">
+        <th> 메신저 </th>
+    </table>
+    <table class="messenger-table">
+        <tr>
+            <th>💬 HEXAGON 게이머들과 소통해보세요 </th>
+        </tr>
+        <tr>
+            <td><button class="btn-5" onclick="messenger()">채팅방 입장</button> </td>
+        </tr>
+    </table>
     <div class="pass-check">
     </div>
 </div>
@@ -97,7 +111,7 @@
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
-    const member_list=()=> {
+    const member_list = () => {
         location.href = "/member/";
     }
     const member_update = () => {
@@ -129,6 +143,13 @@
         location.href = "/point/history";
     }
 
+    const messenger = () => {
+        window.open(
+            "/chat/rooms",
+            "HEXAGON 메신저",
+            "width=550, height=800, top=50, left=50"
+        )
+    }
     // 메시지 이벤트 리스너 등록
     window.addEventListener("message", function (event) {
         if (event.data === "chargeComplete") {

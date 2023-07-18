@@ -13,8 +13,19 @@
 <h4>HEXAGON 포인트 충전</h4>
 <div class="card-body bg-white mt-0 shadow">
     <input type="text" id="how-much" readonly>
+    <table id="bill">
+        <tr>
+            <th>결제 금액</th>
+            <td id="how-much-pay"></td>
+        </tr>
+        <tr>
+            <th>충전할 금액</th>
+            <td id="how-much-charge"></td>
+        </tr>
+    </table>
     <div id="check-how-much">
-        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="5000"><span>5,000원</span></label>
+        <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item"
+                                                                  value="5000"><span>5,000원</span></label>
         <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
         <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
         <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="20000"><span>20,000원</span></label>
@@ -25,7 +36,8 @@
         <label class="box-radio-input" onclick="howMuch()"><input type="radio" name="cp_item" value="50000"><span>50,000원</span></label>
     </div>
     <p style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 5,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
-    <button type="button" id="charge-kakao">결제</button>
+</div>
+<button type="button" id="charge-kakao">결제</button>
 </div>
 
 <script>
@@ -92,7 +104,11 @@
     const howMuch = () => {
         const checked = document.querySelector("input[name='cp_item']:checked").value;
         const howMuch = document.getElementById("how-much");
+        const howMuchPay = document.getElementById("how-much-pay");
+        const howMuchCharge = document.getElementById("how-much-charge");
         howMuch.value = checked;
+        howMuchPay.innerHTML = checked + " 원";
+        howMuchCharge.innerHTML = checked + " 포인트";
     }
 
     // 현재 창을 닫기 위한 함수

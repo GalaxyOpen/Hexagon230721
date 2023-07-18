@@ -1,47 +1,71 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HEXAGON Messenger : 로비</title>
+    <link rel="stylesheet" th:href="@{/css/chatLobby.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<div class="container">
-    <div>
-        <ul th:each="room : ${list}">
-            <li><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.roomName}]]</a></li>
-        </ul>
-    </div>
-</div>
-<form th:action="@{/chat/room}" method="post">
-
-    <table>
-        <thead>
-        <th>★★★★★ Welcome to Hexagon ☆☆☆☆☆</th>
-        </thead>
+<div id="chat-lobby-header">
+    <table id="head-table">
+        <tr>
+            <th><p>채팅 목록</p></th>
+        </tr>
+        <tr>
+            <button class="btn-plus" onclick="showForm()" title="채팅방 개설"><i class="bi bi-plus-lg"></i></button>
+        </tr>
+        <tr id="show-form" style="display: none">
+            <td>
+                <form th:action="@{/chat/room}" method="post" id="create-room">
+                    <input type="text" name="roomName" class="form-control">
+                    <input type="hidden" name="memberId" th:value="${username}">
+                    <button type="submit" class="btn-chat">채팅방 개설</button>
+                </form>
+            </td>
+        </tr>
     </table>
-
-    <input type="text" name="roomName" class="form-control">
-    <input type="hidden" name="memberId" th:value="${username}">
-    <button type="submit" class="btn btn-secondary btn-create">생성하기</button>
-</form>
-
-
+</div>
+<div id="lobby-container">
+    <table id="lobby-list">
+        <tbody>
+        <tr th:each="room : ${list}">
+            <td><i class="bi bi-chat-left-dots-fill"></i><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.roomName}]]</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <script th:inline="javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         let roomName = [[${roomName}]];
 
-        if(roomName != null)
+        if (roomName != null)
             alert(roomName + "방이 개설되었습니다.");
 
-        $(".btn-create").on("click", function (e){
+        $(".btn-create").on("click", function (e) {
             e.preventDefault();
 
             let roomName = $("input[name='roomName']").val();
 
-            if(roomName == "")
+            if (roomName == "")
                 alert("방 이름을 꼭 입력하세요")
             else
                 $("form").submit();
         });
     });
+
+    const showForm = () => {
+        const createRoom = document.getElementById("create-room");
+        const showForm = document.getElementById("show-form");
+        const lobbyContainer = document.getElementById("lobby-container");
+        showForm.style.display = "table-row";
+        lobbyContainer.style.marginTop = "160px";
+    }
 </script>
 </body>
 </html>

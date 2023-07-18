@@ -1,0 +1,115 @@
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("../images/chatLb wallpaper.jpg");
+    background-size: cover;
+    position: center;
+    height: 100%;
+}
+
+#chat-lobby-header {
+    left: 0;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+}
+
+#head-table {
+    width: 100%;
+    background-color: black;
+}
+
+#head-table p {
+    color: #cccccc;
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+}
+
+#head-table td {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #8400ff;
+}
+
+#create-room input[type="text"] {
+    display: inline-block;
+    width: 53%;
+    padding: 12px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+}
+
+#lobby-container {
+    min-height: 100%;
+    margin-top: 90px;
+}
+
+#lobby-list {
+    width: 100%;
+    padding-bottom: 100px;
+}
+
+#lobby-list tbody td {
+    width: 100%;
+    padding: 30px;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-left: 3px solid #341d34;
+    color: #cccccc;
+}
+
+#lobby-list tbody td:hover {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+#lobby-list td a {
+    text-decoration: none;
+    color: #cccccc;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#lobby-list thead {
+    background-color: black;
+    color: #cccccc;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+}
+
+#lobby-list thead th {
+    font-size: 18px;
+    font-weight: bold;
+    /*border-bottom: 1px solid #8400ff;*/
+}
+
+#lobby-list thead td {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #8400ff;
+}
+
+.btn-plus {
+    background-color: black;
+    border: none;
+    color: #2fff00;
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+
+/*#create-room {*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100px;*/
+/*    bottom: 0;*/
+/*    margin-top: 100px;*/
+/*    text-align: center;*/
+/*}*/
+

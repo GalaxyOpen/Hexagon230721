@@ -49,8 +49,10 @@ public class PointController {
     @GetMapping("/history")
     public String pointHistory(@PageableDefault(page = 1) Pageable pageable,
                                @AuthenticationPrincipal User user, Model model) {
-        Page<PointDTO> pointDTOPage = pointService.pointHistory(pageable);
-        System.out.println("포인트 내역 == " + pointDTOPage);
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+        Page<PointDTO> pointDTOPage = pointService.pointHistory(pageable, memberDTO.getId());
+
+
         if (pointDTOPage.getTotalElements() == 0) {
             model.addAttribute("pointList", null);
         } else {

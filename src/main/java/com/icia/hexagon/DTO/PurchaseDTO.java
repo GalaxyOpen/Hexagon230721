@@ -1,5 +1,8 @@
 package com.icia.hexagon.DTO;
 
+import com.icia.hexagon.Entity.BucketEntity;
+import com.icia.hexagon.Entity.PurchaseEntity;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +17,15 @@ public class PurchaseDTO {
     private Long memberId; // 회원번호
     private Long gameId; // 게임번호
     private String createdAt; // 구매일자
-    private int buyAmount; // 결제금액
-    private String payMethod; // 결제방법
-    private String status; // 구매 상태(완료, 취소, 환불등)
+    private Long buyAmount; // 결제금액
+
+    public static PurchaseDTO toPurchaseDTO(PurchaseEntity purchaseEntity){
+        PurchaseDTO purchaseDTO = new PurchaseDTO();
+        purchaseDTO.setId(purchaseEntity.getId());
+        purchaseDTO.setMemberId(purchaseEntity.getMemberEntity().getId());
+        purchaseDTO.setGameId(purchaseEntity.getGameEntity().getId());
+        purchaseDTO.setCreatedAt(UtilClass.dateFormat(purchaseEntity.getCreatedAt()));
+        purchaseDTO.setBuyAmount(purchaseEntity.getBuyAmount());
+        return purchaseDTO;
+    }
 }

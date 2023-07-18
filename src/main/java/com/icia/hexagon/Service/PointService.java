@@ -1,5 +1,6 @@
 package com.icia.hexagon.Service;
 
+import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.DTO.PointDTO;
 import com.icia.hexagon.Entity.MemberEntity;
@@ -46,5 +47,12 @@ public class PointService {
                 .createdAt(UtilClass.dateFormat(pointEntity.getCreatedAt())) // point 내역 발생일시 (7.17. 이문정)
                 .build());
         return pointDTOS;
+    }
+
+    public void pointPurchase(MemberDTO memberDTO, GameDTO gameDTO) {
+        MemberEntity memberEntity = MemberEntity.toPurchaseEntity(memberDTO, gameDTO);
+        PointEntity pointEntity = PointEntity.toPointPurchaseEntity(memberEntity, gameDTO);
+        memberRepository.save(memberEntity);
+        pointRepository.save(pointEntity);
     }
 }

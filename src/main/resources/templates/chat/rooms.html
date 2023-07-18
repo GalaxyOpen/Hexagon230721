@@ -10,24 +10,34 @@
 
 </head>
 <body>
+<div id="chat-lobby-header">
+    <table id="head-table">
+        <tr>
+            <th><p>채팅 목록</p></th>
+        </tr>
+        <tr>
+            <button class="btn-plus" onclick="showForm()" title="채팅방 개설"><i class="bi bi-plus-lg"></i></button>
+        </tr>
+        <tr id="show-form" style="display: none">
+            <td>
+                <form th:action="@{/chat/room}" method="post" id="create-room">
+                    <input type="text" name="roomName" class="form-control">
+                    <input type="hidden" name="memberId" th:value="${username}">
+                    <button type="submit" class="btn-chat">채팅방 개설</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 <div id="lobby-container">
     <table id="lobby-list">
-        <thead>
-        <tr>
-            <th><h4>채팅 목록</h4></th>
-        </tr>
-        </thead>
         <tbody>
         <tr th:each="room : ${list}">
-            <td><i class="bi bi-chat-left-dots-fill"></i><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.roomName}]]</a></td>
+            <td><i class="bi bi-chat-left-dots-fill"></i><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.roomName}]]</a>
+            </td>
         </tr>
         </tbody>
     </table>
-    <form th:action="@{/chat/room}" method="post" id="create-room">
-        <input type="text" name="roomName" class="form-control">
-        <input type="hidden" name="memberId" th:value="${username}">
-        <button type="submit" class="btn-chat">채팅방 개설</button>
-    </form>
 </div>
 
 <script th:inline="javascript">
@@ -49,6 +59,14 @@
                 $("form").submit();
         });
     });
+
+    const showForm = () => {
+        const createRoom = document.getElementById("create-room");
+        const showForm = document.getElementById("show-form");
+        const lobbyContainer = document.getElementById("lobby-container");
+        showForm.style.display = "table-row";
+        lobbyContainer.style.marginTop = "160px";
+    }
 </script>
 </body>
 </html>

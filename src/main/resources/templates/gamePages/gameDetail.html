@@ -96,6 +96,9 @@
             <div class="purchase-button">
                 <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
             </div>
+            <div th:if="${purchase} == null">
+                <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
+            </div>
         </div>
         <!-- 할인 X -->
         <div class="price-info" th:unless="${game.discountRate != 0}">
@@ -112,6 +115,9 @@
             </div>
             <div class="purchase-button">
                 <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+            </div>
+            <div th:if="${purchase} == null">
+                <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
             </div>
         </div>
     </div>
@@ -203,6 +209,20 @@
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script th:inline="javascript">
+
+    const purchase = () => {
+        const id = [[${game.id}]]
+
+        if(confirm("게임을 구매하시겠습니까?")){
+            location.href = "/purchase/save/" + id;
+        }
+
+    }
+
+
+
+
+
     const review_list = (gameReviewList) => {
         const resultArea = document.querySelector("#review-list");
 
@@ -329,6 +349,9 @@
     const bucket = () => {
         location.href = "/bucket/save"
     }
+
+
+
 
 </script>
 </html>

@@ -1,12 +1,10 @@
 package com.icia.hexagon.Controller;
 
-import com.icia.hexagon.DTO.GameDTO;
-import com.icia.hexagon.DTO.GameReviewDTO;
-import com.icia.hexagon.DTO.MemberDTO;
-import com.icia.hexagon.DTO.ThumbnailDTO;
+import com.icia.hexagon.DTO.*;
 import com.icia.hexagon.Service.GameReviewService;
 import com.icia.hexagon.Service.GameService;
 import com.icia.hexagon.Service.MemberService;
+import com.icia.hexagon.Service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,10 +28,11 @@ public class GameController {
     private final GameService gameService;
     private final MemberService memberService;
     private final GameReviewService gameReviewService;
+    private final PurchaseService purchaseService;
 
     // 게임등록 화면
     @GetMapping("/save")
-    public String saveForm(){
+    public String saveForm() {
         return "/gamePages/gameSave";
     }
 
@@ -48,10 +47,10 @@ public class GameController {
 
     // 게임목록
     @GetMapping
-    public String findAll(@PageableDefault(page=1) Pageable pageable,
-                          @RequestParam(value="type", required = false, defaultValue = "")String type,
-                          @RequestParam(value="q", required = false, defaultValue = "")String q,
-                          Model model){
+    public String findAll(@PageableDefault(page = 1) Pageable pageable,
+                          @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                          @RequestParam(value = "q", required = false, defaultValue = "") String q,
+                          Model model) {
         Page<GameDTO> gameDTOS = gameService.paging(pageable, type, q);
         List<GameDTO> gameList = gameDTOS.getContent();
         List<ThumbnailDTO> thumbnailList = new ArrayList<>();
@@ -60,10 +59,10 @@ public class GameController {
             ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
             thumbnailList.add(thumbnailDTO);
         }
-        if(gameDTOS.getTotalElements()==0){
-            model.addAttribute("gameList",null);
+        if (gameDTOS.getTotalElements() == 0) {
+            model.addAttribute("gameList", null);
 
-        }else{
+        } else {
             model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
 
@@ -150,21 +149,36 @@ public class GameController {
     @Transactional
     @GetMapping("/detail/{id}")
     public String findById(@PathVariable Long id,
-                           @RequestParam(value="page", required = false, defaultValue = "0") int page,
+                           @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                            @RequestParam("type") String type,
                            @RequestParam("q") String q,
-                           Model model){
-        model.addAttribute("page",page);
-        model.addAttribute("type",type);
-        model.addAttribute("q",q);
+                           @AuthenticationPrincipal User user,
+                           Model model) {
+
+
+        model.addAttribute("page", page);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
 
         GameDTO gameDTO = gameService.findById(id);
+
+        if (user != null) {
+            MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+            PurchaseDTO purchaseDTO = purchaseService.findByMemberId(gameDTO, memberDTO);
+            System.out.println("============" + purchaseDTO);
+            if (purchaseDTO == null) {
+                model.addAttribute("purchase", null);
+            }
+            model.addAttribute("purchase", purchaseDTO);
+        }
+
         model.addAttribute("game", gameDTO);
 
+
         List<GameReviewDTO> gameReviewDTOList = gameReviewService.findAll(id);
-        if(gameReviewDTOList.size() > 0) {
+        if (gameReviewDTOList.size() > 0) {
             model.addAttribute("gameReviewList", gameReviewDTOList);
-        }else{
+        } else {
             model.addAttribute("gameReviewList", null);
         }
         return "/gamePages/gameDetail";
@@ -173,7 +187,7 @@ public class GameController {
     // 게임정보 수정화면
     @Transactional
     @GetMapping("/update/{id}")
-    public String updateForm(@PathVariable("id") Long id, Model model){
+    public String updateForm(@PathVariable("id") Long id, Model model) {
         GameDTO gameDTO = gameService.findById(id);
         model.addAttribute("game", gameDTO);
         return "/gamePages/gameUpdate";
@@ -183,7 +197,7 @@ public class GameController {
     @Transactional
     @PostMapping("/update")
     public String update(@ModelAttribute GameDTO gameDTO,
-                         @AuthenticationPrincipal User user) throws IOException{
+                         @AuthenticationPrincipal User user) throws IOException {
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
         gameService.update(gameDTO, memberDTO);
         return "redirect:/game";
@@ -191,11 +205,10 @@ public class GameController {
 
     // 게임정보 삭제
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) {
         gameService.delete(id);
         return "redirect:/game";
     }
-
 
 
 }

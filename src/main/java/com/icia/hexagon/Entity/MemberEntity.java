@@ -1,4 +1,5 @@
 package com.icia.hexagon.Entity;
+import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.DTO.PointDTO;
 import lombok.Getter;
@@ -101,6 +102,19 @@ public class MemberEntity extends BaseEntity{
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setTotalPoint(memberDTO.getTotalPoint()+pointDTO.getChargedPoint());
+        return memberEntity;
+    }
+
+    public static MemberEntity toPurchaseEntity(MemberDTO memberDTO, GameDTO gameDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberId(memberDTO.getMemberId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setTotalPoint(memberDTO.getTotalPoint() - gameDTO.getSalesPrice());
         return memberEntity;
     }
 

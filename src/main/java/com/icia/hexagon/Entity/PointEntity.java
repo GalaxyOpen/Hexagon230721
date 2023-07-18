@@ -1,5 +1,6 @@
 package com.icia.hexagon.Entity;
 
+import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.PointDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,15 @@ public class PointEntity extends BaseEntity{
         pointEntity.setUsedPoint(pointDTO.getUsedPoint());
         pointEntity.setChargedPoint(pointDTO.getChargedPoint());
         pointEntity.setTotalPoint(pointDTO.getTotalPoint());
+        pointEntity.setMemberEntity(memberEntity);
+        return pointEntity;
+    }
+
+    public static PointEntity toPointPurchaseEntity(MemberEntity memberEntity, GameDTO gameDTO){
+        PointEntity pointEntity = new PointEntity();
+        pointEntity.setUsedPoint(gameDTO.getSalesPrice());
+        pointEntity.setChargedPoint(0L);
+        pointEntity.setTotalPoint(memberEntity.getTotalPoint());
         pointEntity.setMemberEntity(memberEntity);
         return pointEntity;
     }

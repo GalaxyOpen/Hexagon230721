@@ -96,7 +96,7 @@
             <div class="purchase-button">
                 <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
             </div>
-            <div th:if="${purchase} == null">
+            <div th:if="${purchase} == null and ${session.loginId} != null">
                 <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
             </div>
         </div>
@@ -116,7 +116,7 @@
             <div class="purchase-button">
                 <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
             </div>
-            <div th:if="${purchase} == null">
+            <div th:if="${purchase} == null and ${session.loginId} != null">
                 <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
             </div>
         </div>
@@ -210,17 +210,52 @@
 </body>
 <script th:inline="javascript">
 
+    // 메시지 이벤트 리스너 등록
+    window.addEventListener("message", function (event) {
+        if (event.data === "chargeComplete") {
+            // 충전이 완료되었다는 메시지를 받으면 새로고침
+            location.reload();
+        }
+    });
+
+
     const purchase = () => {
         const id = [[${game.id}]]
+        const price = [[${game.salesPrice}]]
+        const point = [[${point}]]
 
-        if(confirm("게임을 구매하시겠습니까?")){
-            location.href = "/purchase/save/" + id;
+        if (point == null) {
+            alert("로그인을 하셔야합니다.")
+        } else {
+            if (confirm("게임을 구매하시겠습니까?")) {
+                if (point < price) {
+                    if (confirm("포인트가 부족합니다. 충전하시겠습니까?")) {
+                        // 포인트 충전 화면 URL
+                        const pointChargeUrl = "/point/charge";
+
+                        // 새 창의 옵션을 설정합니다. 새 창의 크기, 위치 등을 조절할 수 있습니다.
+                        const windowOptions = "width=528,height=624,scrollbars=yes,resizable=yes";
+
+                        // 새 창을 엽니다.
+                        const newWindow = window.open(pointChargeUrl, "_blank", windowOptions);
+
+                        // 포인트 충전 결과를 확인하기 위한 이벤트 리스너 등록
+                        window.addEventListener("message", function (event) {
+                            // event.data 값이 "chargeComplete"인 경우, 충전이 완료되었다는 의미
+                            if (event.data === "chargeComplete") {
+                                // 충전이 완료되었다는 메시지를 받으면 새 창을 닫음
+                                newWindow.close();
+                            }
+                        });
+                    } else {
+                        alert("취소되었습니다.");
+                    }
+                } else {
+                    location.href = "/purchase/save/" + id;
+                }
+            }
         }
-
     }
-
-
-
 
 
     const review_list = (gameReviewList) => {
@@ -229,7 +264,7 @@
         let output = "";
         for (let i in gameReviewList) {
             let stars = "";
-            for (let j=0; j < gameReviewList[i].star; j++) {
+            for (let j = 0; j < gameReviewList[i].star; j++) {
                 stars += "⭐";
             }
             output +=
@@ -240,7 +275,7 @@
                 "                            <i class=\"bi bi-person-circle\"></i>\n" +
                 "                        </div>\n" +
                 "                        <div id=\"wrt-cr\">\n" +
-                "                            <span>" + gameReviewList[i].reviewWriter +"</span>\n" +
+                "                            <span>" + gameReviewList[i].reviewWriter + "</span>\n" +
                 "                            <p>" + gameReviewList[i].createdAt + "</p>\n" +
                 "                        </div>\n" +
                 "                        <div>\n" +
@@ -349,8 +384,6 @@
     const bucket = () => {
         location.href = "/bucket/save"
     }
-
-
 
 
 </script>

@@ -24,22 +24,20 @@ public class PurchaseEntity extends BaseEntity{
     private GameEntity gameEntity;
 
     @Column(nullable = false)
-    private int buyAmount;
+    private Long buyAmount;
 
-    @Column(length = 20, nullable = false)
-    private String payMethod;
+//    @Column(length = 20, nullable = false)
+//    private String payMethod;
+//
+//    @Column(length = 20, nullable = false)
+//    private String status;
 
-    @Column(length = 20, nullable = false)
-    private String status;
-
-//public static PurchaseEntity toPurchaseEntity(PurchaseDTO purchaseDTO){
-//    PurchaseEntity purchaseEntity = new PurchaseEntity();
-//    purchaseEntity.setMemberEntity(purchaseDTO.getMemberEntity);
-//    purchaseEntity.setGameEntity(purchaseDTO.getGameEntity);
-//    purchaseEntity.setBuyAmount(purchaseDTO.getBuyAmount);
-//    purchaseEntity.setPayMethod(purchaseDTO.getPayMethod);
-//    purchaseEntity.setStatus(purchaseDTO.getStatus);
-//    return purchaseEntity;
-//}
+    public static PurchaseEntity toPurchaseEntity(GameEntity gameEntity, MemberEntity memberEntity){
+        PurchaseEntity purchaseEntity = new PurchaseEntity();
+        purchaseEntity.setMemberEntity(memberEntity);
+        purchaseEntity.setGameEntity(gameEntity);
+        purchaseEntity.setBuyAmount(gameEntity.getSalesPrice());
+        return purchaseEntity;
+    }
 
 }

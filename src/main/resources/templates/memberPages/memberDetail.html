@@ -150,6 +150,13 @@
             "width=550, height=800, top=50, left=50"
         )
     }
+    // 메시지 이벤트 리스너 등록
+    window.addEventListener("message", function (event) {
+        if (event.data === "chargeComplete") {
+            // 충전이 완료되었다는 메시지를 받으면 새로고침
+            location.reload();
+        }
+    });
 
 </script>
 </html>

@@ -39,7 +39,7 @@
 </div>
 <button type="button" id="charge-kakao">결제</button>
 </div>
-</body>
+
 <script>
     $('#charge-kakao').click(function () {
         // getter
@@ -70,10 +70,7 @@
             console.log(rsp);
             if (rsp.success) {
                 let msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
+                msg += '\n결제 금액 : ' + rsp.paid_amount;
 
                 axios({
                     method: "post",
@@ -87,18 +84,20 @@
                     .then(function (response) {
                         console.log("포인트 저장 요청 완료");
                         console.log(response.data); // 응답 데이터 확인
-                        location.href = "/member/detail";
+                        // 알림창 띄운 후 확인 버튼을 누르면 창이 종료되도록 처리
+                        alert(msg);
+                        closeWindow();
                     })
                     .catch(function (error) {
                         console.error("포인트 저장 요청 실패:", error);
+                        alert("결제를 실패하셨습니다.")
                         location.href = "/member/detail";
                     });
             } else {
                 let msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
             }
-            alert(msg);
-            document.location.href = "/user/mypage/home"; //alert창 확인 후 이동할 url 설정
         });
     });
 
@@ -111,5 +110,12 @@
         howMuchPay.innerHTML = checked + " 원";
         howMuchCharge.innerHTML = checked + " 포인트";
     }
+
+    // 현재 창을 닫기 위한 함수
+    function closeWindow() {
+        window.opener.postMessage("chargeComplete", "*");
+        window.close();
+    }
 </script>
+</body>
 </html>

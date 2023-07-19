@@ -26,7 +26,9 @@ body {
 }
 
 #chat-room-container {
-    overflow-y: scroll;
+    overflow-y: auto;
+    display:flex;
+    flex-direction: column-reverse;
     margin-top: 110px;
     height: 550px;
     min-height: 100%;

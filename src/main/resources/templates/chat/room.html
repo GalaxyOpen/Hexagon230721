@@ -25,6 +25,7 @@
 </div>
 </body>
 <script th:inline="javascript">
+
     $(document).ready(function () {
 
         let roomName = [[${room.roomName}]];
@@ -99,6 +100,12 @@
                 sendMessage();
             }
         });
+
+        $(window).on('load', function () {
+            let container = document.getElementById("chat-room-container");
+            container.scrollTop = container.scrollHeight;
+        });
     });
+
 </script>
 </html>

@@ -218,27 +218,56 @@
         }
     });
 
+    const getCurrentAge = (birthdate) => {
+        const currentDate = new Date();
+        const birthdateParts = birthdate.split('-');
+        const birthYear = parseInt(birthdateParts[0]);
+        const birthMonth = parseInt(birthdateParts[1]);
+        const birthDay = parseInt(birthdateParts[2]);
+
+        let age = currentDate.getFullYear() - birthYear;
+
+        if (currentDate.getMonth() + 1 < birthMonth) {
+            age--;
+        } else if (currentDate.getMonth() + 1 === birthMonth) {
+            if (currentDate.getDate() < birthDay) {
+                age--;
+            }
+        }
+
+        return age;
+    };
+
 
     const purchase = () => {
         const id = [[${game.id}]]
         const price = [[${game.salesPrice}]]
+        const grade = [[${game.gameGrade}]]
+        const member = [[${session.loginId}]]
         const point = [[${point}]]
+        const brith = [[${brith}]] // 2023-07-14
+        const age = getCurrentAge(brith);
 
-        if (point == null) {
-            alert("로그인을 하셔야합니다.")
-        } else {
-            if (confirm("게임을 구매하시겠습니까?")) {
+        console.log(age)
+        console.log(grade)
+
+        if (member == null) {
+            alert("로그인 후 구매가능합니다.")
+            return
+        }
+
+        if (confirm("게임을 구매하시겠습니까?")) {
+            if (String(grade) != '전체' && age < grade) {
+                alert(grade + "세 이상만 이용가능합니다.")
+            } else {
                 if (point < price) {
                     if (confirm("포인트가 부족합니다. 충전하시겠습니까?")) {
                         // 포인트 충전 화면 URL
                         const pointChargeUrl = "/point/charge";
-
                         // 새 창의 옵션을 설정합니다. 새 창의 크기, 위치 등을 조절할 수 있습니다.
                         const windowOptions = "width=528,height=624,scrollbars=yes,resizable=yes";
-
                         // 새 창을 엽니다.
                         const newWindow = window.open(pointChargeUrl, "_blank", windowOptions);
-
                         // 포인트 충전 결과를 확인하기 위한 이벤트 리스너 등록
                         window.addEventListener("message", function (event) {
                             // event.data 값이 "chargeComplete"인 경우, 충전이 완료되었다는 의미

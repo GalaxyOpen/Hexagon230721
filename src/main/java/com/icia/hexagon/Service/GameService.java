@@ -119,7 +119,7 @@ public class GameService {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = pageable.getPageSize();
 
-        LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
+        LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(7);
         Page<GameEntity> gameEntities = null;
         if (type.equals("title")) {
             gameEntities = gameRepository.findByGameTitleContainingAndCreatedAtAfter(q, oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));

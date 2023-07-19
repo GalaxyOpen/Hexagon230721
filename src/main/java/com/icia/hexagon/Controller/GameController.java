@@ -165,6 +165,7 @@ public class GameController {
         if (user != null) {
             MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
             PurchaseDTO purchaseDTO = purchaseService.findByMemberId(gameDTO, memberDTO);
+            model.addAttribute("brith", memberDTO.getMemberBirth());
             model.addAttribute("point", memberDTO.getTotalPoint());
 
             if (purchaseDTO == null) {
@@ -172,6 +173,7 @@ public class GameController {
             }
             model.addAttribute("purchase", purchaseDTO);
         }else{
+            model.addAttribute("brith", null);
             model.addAttribute("point", null);
         }
         model.addAttribute("game", gameDTO);

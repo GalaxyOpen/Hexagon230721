@@ -28,6 +28,7 @@ public class PointService {
         PointEntity pointEntity = PointEntity.toPointSaveEntity(pointDTO, memberEntity);
         memberRepository.save(memberEntity);
         pointRepository.save(pointEntity);
+
     }
 
     @Transactional
@@ -44,7 +45,7 @@ public class PointService {
                 .ChargedPoint(pointEntity.getChargedPoint())
                 .UsedPoint(pointEntity.getUsedPoint())
                 .totalPoint(pointEntity.getTotalPoint())
-                .createdAt(UtilClass.dateFormat(pointEntity.getCreatedAt())) // point 내역 발생일시 (7.17. 이문정)
+                .createdAt(UtilClass.dateFormat(pointEntity.getCreatedAt()))
                 .build());
         return pointDTOS;
     }

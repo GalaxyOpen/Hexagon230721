@@ -162,14 +162,13 @@ body {
     display: inline-block;
     float: left;
     width: 60%;
-    margin-top: 5%;
 }
 
 .price-info {
     display: inline-block;
     float: left;
     width: 60%;
-    margin-top: 8%;
+    margin-top: 4%;
 }
 
 .discount {
@@ -226,6 +225,7 @@ body {
 #introduction {
     margin-top: 30px;
     padding: 10px;
+    margin-bottom: 30px;
 }
 
 
@@ -239,10 +239,11 @@ body {
     width: 100%;
 }
 
-#review-write {
+.review-write {
     background-color: #230f23;
     width: 100%;
     padding: 30px;
+    position: relative;
 }
 
 .eval-this-game {
@@ -251,7 +252,7 @@ body {
     margin-right: 30px;
 }
 
-#review-write input[type="text"] {
+.review-write input[type="text"] {
     width: 50%;
     padding: 8px;
     outline: none;
@@ -264,7 +265,7 @@ body {
     margin-bottom: 5px;
 }
 
-#review-write textarea {
+.review-write textarea {
     background-color: inherit;
     padding: 8px;
     margin-top: 30px;
@@ -274,7 +275,7 @@ body {
     border: none;
 }
 
-#review-write textarea:focus {
+.review-write textarea:focus {
     outline: none;
 }
 
@@ -305,25 +306,25 @@ body {
     text-align: right;
 }
 
-#review-write input[type=radio]{
+.review-write input[type=radio]{
     display: none;
 }
 
-#review-write label{
+.review-write label{
     font-size: 1.5em;
     color: transparent;
     text-shadow: 0 0 0 #f0f0f0;
 }
 
-#review-write label:hover{
+.review-write label:hover{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
-#review-write label:hover ~ label{
+.review-write label:hover ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
-#review-write input[type=radio]:checked ~ label{
+.review-write input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
@@ -363,4 +364,39 @@ body {
 
 .review-contents-box {
     min-height: 50px;
+}
+
+.need-login {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; /* 수직 정렬 */
+
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; /* 수평 정렬 */
+
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    position: absolute;
+}
+
+.need-login p {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
 }

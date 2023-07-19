@@ -18,7 +18,7 @@
 <div th:replace="/components/gameNav :: gameNav"></div>
 <div class="game-release-section" style="margin-top: 200px">
   <div class="paging-list">
-    <h3> 🆕 지금까지 이런 게임은 없었다! 이 달의 신작 </h3>
+    <h3> 🆕 지금까지 이런 게임은 없었다! 이 주의 신작 </h3>
     <div th:if="${gameList != null}" class="game-list">
       <div th:each="game: ${gameList}" class="game-card">
         <div class="game-thumbnail">

@@ -2,14 +2,21 @@ package com.icia.hexagon.Service;
 
 import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.MemberDTO;
+
 import com.icia.hexagon.DTO.PurchaseDTO;
 import com.icia.hexagon.Entity.GameEntity;
 import com.icia.hexagon.Entity.MemberEntity;
+
 import com.icia.hexagon.Entity.PurchaseEntity;
 import com.icia.hexagon.Repository.GameRepository;
 import com.icia.hexagon.Repository.MemberRepository;
 import com.icia.hexagon.Repository.PurchaseRepository;
+import com.icia.hexagon.Util.UtilClass;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,4 +55,23 @@ public class PurchaseService {
             return null;
         }
     }
+
+    public Page<PurchaseDTO> purchaseHistory(Pageable pageable, Long memberId) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 10;
+        Page<PurchaseEntity> purchaseEntities = null;
+
+        purchaseEntities = purchaseRepository.findByMemberEntity_Id(memberId, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        Page<PurchaseDTO> purchaseDTOS = purchaseEntities.map(purchaseEntity -> PurchaseDTO.builder()
+                .id(purchaseEntity.getId())
+                .memberId(purchaseEntity.getMemberEntity().getId())
+                .gameId(purchaseEntity.getGameEntity().getId())
+                .createdAt(UtilClass.dateFormat(purchaseEntity.getCreatedAt()))
+                .buyAmount(purchaseEntity.getBuyAmount())
+                .build());
+        return purchaseDTOS;
+    }
+
+
 }

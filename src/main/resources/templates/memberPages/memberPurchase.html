@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/buttons.css}">
+  <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
+  <link rel="stylesheet" th:href="@{/css/memberList.css}">
+  <link rel="stylesheet" th:href="@{/css/pointList.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div th:replace="/components/header :: header"></div>
+<div id="point-list-section" style="margin-top: 150px">
+  <h2><span th:text="${session.loginId}"></span><span> 님의 구매 내역</span></h2>
+  <div class="container" id="paging-list">
+    <div th:if="${purchaseList !=null}" id="member-list">
+      <table class="table-point-list">
+        <thead>
+        <tr>
+          <th scope="col">게임</th>
+          <th scope="col">구매금액</th>
+          <th scope="col">구매일자</th>
+        </tr>
+        </thead>
+          <tbody>
+          <tr th:each="purchase, index: ${purchaseList}">
+              <td th:text="${games[index.index]}"></td>
+              <td style="color: #ff0000">
+                  <span th:text="${purchase.buyAmount}"></span>
+              </td>
+              <td th:text="${purchase.createdAt}"></td>
+          </tr>
+          </tbody>
+      </table>
+
+      <div class="point-page-container">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" th:href="@{/member(page=1)}">
+              <span>첫 페이지</span>
+            </a>
+          </li>
+          <li th:class="${purchaseList.first} ? 'none'" : class="page-item">
+            <a class="page-link"
+               th:href="${purchaseList.first} ? '#' : @{/purchase(page=${purchaseList.number})}">
+              <span><</span>
+            </a>
+          </li>
+          <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+              th:class="${page == purchaseList.number+1}?'page-item-active'" class="page-item">
+            <a th:href="@{/purchase(page=${page})}" class="page-link"
+               th:text="${page}"></a>
+          </li>
+          <li th:class="${purchaseList.last}?'none'">
+            <a class="page-link"
+               th:href="${purchaseList.last}?'#': @{/purchase(page=${purchaseList.number+2})}">
+              <span>&gt;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" th:href="@{/purchase(page=${purchaseList.totalPages})}">
+              <span>끝 페이지</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div th:unless="${purchaseList!=null}">
+      <h1>검색결과가 없습니다!!</h1>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -49,7 +49,7 @@ public class ChatController {
         ChatRoomEntity room = new ChatRoomEntity();
         mav.addObject("room", room);
         mav.addObject("username", memberId);
-        rttr.addFlashAttribute("roomName", roomName+"방이 개설되었습니다.");
+        rttr.addFlashAttribute("roomName", roomName);
         return mav;
     }
 

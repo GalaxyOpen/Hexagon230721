@@ -93,11 +93,17 @@
             <div class="sales-price">
                 <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
             </div>
-            <div class="purchase-button">
-                <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
-            </div>
             <div th:if="${purchase} == null and ${session.loginId} != null">
-                <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
+                <div class="purchase-button">
+                    <button class="btn-4-bucket" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+                    <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 바로구매</button>
+                </div>
+            </div>
+            <div th:unless="${purchase} == null and ${session.loginId} != null">
+                <div class="purchase-button">
+                    <button class="btn-4-bucket" onclick="bucket()" title="로그인 후 이용 가능합니다." disabled><i class="bi bi-cart4"></i> 장바구니</button>
+                    <button class="btn-4" onclick="purchase()" title="로그인 후 이용 가능합니다." disabled><i class="bi bi-upc-scan"></i> 바로구매</button>
+                </div>
             </div>
         </div>
         <!-- 할인 X -->
@@ -113,11 +119,17 @@
             <div class="sales-price">
                 <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
             </div>
-            <div class="purchase-button">
-                <button class="btn-4" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
-            </div>
             <div th:if="${purchase} == null and ${session.loginId} != null">
-                <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 구매하기</button>
+                <div class="purchase-button">
+                    <button class="btn-4-bucket" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+                    <button class="btn-4" onclick="purchase()"><i class="bi bi-upc-scan"></i> 바로구매</button>
+                </div>
+            </div>
+            <div th:unless="${purchase} == null and ${session.loginId} != null">
+                <div class="purchase-button">
+                    <button class="btn-4-bucket" onclick="bucket()" title="로그인 후 이용 가능합니다." disabled><i class="bi bi-cart4"></i> 장바구니</button>
+                    <button class="btn-4" onclick="purchase()" title="로그인 후 이용 가능합니다." disabled><i class="bi bi-cart4"></i> 바로구매</button>
+                </div>
             </div>
         </div>
     </div>

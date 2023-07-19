@@ -162,14 +162,13 @@ body {
     display: inline-block;
     float: left;
     width: 60%;
-    margin-top: 5%;
 }
 
 .price-info {
     display: inline-block;
     float: left;
     width: 60%;
-    margin-top: 8%;
+    margin-top: 4%;
 }
 
 .discount {
@@ -226,6 +225,7 @@ body {
 #introduction {
     margin-top: 30px;
     padding: 10px;
+    margin-bottom: 30px;
 }
 
 

@@ -129,7 +129,7 @@
 
 .btn-4 {
     float: right;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 70%;
     background: linear-gradient(to right, #bc3265, #672873) ;
     border: none;
@@ -141,8 +141,27 @@
     border-radius: 5px;
 }
 
+.btn-4-bucket {
+    float: right;
+    margin-top: 10px;
+    width: 70%;
+    background-color: transparent;
+    border: 1px solid #cccccc;
+    outline: none;
+    color: #cccccc;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 .btn-4:hover {
     background: linear-gradient(to right, #e02c6f, #692577) ;
+}
+
+.btn-4-bucket:hover {
+    border: 1px solid white;
+    color: white;
 }
 
 #review-write. #review-list {

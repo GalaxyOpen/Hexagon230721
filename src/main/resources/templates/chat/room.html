@@ -18,13 +18,14 @@
     <div class="chatting-list" id="msgArea">
 
     </div>
-    <div id="chat-room-input">
-        <textarea type="text" id="msg"></textarea>
-        <button type="button" id="btn-send"><i class="bi bi-send-check"></i></button>
-    </div>
+</div>
+<div id="chat-room-input">
+    <textarea type="text" id="msg"></textarea>
+    <button type="button" id="btn-send"><i class="bi bi-send-check"></i></button>
 </div>
 </body>
 <script th:inline="javascript">
+
     $(document).ready(function () {
 
         let roomName = [[${room.roomName}]];
@@ -47,10 +48,14 @@
             let str = '';
 
             if (writer === username) {
-                str = "<div>";
+                str += "<div class='msg-form'>";
+                str += "<b style='color: #2fff00'>" + writer + " : " + message + "</b>";
+                str += "</div>";
+                $("#msgArea").append(str);
+            } else if (writer !== username) {
                 str += "<div>";
                 str += "<b style='color: #cccccc'>" + writer + " : " + message + "</b>";
-                str += "</div></div>";
+                str += "</div>";
                 $("#msgArea").append(str);
             }
         }
@@ -95,6 +100,12 @@
                 sendMessage();
             }
         });
+
+        $(window).on('load', function () {
+            let container = document.getElementById("chat-room-container");
+            container.scrollTop = container.scrollHeight;
+        });
     });
+
 </script>
 </html>

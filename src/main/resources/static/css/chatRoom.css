@@ -15,6 +15,7 @@ body {
     backdrop-filter: blur(5px);
     color: #cccccc;
     padding: 30px;
+    z-index: 1;
 }
 
 #chat-room-header span {
@@ -25,30 +26,31 @@ body {
 }
 
 #chat-room-container {
+    overflow-y: auto;
+    display:flex;
+    flex-direction: column-reverse;
     margin-top: 110px;
-    height: 100%;
-}
-
-#msgArea {
-    height: 600px;
+    height: 550px;
     min-height: 100%;
+    margin-bottom: 10px;
     position: relative;
 }
 
+
 #chat-room-input {
     bottom: 0;
-    position: fixed;
+    position: relative;
     width: 100%;
     height: 100px;
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(5px);
-    transform: translateY(-100%);
+    transform: translateY(0%);
 }
 
 #chat-room-input textarea {
     background-color: black;
     width: 95%;
-    height: 100px;
+    height: 95%;
     resize: none;
     position: relative;
     color: #cccccc;
@@ -59,7 +61,7 @@ body {
 #btn-send {
     position: absolute;
     right: 25px;
-    top: 3px;
+    top: 5px;
     background-color: inherit;
     border: none;
     color: #cccccc;
@@ -69,4 +71,3 @@ body {
 #btn-send:hover {
     color: white;
 }
-

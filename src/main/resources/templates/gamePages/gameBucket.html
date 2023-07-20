@@ -20,9 +20,9 @@
         </thead>
         <tbody>
         <tr th:each="bucket : ${bucketList}">
-            <td th:text="${bucket.game.gameTitle}"></td>
-            <td th:text="${#temporals.format(bucket.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${bucket.buyAmount}"></td>
+            <td th:text="${bucket.gameId}"></td>
+<!--            <td th:text="${#temporals.format(bucket.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--            <td th:text="${bucket.buyAmount}"></td>-->
         </tr>
         </tbody>
     </table>

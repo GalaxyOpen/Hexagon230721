@@ -61,6 +61,10 @@
             </div>
         </div>
 
+        <div th:unless="${gameList!=null}">
+            <h1>검색결과가 없습니다!!</h1>
+        </div>
+
         <div class="page-container">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
@@ -92,10 +96,6 @@
                 </li>
             </ul>
         </div>
-    </div>
-
-    <div th:unless="${gameList!=null}">
-        <h1>검색결과가 없습니다!!</h1>
     </div>
 </div>
 <div th:replace="/components/footer :: footer"></div>

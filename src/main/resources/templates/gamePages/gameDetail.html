@@ -340,6 +340,14 @@
         const contents = document.querySelector("#review-contents").value;
         const star = document.querySelector('[name="star"]:checked').value;
         const gameId = [[${game.id}]]
+        const purchase = [[${purchase}]]
+        console.log(purchase)
+
+
+        if(purchase == null){
+            alert("게임을 구매해야 리뷰작성이 가능합니다.")
+            return
+        }
         axios({
             method: "post",
             url: "/review/save",

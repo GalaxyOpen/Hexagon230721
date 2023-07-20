@@ -29,6 +29,9 @@ public class PointEntity extends BaseEntity{
     @ColumnDefault("0")
     private Long totalPoint;
 
+    @Column
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -38,6 +41,7 @@ public class PointEntity extends BaseEntity{
         pointEntity.setUsedPoint(pointDTO.getUsedPoint());
         pointEntity.setChargedPoint(pointDTO.getChargedPoint());
         pointEntity.setTotalPoint(pointDTO.getTotalPoint());
+        pointEntity.setStatus("포인트충전");
         pointEntity.setMemberEntity(memberEntity);
         return pointEntity;
     }
@@ -47,6 +51,7 @@ public class PointEntity extends BaseEntity{
         pointEntity.setUsedPoint(gameDTO.getSalesPrice());
         pointEntity.setChargedPoint(0L);
         pointEntity.setTotalPoint(memberEntity.getTotalPoint());
+        pointEntity.setStatus("게임구매");
         pointEntity.setMemberEntity(memberEntity);
         return pointEntity;
     }
@@ -56,6 +61,7 @@ public class PointEntity extends BaseEntity{
         pointEntity.setUsedPoint(0L);
         pointEntity.setChargedPoint ((long)(gameDTO.getSalesPrice()*0.9));
         pointEntity.setTotalPoint(entity.getTotalPoint());
+        pointEntity.setStatus("게임판매");
         pointEntity.setMemberEntity(entity);
         return pointEntity;
     }

@@ -153,7 +153,8 @@
         </div>
         <div class="lower-button">
             <button class="btn-2-left" onclick="game_List()">목록</button>
-            <button th:if="${session.loginId} == ${game.gameCreator}" class="btn-2-left" onclick="game_Update()">수정
+            <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId == 'admin'} "
+                    class="btn-2-left" onclick="game_Update()">수정
             </button>
             <button th:if="${session.loginId} == ${game.gameCreator} or ${session.loginId == 'admin'}"
                     class="btn-2-cancel-left" onclick="game_Delete()">삭제
@@ -340,6 +341,14 @@
         const contents = document.querySelector("#review-contents").value;
         const star = document.querySelector('[name="star"]:checked').value;
         const gameId = [[${game.id}]]
+        const purchase = [[${purchase}]]
+        console.log(purchase)
+
+
+        if(purchase == null){
+            alert("게임을 구매해야 리뷰작성이 가능합니다.")
+            return
+        }
         axios({
             method: "post",
             url: "/review/save",
@@ -369,7 +378,14 @@
     }
     const game_Delete = () => {
         const id = [[${game.id}]]
-        location.href = "/game/delete/" + id;
+
+        if(confirm("정말로 게임을 삭제하시겠습니까?")){
+            location.href = "/game/delete/" + id;
+        } else {
+            alert("삭제가 취소되었습니다.")
+        }
+
+
     }
     document.addEventListener("DOMContentLoaded", function () {
         const youtubeUrl = 'https://www.youtube.com/embed/' + [[${game.youtubeUrl}]];

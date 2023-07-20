@@ -90,7 +90,6 @@ public class GameController {
             model.addAttribute("gameList", null);
         } else {
             List<ThumbnailDTO> thumbnailList = new ArrayList<>();
-
             for (GameDTO game : gameDTOS.getContent()) {
                 ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
                 thumbnailList.add(thumbnailDTO);
@@ -98,6 +97,7 @@ public class GameController {
 
             model.addAttribute("thumbnailList", thumbnailList);
             model.addAttribute("gameList", gameDTOS);
+
         }
 
         int blockLimit = 10;
@@ -126,12 +126,14 @@ public class GameController {
                 ThumbnailDTO thumbnailDTO = gameService.GameThumbnails(game.getId());
                 thumbnailList.add(thumbnailDTO);
             }
-
+            model.addAttribute("gameList", gameDTOS);
             model.addAttribute("thumbnailList", thumbnailList);
+        }else{
+            model.addAttribute("gameList", null);
         }
 
-        model.addAttribute("gameList", gameDTOS);
 
+        System.out.println(gameDTOS.getContent());
         int blockLimit = 10;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < gameDTOS.getTotalPages()) ? startPage + blockLimit - 1 : gameDTOS.getTotalPages();

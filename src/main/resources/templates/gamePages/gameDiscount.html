@@ -67,30 +67,35 @@
 
         <div class="page-container">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" th:href="@{/game/discount(page=1, type=${type}, q=${q})}">
+                <li th:class="${gameList != null} ? 'page-item' : 'none'">
+                    <a class="page-link" th:if="${gameList != null}"
+                       th:href="@{/game/release(page=1, type=${type}, q=${q})}">
                         <span>첫 페이지</span>
                     </a>
                 </li>
-                <li th:class="${gameList.first} ? 'none'" : class="page-item">
+
+                <li th:if="${gameList != null}" th:class="${gameList.first} ? 'none page-item' : 'page-item'">
                     <a class="page-link"
-                       th:href="${gameList.first} ? '#' : @{/game/discount(page=${gameList.number}, tyep=${type}, q=${q})}">
+                       th:href="${gameList.first} ? '#' : @{/game/release(page=${gameList.number}, type=${type}, q=${q})}">
                         <span><</span>
                     </a>
                 </li>
-                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
-                    th:class="${page == gameList.number+1}?'page-item-active'" class="page-item">
-                    <a th:href="@{/game/discount(page=${page}, type=${type}, q=${q})}" class="page-link"
-                       th:text="${page}"></a>
+
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:if="${gameList != null}"
+                    th:class="${page == gameList.number+1}?'page-item-active' : 'page-item'">
+                    <a th:href="@{/game/release(page=${page}, type=${type}, q=${q})}" class="page-link" th:text="${page}"></a>
                 </li>
-                <li th:class="${gameList.last}?'none'">
-                    <a class="page-link"
-                       th:href="${gameList.last}?'#':@{/game/discount(page=${gameList.number+2}, type=${type}, q=${q})}">
+
+                <li th:class="${gameList != null and gameList.last} ? 'none' : 'page-item'">
+                    <a class="page-link" th:if="${gameList != null}"
+                       th:href="${gameList.last} ? '#' : @{/game/release(page=${gameList.number+2}, type=${type}, q=${q})}">
                         <span>&gt;</span>
                     </a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" th:href="@{/game/discount(page=${gameList.totalPages}, type=${type}, q=${q})}">
+
+                <li th:class="${gameList != null} ? 'page-item' : 'none'">
+                    <a class="page-link" th:if="${gameList != null}"
+                       th:href="@{/game/release(page=${gameList.totalPages}, type=${type}, q=${q})}">
                         <span>끝 페이지</span>
                     </a>
                 </li>

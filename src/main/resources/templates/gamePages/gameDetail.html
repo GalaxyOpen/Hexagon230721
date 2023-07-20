@@ -96,6 +96,14 @@
             <div th:if="${purchase} == null and ${session.loginId} != null">
                 <div class="purchase-button">
                     <button class="btn-4-bucket" onclick="bucket()"><i class="bi bi-cart4"></i> 장바구니</button>
+
+                    <div id="confirmModal" style="display: none;">
+                        <p>장바구니에 담을까요?</p>
+                        <button onclick="addToBucket()">예</button>
+                        <button onclick="closeModal()">아니오</button>
+                    </div>
+
+
                     <button class="btn-4" onclick="purchase()"><i class="bi bi-cart4"></i> 바로구매</button>
                 </div>
             </div>
@@ -233,6 +241,40 @@
             location.reload();
         }
     });
+    function bucket() {
+        const modal = document.getElementById("confirmModal");
+        modal.style.display = "block";
+        console.log(modal);
+    }
+
+    const addToBucket=()=>{
+        // 장바구니에 담을 Ajax 요청을 보내는 로직을 작성합니다.
+        console.log("memberId:", [[${member.memberId}]]);
+        console.log("member 객체", [[${member}]]);
+        console.log("gameId:",[[${game.id}]]);
+        console.log("game 객체", [[${game}]]);
+        axios({
+            method: 'post',
+            url: '/bucket/save',
+            data: {
+                memberId: [[${member.memberId}]],
+                gameId: [[${game.id}]]
+            }
+        })
+            .then(response => {
+                // 성공적으로 장바구니에 담겼을 때의 처리를 여기에 작성합니다.
+                // 예를 들어, 장바구니 담기 성공 메시지를 띄우고, 장바구니 페이지로 이동하는 등의 처리를 할 수 있습니다.
+                alert('장바구니에 담겼습니다.');
+                closeModal();
+                location.href = '/bucket/' + [[${member.memberId}]];
+            })
+            .catch(error => {
+                // 장바구니 담기 실패 시의 처리를 여기에 작성합니다.
+                // 예를 들어, 에러 메시지를 띄우거나 로그를 출력하는 등의 처리를 할 수 있습니다.
+                console.error('장바구니 담기 실패:', error);
+                closeModal();
+            });
+    }
 
     const getCurrentAge = (birthdate) => {
         const currentDate = new Date();
@@ -442,8 +484,9 @@
         captionText.innerHTML = dots[slideIndex - 1].alt;
     }
 
-    const bucket = () => {
-        location.href = "/bucket/save"
+    function closeModal() {
+        const modal = document.getElementById("confirmModal");
+        modal.style.display = "none";
     }
 
 

@@ -255,7 +255,7 @@
             method: 'post',
             url: '/bucket/save',
             data: {
-                memberId: [[${member.memberId}]],
+                memberId: [[${session.loginId}]],
                 gameId: [[${game.id}]]
             }
         })

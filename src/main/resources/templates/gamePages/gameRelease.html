@@ -1,102 +1,103 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" th:href="@{/css/main.css}">
-  <link rel="stylesheet" th:href="@{/css/gameNav.css}">
-  <link rel="stylesheet" th:href="@{/css/buttons.css}">
-  <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
-  <link rel="stylesheet" th:href="@{/css/memberList.css}">
-  <link rel="stylesheet" th:href="@{/css/gameList.css}">
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/gameNav.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/memberDetail.css}">
+    <link rel="stylesheet" th:href="@{/css/memberList.css}">
+    <link rel="stylesheet" th:href="@{/css/gameList.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="/components/header :: header"></div>
 <div th:replace="/components/gameNav :: gameNav"></div>
 <div class="game-release-section" style="margin-top: 200px">
-  <div class="paging-list">
-    <h3> 🆕 지금까지 이런 게임은 없었다! 이 주의 신작 </h3>
-    <div th:if="${gameList != null}" class="game-list">
-      <div th:each="game: ${gameList}" class="game-card">
-        <div class="game-thumbnail">
-          <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}" class="thumbnail-column">
-            <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
-                 style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
-          </div>
-        </div>
-        <div class="game-info">
-          <div style="display: none" th:text="${game.id}"></div>
-          <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
-             th:text="${game.gameTitle}">제목</a>
-          <p th:if="${game.gameGenre == '0'}">RTS</p>
-          <p th:if="${game.gameGenre == '1'}">슈팅</p>
-          <p th:if="${game.gameGenre == '2'}">퍼즐</p>
-          <p th:if="${game.gameGenre == '3'}">공포</p>
-          <p th:if="${game.gameGenre == '4'}">액션</p>
-          <p th:if="${game.gameGenre == '5'}">모험</p>
-          <p th:if="${game.gameGenre == '6'}">RPG</p>
+    <div class="paging-list">
+        <h3> 🆕 지금까지 이런 게임은 없었다! 이 주의 신작 </h3>
+        <div th:if="${gameList != null}" class="game-list">
+            <div th:each="game: ${gameList}" class="game-card">
+                <div class="game-thumbnail">
+                    <div th:each="thumbnail: ${thumbnailList}" th:if="${game.id == thumbnail.gameId}"
+                         class="thumbnail-column">
+                        <img class="demo cursor" th:src="@{|/upload/${thumbnail.storedFileName}|}"
+                             style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
+                    </div>
+                </div>
+                <div class="game-info">
+                    <div style="display: none" th:text="${game.id}"></div>
+                    <a th:href="@{|/game/detail/${game.id}?page=${gameList.number+1}&type=${type}&q=${q}|}"
+                       th:text="${game.gameTitle}">제목</a>
+                    <p th:if="${game.gameGenre == '0'}">RTS</p>
+                    <p th:if="${game.gameGenre == '1'}">슈팅</p>
+                    <p th:if="${game.gameGenre == '2'}">퍼즐</p>
+                    <p th:if="${game.gameGenre == '3'}">공포</p>
+                    <p th:if="${game.gameGenre == '4'}">액션</p>
+                    <p th:if="${game.gameGenre == '5'}">모험</p>
+                    <p th:if="${game.gameGenre == '6'}">RPG</p>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate != 0}">
+                    <div class="dc-rate">
+                        <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
+                    </div>
+                    <div class="rel-price-none">
+                        <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
+                    </div>
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+                <div class="game-price" th:if="${game.discountRate == 0}">
+                    <div class="sal-price">
+                        <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="game-price" th:if="${game.discountRate != 0}">
-          <div class="dc-rate">
-            <span>-</span><span th:text="${game.discountRate}"></span><span>%</span>
-          </div>
-          <div class="rel-price-none">
-            <span>&#8361; </span><span th:text="${game.releasePrice}"></span>
-          </div>
-          <div class="sal-price">
-            <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
-          </div>
+        <div th:unless="${gameList!=null}">
+            <h1>검색결과가 없습니다!!</h1>
         </div>
 
-        <div class="game-price" th:if="${game.discountRate == 0}">
-          <div class="sal-price">
-            <span>&#8361; </span><span th:text="${game.salesPrice}"></span>
-          </div>
+        <div class="page-container">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/game/release(page=1, type=${type}, q=${q})}">
+                        <span>첫 페이지</span>
+                    </a>
+                </li>
+                <li th:class="${gameList.first} ? 'none'" : class="page-item">
+                    <a class="page-link"
+                       th:href="${gameList.first} ? '#' : @{/game/release(page=${gameList.number}, tyep=${type}, q=${q})}">
+                        <span><</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                    th:class="${page == gameList.number+1}?'page-item-active'" class="page-item">
+                    <a th:href="@{/game/release(page=${page}, type=${type}, q=${q})}" class="page-link"
+                       th:text="${page}"></a>
+                </li>
+                <li th:class="${gameList.last}?'none'">
+                    <a class="page-link"
+                       th:href="${gameList.last}?'#':@{/game/release(page=${gameList.number+2}, type=${type}, q=${q})}">
+                        <span>&gt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/game/release(page=${gameList.totalPages}, type=${type}, q=${q})}">
+                        <span>끝 페이지</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-
-      </div>
     </div>
-
-    <div class="page-container">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" th:href="@{/game/release(page=1, type=${type}, q=${q})}">
-            <span>첫 페이지</span>
-          </a>
-        </li>
-        <li th:class="${gameList.first} ? 'none'" : class="page-item">
-          <a class="page-link"
-             th:href="${gameList.first} ? '#' : @{/game/release(page=${gameList.number}, tyep=${type}, q=${q})}">
-            <span><</span>
-          </a>
-        </li>
-        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
-            th:class="${page == gameList.number+1}?'page-item-active'" class="page-item">
-          <a th:href="@{/game/release(page=${page}, type=${type}, q=${q})}" class="page-link"
-             th:text="${page}"></a>
-        </li>
-        <li th:class="${gameList.last}?'none'">
-          <a class="page-link"
-             th:href="${gameList.last}?'#':@{/game/release(page=${gameList.number+2}, type=${type}, q=${q})}">
-            <span>&gt;</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" th:href="@{/game/release(page=${gameList.totalPages}, type=${type}, q=${q})}">
-            <span>끝 페이지</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div th:unless="${gameList!=null}">
-    <h1>검색결과가 없습니다!!</h1>
-  </div>
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>

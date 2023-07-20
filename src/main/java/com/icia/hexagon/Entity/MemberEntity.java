@@ -114,6 +114,19 @@ public class MemberEntity extends BaseEntity{
         return memberEntity;
     }
 
+    public static MemberEntity toSalesEntity(MemberDTO memberDTO, GameDTO gameDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberId(memberDTO.getMemberId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setTotalPoint ((long) (memberDTO.getTotalPoint() + (gameDTO.getSalesPrice()*0.9)));
+        return memberEntity;
+    }
+
 
     public String getRoles() {
         // 멤버의 권한(role) 정보를 반환하는 로직 작성

@@ -39,8 +39,13 @@ public class TradeController {
                                @AuthenticationPrincipal User user) {
         GameDTO gameDTO = gameService.findById(id);
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
-
+        // 구매자 포인트내역 생성
         pointService.pointPurchase(memberDTO, gameDTO);
+
+        // 판매자 포인트내역 생성
+        pointService.pointSales(gameDTO);
+
+        // 거래내역 생성
         tradeService.tradeSave(gameDTO, memberDTO);
         return "redirect:/game";
     }

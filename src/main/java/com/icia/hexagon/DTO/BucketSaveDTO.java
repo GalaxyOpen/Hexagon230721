@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class BucketSaveDTO {
 
     private Long id; // 장바구니 번호
-    private Long MemberId; // 회원 번호
+    private String MemberId; // 회원 번호
     private Long GameId; // 게임 번호
 
 }

@@ -27,12 +27,6 @@ public class BucketEntity {
     @Column(nullable = false)
     private int buyAmount;
 
-    @Column(length = 20, nullable = false)
-    private String payMethod;
-
-    @Column(length = 20, nullable = false)
-    private String status;
-
     public static BucketEntity toBucketSaveEntity(MemberEntity memberEntity, GameEntity gameEntity){
         BucketEntity bucketEntity = new BucketEntity();
         bucketEntity.setMemberEntity(memberEntity);

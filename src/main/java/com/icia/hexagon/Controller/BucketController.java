@@ -10,6 +10,8 @@ import com.icia.hexagon.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,20 +28,22 @@ public class BucketController {
 
     //장바구니 담기
     @PostMapping("/save")
-    public @ResponseBody boolean save(@ModelAttribute BucketSaveDTO bucketSaveDTO){
-        // 리스트에 gameId, memberId 확인
-        // 없으면 저장이후 True 리턴
-        // 있으면 false 리턴
-        if(bucketService.check(bucketSaveDTO)){
+    public ResponseEntity<Boolean> save(@RequestBody BucketSaveDTO bucketSaveDTO) {
+        if (bucketService.check(bucketSaveDTO)) {
             bucketService.save(bucketSaveDTO);
-            return true;
-        }else{
-            return false;
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
         }
     }
-    @GetMapping("/{memberId}")
-    public String findByMemberId(@PathVariable("memberId")Long memberId, Model model){
-        List<BucketDetailDTO> bucketList = bucketService.findByMemberId(memberId);
+
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id,
+                           @AuthenticationPrincipal User user,
+                           Model model){
+
+        List<BucketDetailDTO> bucketList = bucketService.findById(id);
+        System.out.println("id =" +id);
         boolean bucket = false;
         if(!bucketList.isEmpty()){
             int totalPrice=0;
@@ -49,11 +53,11 @@ public class BucketController {
             model.addAttribute("bucketList", bucketList);
             model.addAttribute("totalPrice", totalPrice);
 
-            MemberDTO memberDTO = memberService.findById(memberId);
+            MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
             Long totalPoint = memberDTO.getTotalPoint();
+            GameDTO gameDTO = gameService.findById(memberDTO.getId());
             model.addAttribute("totalPoint", totalPoint);
-
-            GameDTO gameDTO = gameService.findById(memberId);
+            model.addAttribute("member", memberDTO);
             model.addAttribute("game", gameDTO);
 
         }else{
@@ -61,7 +65,7 @@ public class BucketController {
             bucket = true;
         }
         model.addAttribute("bucket", bucket);
-        return "/etc/bucket";
+        return "gamePages/gameBucket";
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable("id") Long id){

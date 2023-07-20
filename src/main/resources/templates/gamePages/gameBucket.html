@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Bucket</title>
+</head>
+<body>
+<h1>장바구니</h1>
+<div th:if="${bucket}">
+    <p>장바구니가 비어있습니다.</p>
+</div>
+<div th:if="${!bucket}">
+    <table>
+        <thead>
+        <tr>
+            <th>게임 제목</th>
+            <th>장바구니에 담은 날짜</th>
+            <th>결제금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bucket : ${bucketList}">
+            <td th:text="${bucket.game.gameTitle}"></td>
+            <td th:text="${#temporals.format(bucket.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${bucket.buyAmount}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <p>총 결제금액: <span th:text="${totalPrice}"></span></p>
+</div>
+<p>보유 포인트: <span th:text="${totalPoint}"></span></p>
+<div>
+    <!-- 여기에 추가적인 내용을 작성하시면 됩니다. -->
+</div>
+</body>
+</html>

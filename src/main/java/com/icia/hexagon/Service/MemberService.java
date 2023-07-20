@@ -51,26 +51,6 @@ public class MemberService {
         return memberDTOS;
     }
 
-//    public boolean authenticate(String memberEmail, String memberPassword) {
-//        // 사용자 이메일에 해당하는 회원 정보 조회
-//        Optional<MemberEntity> memberEntityOptional = memberRepository.findByMemberEmail(memberEmail);
-//
-//        // 사용자가 입력한 이메일과 일치하는 회원 정보가 없는 경우
-//        if (memberEntityOptional.isEmpty()) {
-//            return false;
-//        }
-//
-//        MemberEntity memberEntity = memberEntityOptional.get();
-//
-//        // 사용자가 입력한 비밀번호와 저장된 비밀번호 비교
-//        String hashedPassword = memberEntity.getMemberPassword();
-//
-//        // BCrypt.checkpw() 메서드는 BCrypt 해시 알고리즘을 사용하여 입력한 비밀번호와 해시된 비밀번호를 비교하는 역할.
-//        // BCrypt 해시 알고리즘은 무작위 솔트(salt)와 함께 비밀번호를 해시화하여 저장하므로, 안전한 비밀번호 비교를 위해 사용.
-//        boolean passwordMatch = BCrypt.checkpw(memberPassword, hashedPassword);
-//
-//        return passwordMatch;
-//    }
 
     public MemberDTO findById(Long id) {
         MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(()->new NoSuchElementException());

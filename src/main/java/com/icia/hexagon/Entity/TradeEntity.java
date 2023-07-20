@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "purchase_table")
+@Table(name = "trade_table")
 @Getter
 @Setter
-public class PurchaseEntity extends BaseEntity{
+public class TradeEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,12 @@ public class PurchaseEntity extends BaseEntity{
 //    @Column(length = 20, nullable = false)
 //    private String status;
 
-    public static PurchaseEntity toPurchaseEntity(GameEntity gameEntity, MemberEntity memberEntity){
-        PurchaseEntity purchaseEntity = new PurchaseEntity();
-        purchaseEntity.setMemberEntity(memberEntity);
-        purchaseEntity.setGameEntity(gameEntity);
-        purchaseEntity.setBuyAmount(gameEntity.getSalesPrice());
-        return purchaseEntity;
+    public static TradeEntity toPurchaseEntity(GameEntity gameEntity, MemberEntity memberEntity){
+        TradeEntity tradeEntity = new TradeEntity();
+        tradeEntity.setMemberEntity(memberEntity);
+        tradeEntity.setGameEntity(gameEntity);
+        tradeEntity.setBuyAmount(gameEntity.getSalesPrice());
+        return tradeEntity;
     }
 
 }

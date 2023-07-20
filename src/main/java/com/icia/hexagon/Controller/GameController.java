@@ -4,7 +4,7 @@ import com.icia.hexagon.DTO.*;
 import com.icia.hexagon.Service.GameReviewService;
 import com.icia.hexagon.Service.GameService;
 import com.icia.hexagon.Service.MemberService;
-import com.icia.hexagon.Service.PurchaseService;
+import com.icia.hexagon.Service.TradeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class GameController {
     private final GameService gameService;
     private final MemberService memberService;
     private final GameReviewService gameReviewService;
-    private final PurchaseService purchaseService;
+    private final TradeService tradeService;
 
     // 게임등록 화면
     @GetMapping("/save")
@@ -164,14 +163,14 @@ public class GameController {
 
         if (user != null) {
             MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
-            PurchaseDTO purchaseDTO = purchaseService.findByMemberId(gameDTO, memberDTO);
+            TradeDTO tradeDTO = tradeService.findByMemberId(gameDTO, memberDTO);
             model.addAttribute("brith", memberDTO.getMemberBirth());
             model.addAttribute("point", memberDTO.getTotalPoint());
 
-            if (purchaseDTO == null) {
+            if (tradeDTO == null) {
                 model.addAttribute("purchase", null);
             }
-            model.addAttribute("purchase", purchaseDTO);
+            model.addAttribute("purchase", tradeDTO);
         }else{
             model.addAttribute("brith", null);
             model.addAttribute("point", null);

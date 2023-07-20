@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +55,7 @@ public class MemberEntity extends BaseEntity{
     private List<GameReviewEntity> gameReviewEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy ="memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
-    private List<PurchaseEntity> purchaseEntityList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "memberEntity", cascade=CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<SalesEntity> salesEntityList = new ArrayList<>();
+    private List<TradeEntity> tradeEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch=FetchType.LAZY)
     private List<StarEntity> starEntityList = new ArrayList<>();

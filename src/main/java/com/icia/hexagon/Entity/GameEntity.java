@@ -1,7 +1,6 @@
 package com.icia.hexagon.Entity;
 
 import com.icia.hexagon.DTO.GameDTO;
-import com.icia.hexagon.DTO.ThumbnailDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,9 +67,7 @@ public class GameEntity extends BaseEntity {
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BucketEntity> bucketEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PurchaseEntity> purchaseEntityList = new ArrayList<>();
-    @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<SalesEntity> salesEntityList = new ArrayList<>();
+    private List<TradeEntity> tradeEntityList = new ArrayList<>();
 
     public static GameEntity toSaveEntity(GameDTO gameDTO, MemberEntity memberEntity) {
         GameEntity gameEntity = new GameEntity();

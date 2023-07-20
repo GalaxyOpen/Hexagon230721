@@ -26,13 +26,8 @@ public class TradeEntity extends BaseEntity{
     @Column(nullable = false)
     private Long buyAmount;
 
-//    @Column(length = 20, nullable = false)
-//    private String payMethod;
-//
-//    @Column(length = 20, nullable = false)
-//    private String status;
 
-    public static TradeEntity toPurchaseEntity(GameEntity gameEntity, MemberEntity memberEntity){
+    public static TradeEntity toTradeEntity(GameEntity gameEntity, MemberEntity memberEntity) {
         TradeEntity tradeEntity = new TradeEntity();
         tradeEntity.setMemberEntity(memberEntity);
         tradeEntity.setGameEntity(gameEntity);

@@ -36,7 +36,7 @@ public class TradeService {
         if(gameDTO.getSalesPrice() <= memberDTO.getTotalPoint()){
             GameEntity gameEntity = gameRepository.findById(gameDTO.getId()).get();
             MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).get();
-            tradeRepository.save(TradeEntity.toPurchaseEntity(gameEntity, memberEntity));
+            tradeRepository.save(TradeEntity.toTradeEntity(gameEntity, memberEntity));
         }
     }
 

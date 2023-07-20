@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 
 public class PointEntity extends BaseEntity{
-// BaseEntity에서 createdAt 상속 (7.17. 이문정)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,4 +51,12 @@ public class PointEntity extends BaseEntity{
         return pointEntity;
     }
 
+    public static PointEntity toPointSalesEntity(MemberEntity entity ,GameDTO gameDTO){
+        PointEntity pointEntity = new PointEntity();
+        pointEntity.setUsedPoint(0L);
+        pointEntity.setChargedPoint ((long)(gameDTO.getSalesPrice()*0.9));
+        pointEntity.setTotalPoint(entity.getTotalPoint());
+        pointEntity.setMemberEntity(entity);
+        return pointEntity;
+    }
 }

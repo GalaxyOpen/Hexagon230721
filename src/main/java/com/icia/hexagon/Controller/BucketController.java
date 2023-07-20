@@ -37,28 +37,29 @@ public class BucketController {
         }
     }
 
-    @GetMapping("/{id}")
-    public String findById(@PathVariable Long id,
-                           @AuthenticationPrincipal User user,
+    @GetMapping("/")
+    public String findById(@AuthenticationPrincipal User user,
                            Model model){
 
-        List<BucketDetailDTO> bucketList = bucketService.findById(id);
-        System.out.println("id =" +id);
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+        List<BucketDetailDTO> memberId = bucketService.findByMemberId(memberDTO.getMemberId());
+
         boolean bucket = false;
-        if(!bucketList.isEmpty()){
+
+        if(!memberId.isEmpty()){
             int totalPrice=0;
-            for(BucketDetailDTO b : bucketList){
+            for(BucketDetailDTO b : memberId){
                 totalPrice += b.getBuyAmount();
             }
-            model.addAttribute("bucketList", bucketList);
+            model.addAttribute("bucketList", memberId);
             model.addAttribute("totalPrice", totalPrice);
 
-            MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+
             Long totalPoint = memberDTO.getTotalPoint();
-            GameDTO gameDTO = gameService.findById(memberDTO.getId());
-            model.addAttribute("totalPoint", totalPoint);
-            model.addAttribute("member", memberDTO);
-            model.addAttribute("game", gameDTO);
+//            GameDTO gameDTO = gameService.findById(id);
+//            model.addAttribute("totalPoint", totalPoint);
+//            model.addAttribute("member", memberDTO);
+//            model.addAttribute("game", gameDTO);
 
         }else{
             //비어있을때

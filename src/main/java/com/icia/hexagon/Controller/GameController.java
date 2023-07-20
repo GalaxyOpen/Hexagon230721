@@ -168,6 +168,7 @@ public class GameController {
             TradeDTO tradeDTO = tradeService.findByMemberId(gameDTO, memberDTO);
             model.addAttribute("brith", memberDTO.getMemberBirth());
             model.addAttribute("point", memberDTO.getTotalPoint());
+            model.addAttribute("memberId", memberDTO.getId());
 
             if (tradeDTO == null) {
                 model.addAttribute("purchase", null);

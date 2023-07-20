@@ -48,6 +48,7 @@ public class PointService {
                 .ChargedPoint(pointEntity.getChargedPoint())
                 .UsedPoint(pointEntity.getUsedPoint())
                 .totalPoint(pointEntity.getTotalPoint())
+                .status(pointEntity.getStatus())
                 .createdAt(UtilClass.dateFormat(pointEntity.getCreatedAt()))
                 .build());
         return pointDTOS;

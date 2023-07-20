@@ -1,13 +1,17 @@
 package com.icia.hexagon.Repository;
 
 
+import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.Entity.GameEntity;
+import com.icia.hexagon.Entity.GameFileEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 
 public interface GameRepository extends JpaRepository<GameEntity, Long> {
@@ -32,4 +36,6 @@ public interface GameRepository extends JpaRepository<GameEntity, Long> {
     Page<GameEntity> findByGameCreatorContainingAndDiscountRateGreaterThanOrderByDiscountRateDesc(String q, int discountRate, Pageable pageable);
 
     Page<GameEntity> findByDiscountRateGreaterThanOrderByDiscountRateDesc(int discountRate, Pageable pageable);
+
+    List<GameEntity> findByMemberEntity_Id(Long memberId);
 }

@@ -119,7 +119,7 @@ public class GameService {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = pageable.getPageSize();
 
-        LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(7);
+        LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
         Page<GameEntity> gameEntities = null;
         if (type.equals("title")) {
             gameEntities = gameRepository.findByGameTitleContainingAndCreatedAtAfter(q, oneDayAgo, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
@@ -279,9 +279,14 @@ public class GameService {
         return ThumbnailDTO.toDTO(gameEntity.get());
     }
 
-    public GameFileDTO fileByGameId(Long id) {
-        GameFileEntity gameFiles = gameFileRepository.findByGameEntity_Id(id).get();
-        GameFileDTO gameFileDTO = GameFileDTO.toDTO(gameFiles);
-        return gameFileDTO;
+    public List<GameDTO> findByMemberId(Long memberId) {
+        List<GameEntity> gameEntities = gameRepository.findByMemberEntity_Id(memberId);
+        List<GameDTO> gameDTOs = new ArrayList<>();
+
+        for (GameEntity gameEntity : gameEntities) {
+            gameDTOs.add(GameDTO.toDTO(gameEntity));
+        }
+
+        return gameDTOs;
     }
 }

@@ -122,11 +122,18 @@
 
     const member_delete = () => {
         const id = [[${user.id}]];
+
+        if(!confirm("정말로 회원탈퇴를 하시겠습니까?")){
+            alert("회원탈퇴가 취소되었습니다.")
+            return
+        }
+
         axios({
             method: "delete",
             url: "/member/delete/" + id,
             withCredentials: true // 인증 정보 포함
         }).then(res => {
+            alert("지금까지 이용해주셔서 감사합니다.")
             location.href = "/";
         }).catch(err => {
             alert("삭제 실패");

@@ -249,15 +249,13 @@
 
     const addToBucket=()=>{
         // 장바구니에 담을 Ajax 요청을 보내는 로직을 작성합니다.
-        console.log("memberId:", [[${member.memberId}]]);
-        console.log("member 객체", [[${member}]]);
         console.log("gameId:",[[${game.id}]]);
         console.log("game 객체", [[${game}]]);
         axios({
             method: 'post',
             url: '/bucket/save',
             data: {
-                memberId: [[${member.memberId}]],
+                memberId: [[${session.loginId}]],
                 gameId: [[${game.id}]]
             }
         })
@@ -266,7 +264,7 @@
                 // 예를 들어, 장바구니 담기 성공 메시지를 띄우고, 장바구니 페이지로 이동하는 등의 처리를 할 수 있습니다.
                 alert('장바구니에 담겼습니다.');
                 closeModal();
-                location.href = '/bucket/' + [[${member.memberId}]];
+                location.href = '/bucket/' + [[${session.loginId}]];
             })
             .catch(error => {
                 // 장바구니 담기 실패 시의 처리를 여기에 작성합니다.

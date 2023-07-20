@@ -335,7 +335,8 @@
         resultArea.innerHTML = output;
     }
     const review_write = () => {
-        const writer = document.querySelector("#review-writer").value;
+        // const writer = document.querySelector("#review-writer").value;
+        const writer = [[${session.loginId}]]
         const contents = document.querySelector("#review-contents").value;
         const star = document.querySelector('[name="star"]:checked').value;
         const gameId = [[${game.id}]]
@@ -349,7 +350,7 @@
                 star: star
             }
         }).then(res => {
-            document.querySelector("#review-writer").value = "";
+            document.querySelector("#review-writer").value = writer;
             document.querySelector("#review-contents").value = "";
             review_list(res.data);
         }).catch(err => {

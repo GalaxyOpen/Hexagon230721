@@ -113,13 +113,6 @@ public class MemberController {
     }
 
 
-    // 마이페이지
-    @GetMapping("/myPage")
-    public String myPage(){
-        return "/memberPages/memberMain";
-    }
-
-
     // 회원상세 정보
     @GetMapping("/detail")
     public String detail(@AuthenticationPrincipal User user, Model model){

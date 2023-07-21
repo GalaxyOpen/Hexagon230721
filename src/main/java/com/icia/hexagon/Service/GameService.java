@@ -62,6 +62,7 @@ public class GameService {
             gameEntity.getThumbnailEntities().add(thumbnailEntity);
 
             // thumbnailEntity에 gameEntity 설정
+            gameEntity.setThumbnailUrl(thumbnailStoredFileName);
             thumbnailEntity.setGameEntity(gameEntity);
             thumbnailRepository.save(thumbnailEntity);
         }

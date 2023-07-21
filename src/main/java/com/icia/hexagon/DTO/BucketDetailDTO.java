@@ -33,16 +33,12 @@ public class BucketDetailDTO {
         bucketDetailDTO.setId(bucketEntity.getId());
         bucketDetailDTO.setMemberId(bucketEntity.getMemberEntity().getMemberId());
         bucketDetailDTO.setGameId(bucketEntity.getGameEntity().getId());
-
         bucketDetailDTO.setGameTitle(bucketEntity.getGameEntity().getGameTitle());
         bucketDetailDTO.setReleasePrice(bucketEntity.getGameEntity().getReleasePrice());
         bucketDetailDTO.setDiscountRate(bucketEntity.getGameEntity().getDiscountRate());
         bucketDetailDTO.setSalesPrice(bucketEntity.getGameEntity().getSalesPrice());
-
-//        bucketDetailDTO.setThumbnailUrl(bucketEntity.getGameEntity().getThumbnailEntities().get(0).getStoredFileName());
-
+        bucketDetailDTO.setThumbnailUrl(bucketEntity.getGameEntity().getThumbnailUrl());
         bucketDetailDTO.setBuyAmount(bucketEntity.getBuyAmount());
-
         return bucketDetailDTO;
     }
 }

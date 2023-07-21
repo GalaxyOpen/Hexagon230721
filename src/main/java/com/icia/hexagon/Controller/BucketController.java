@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,24 +43,25 @@ public class BucketController {
                            Model model){
 
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
-        List<BucketDetailDTO> memberId = bucketService.findByMemberId(memberDTO.getMemberId());
+        List<BucketDetailDTO> bucketDetailDTOS = bucketService.findByMemberId(memberDTO.getMemberId());
+
+        System.out.println("====== 장바구니 ====== " + bucketDetailDTOS);
 
         boolean bucket = false;
 
-        if(!memberId.isEmpty()){
-            int totalPrice=0;
-            for(BucketDetailDTO b : memberId){
-                totalPrice += b.getBuyAmount();
+        if(!bucketDetailDTOS.isEmpty()){
+
+                model.addAttribute("bucketList", bucketDetailDTOS);
+                model.addAttribute("totalPrice", memberDTO.getTotalPoint());
+
+
+            int totalSalesPrice = 0;
+            for (BucketDetailDTO bucketDetail : bucketDetailDTOS) {
+                totalSalesPrice += bucketDetail.getSalesPrice();
             }
-            model.addAttribute("bucketList", memberId);
-            model.addAttribute("totalPrice", totalPrice);
 
-
-            Long totalPoint = memberDTO.getTotalPoint();
-//            GameDTO gameDTO = gameService.findById(id);
-            model.addAttribute("totalPoint", totalPoint);
-//            model.addAttribute("member", memberDTO);
-//            model.addAttribute("game", gameDTO);
+            model.addAttribute("totalSalesPrice", totalSalesPrice);
+            model.addAttribute("totalPoint", memberDTO.getTotalPoint());
 
         }else{
             //비어있을때

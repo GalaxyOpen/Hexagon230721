@@ -44,7 +44,7 @@ public class MemberController {
         String encodedPassword = PasswordUtils.encryptPassword(memberDTO.getMemberPassword());  // 비밀번호 암호화
         memberDTO.setMemberPassword(encodedPassword);  // 암호화된 비밀번호로 설정
         memberService.save(memberDTO);
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 
     // 회원가입 아이디 중복체크

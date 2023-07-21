@@ -36,7 +36,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/member/login")  // 로그인 처리 URL
                 .usernameParameter("memberId")  // 사용자 이름 파라미터명
                 .passwordParameter("memberPassword")  // 비밀번호 파라미터명
-                .defaultSuccessUrl("/", false)  // 로그인 성공 시 이동할 URL
+                .defaultSuccessUrl("/game", false)  // 로그인 성공 시 이동할 URL
                 .failureHandler(new CustomAuthenticationFailureHandler())  // 커스텀 실패 핸들러 지정
                 .permitAll()  // 로그인 페이지에 대한 접근 허용
                 .and()

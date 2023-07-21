@@ -15,13 +15,15 @@
 <body>
 <div th:replace="/components/header :: header"></div>
 <div id="member-detail-section">
-    <form action="/member/update" method="post">
+    <form action="/member/update" method="post" id="update-form">
         <table class="top-table">
             <tr>
                 <th>회원정보</th>
                 <th>
-                    <button class="btn-2-cancel" onclick="cancel()"><i class="bi bi-x-lg"></i></button>
-                    <input type="submit" class="btn-2" value="수정완료">
+                    <input type="button" class="btn-2" value="수정완료" onclick="member_update()">
+                </th>
+                <th>
+                    <button type="button" class="btn-2-ㅊ" onclick="update_cancel()"><i class="bi bi-x-lg"></i></button>
                 </th>
             </tr>
         </table>
@@ -36,31 +38,37 @@
             </tr>
             <tr>
                 <th>E-mail</th>
-                <td><input type="text" th:value="${user.memberEmail}" name="memberEmail" id="member-email"></td>
+                <td><input type="text" th:value="${user.memberEmail}" name="memberEmail" id="member-email"
+                           onblur="email_check()"></td>
             </tr>
             <tr>
                 <th>비밀번호</th>
                 <td th:text="${user.memberPassword}" style="display: none"></td>
-                <td><input type="text" placeholder="변경하실 비밀번호를 입력하세요." name="memberPassword" id="member-password"></td>
+                <td><input type="text" placeholder="변경하실 비밀번호를 입력하세요." name="memberPassword" id="member-password"
+                           onblur="password_check()"></td>
             </tr>
             <tr>
                 <th>이름</th>
-                <td><input type="text" th:value="${user.memberName}" name="memberName" id="member-name"></td>
+                <td><input type="text" th:value="${user.memberName}" name="memberName" id="member-name"
+                           onblur="name_check()"></td>
             </tr>
             <tr>
                 <th>생년월일</th>
-                <td><input type="date" th:value="${user.memberBirth}" name="memberBirth" id="member-mirth"></td>
+                <td><input type="date" th:value="${user.memberBirth}" name="memberBirth" id="member-mirth" readonly>
+                </td>
             </tr>
             <tr>
                 <th>전화번호</th>
-                <td><input type="text" th:value="${user.memberMobile}" name="memberMobile" id="member-mobile"></td>
+                <td><input type="text" th:value="${user.memberMobile}" name="memberMobile" id="member-mobile"
+                           onblur="mobile_check()"></td>
             </tr>
             <tr>
                 <th>회원탈퇴</th>
-                <td><button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button></td>
+                <td>
+                    <button class="btn-3-danger" onclick="member_delete()">회원탈퇴</button>
+                </td>
             </tr>
             <tr style="display: none">
-                <th>포인트 어차피 안보여줄거임ㅋ</th>
                 <td><input type="text" th:value="${user.totalPoint}" name="totalPoint"></td>
             </tr>
         </table>
@@ -68,70 +76,176 @@
 
 
     <table class="top-table">
-            <th> 포인트 내역</th>
-        </table>
-        <table class="point-table">
-            <tr style="display: none">
-                <th>비밀번호</th>
-                <td th:text="${user.memberPassword}"></td>
-            </tr>
-            <tr>
-                <th id="cash-icon"><i class="bi bi-currency-exchange"></i></th>
-            </tr>
-            <tr>
-                <th id="you-have-n-points">
-                    <span th:text="${user.memberId}"></span> 님이 보유하신 포인트
-                </th>
-            </tr>
-            <tr>
-                <th id="points-amount">
-                    <span th:text="${user.totalPoint}"></span> POINT
-                </th>
-            </tr>
-            <tr>
-                <th id="charge-list">
-                    <button class="btn-3" onclick="member_list()">충전하기</button>
-                    <button class="btn-3" onclick="member_update()">내역보기</button>
-                </th>
-            </tr>
-        </table>
-        <div class="pass-check">
-        </div>
+        <th> 포인트 내역</th>
+    </table>
+    <table class="point-table">
+        <tr style="display: none">
+            <th>비밀번호</th>
+            <td th:text="${user.memberPassword}"></td>
+        </tr>
+        <tr>
+            <th id="cash-icon"><i class="bi bi-currency-exchange"></i></th>
+        </tr>
+        <tr>
+            <th id="you-have-n-points">
+                <span th:text="${user.memberId}"></span> 님이 보유하신 포인트
+            </th>
+        </tr>
+        <tr>
+            <th id="points-amount">
+                <span th:text="${user.totalPoint}"></span> POINT
+            </th>
+        </tr>
+        <tr>
+            <th id="charge-list">
+                <button class="btn-3" onclick="point_charge()">충전하기</button>
+                <button class="btn-3" onclick="point_history()">내역보기</button>
+            </th>
+        </tr>
+    </table>
+    <div class="pass-check">
+    </div>
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script>
-    // const req_update = () => {
-    //     const password = document.querySelector('input[name="memberPassword"]').value;
-    //     const id = document.querySelector('input[name="id"]').value;
-    //     const memberId = document.querySelector('input[name="memberPassword"]').value;
-    //     const memberEmail = document.querySelector('input[name="memberEmail"]').value;
-    //     const memberName = document.querySelector('input[name="memberName"]').value;
-    //     const memberBirth = document.querySelector('input[name="memberBirth"]').value;
-    //     const memberMobile = document.querySelector('input[name="memberMobile"]').value;
-    //
-    //         axios({
-    //             method: "put",
-    //             url: "/member/update",
-    //             data: {
-    //                 id: id,
-    //                 memberId: memberId,
-    //                 memberPassword: password,
-    //                 memberEmail: memberEmail,
-    //                 memberName: memberName,
-    //                 memberBirth: memberBirth,
-    //                 memberMobile: memberMobile
-    //             }
-    //         }).then(res => {
-    //             location.href = "redirect:/member/detail";
-    //         }).catch(err => {
-    //             alert("비밀번호를 확인하세요");
-    //             password.focus();
-    //         });
-    // }
-
-    const cancel = () => {
+    // 기본 정보 (페이지 로딩 시의 정보)
+    const update_cancel = () => {
         history.back();
     }
+
+    const email_check = () => {
+        const email = document.querySelector("#member-email").value;
+        const exp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (email.length == 0) {
+            return false;
+
+        } else if (exp.test(email)) {
+            return true;
+
+        } else {
+            emailCheck.innerHTML = "유효한 이메일 주소가 아닙니다. (ex: aaaa@hexagon.com)";
+            return false;
+
+        }
+    }
+
+    const password_check = () => {
+        const password = document.querySelector("#member-password").value
+        const exp = /^(?=.*[a-z])(?=.*\d)(?=.*[-_!#])[A-Za-z\d-_!#]{6,20}$/;
+
+
+        if (password.length == 0) {
+            return false;
+
+        } else if (exp.test(password)) {
+            return true;
+
+        } else {
+            return false;
+
+        }
+    }
+
+    const name_check = () => {
+        const name = document.querySelector("#member-name").value;
+        const exp = /^[A-Za-z가-힣]+$/;
+
+
+        if (name.length == 0) {
+            return false;
+
+        } else if (exp.test(name)) {
+            return true;
+
+        } else {
+            nameCheck.innerHTML = "";
+            return false;
+
+        }
+    }
+
+
+    const mobileInput = document.querySelector("#member-mobile");
+    const exp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+    mobileInput.addEventListener("input", function () {
+        const mobile = mobileInput.value;
+        const formattedMobile = formatMobile(mobile);
+        mobileInput.value = formattedMobile;
+        validateMobile(formattedMobile);
+    });
+
+    const mobile_check = () => {
+        const mobileInput = document.querySelector("#member-mobile");
+        const mobile = mobileInput.value;
+        const exp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+        if (mobile.length === 0) {
+            return false;
+
+        } else if (exp.test(mobile)) {
+            const formattedMobile = formatMobile(mobile);
+            mobileInput.value = formattedMobile;
+            return true;
+
+        } else {
+            return false;
+
+        }
+    };
+
+    const formatMobile = (mobile) => {
+        const digits = mobile.replace(/[^0-9]/g, "");
+        let formattedMobile = "";
+        if (digits.length > 2) {
+            formattedMobile += digits.substring(0, 3);
+            if (digits.length > 3) {
+                formattedMobile += "-" + digits.substring(3, 7);
+                if (digits.length > 7) {
+                    formattedMobile += "-" + digits.substring(7, 11);
+                }
+            }
+        } else {
+            formattedMobile = digits;
+        }
+        return formattedMobile;
+    };
+
+    const member_update = () => {
+        const emailValid = email_check();
+        const passwordValid = password_check();
+        const nameValid = name_check();
+        const mobileValid = mobile_check();
+
+        if (!emailValid) {
+            alert("유효한 이메일 주소가 아닙니다. (ex: aaaa@hexagon.com)")
+            document.querySelector("#member-email").focus();
+        } else if (!passwordValid) {
+            alert("기존 비밀번호 유지 시, 이전 비밀번호를 입력해주세요. \n비밀번호는 6~20자의 영문, 숫자, 특수문자(-_!#)로 구성돼야 합니다.")
+            document.querySelector("#member-password").focus();
+        } else if (!nameValid) {
+            alert("한글, 영문 대/소문자를 사용해 주세요. (특수기호, 공백 사용 불가)")
+            document.querySelector("#member-name").focus();
+        } else if (!mobileValid) {
+            alert("유효한 전화번호 형식이 아닙니다.")
+            document.querySelector("#member-mobile").focus();
+        } else {
+            alert("회원정보 수정이 완료되었습니다.")
+            document.getElementById("update-form").submit();
+        }
+    }
+
+
+    const point_charge = () => {
+        alert("회원 정보 수정 중에는 포인트 충전이 불가능합니다.")
+    }
+
+    const point_history = () => {
+        alert("회원 정보 수정 중에는 포인트 내역보기가 불가능합니다.")
+    }
+
 </script>
 </html>

@@ -51,6 +51,9 @@ public class GameEntity extends BaseEntity {
     @Column
     private String youtubeUrl;
 
+    @Column
+    private String thumbnailUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -81,6 +84,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setThumbnailUrl(gameDTO.getThumbnailUrl());
         gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(0);
 
@@ -98,6 +102,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setThumbnailUrl(gameDTO.getThumbnailUrl());
         gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(1);
         return gameEntity;
@@ -116,6 +121,7 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setThumbnailUrl(gameDTO.getThumbnailUrl());
         gameEntity.setMemberEntity(memberEntity);
         return gameEntity;
     }
@@ -132,10 +138,12 @@ public class GameEntity extends BaseEntity {
         gameEntity.setDiscountRate(gameDTO.getDiscountRate());
         gameEntity.setSalesPrice(gameDTO.getSalesPrice());
         gameEntity.setYoutubeUrl(gameDTO.getYoutubeUrl());
+        gameEntity.setThumbnailUrl(gameDTO.getThumbnailUrl());
         gameEntity.setMemberEntity(memberEntity);
         gameEntity.setFileAttached(1);
         return gameEntity;
     }
+
 
 
 }

@@ -21,7 +21,10 @@
         <tbody>
         <tr th:each="bucket : ${bucketList}">
             <td th:text="${bucket.gameId}"></td>
-            <!--            <td th:text="${bucket.thumbnailUrl}"></td>-->
+            <td>
+                <img class="demo cursor" th:src="@{|/upload/${bucket.thumbnailUrl}|}"
+                     style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
+            </td>
             <td th:text="${bucket.gameTitle}"></td>
             <td th:text="${bucket.releasePrice}"></td>
             <td th:text="${bucket.discountRate}"></td>
@@ -31,7 +34,7 @@
         </tr>
         </tbody>
     </table>
-    <p>총 결제금액: <span th:text="${totalPrice}"></span></p>
+    <p>총 결제금액: <span th:text="${totalSalesPrice}"></span></p>
 </div>
 <p>보유 포인트: <span th:text="${totalPoint}"></span></p>
 <div>

@@ -17,6 +17,12 @@ public class BucketDetailDTO {
 
     // 장바구니에서 보여줄 것
 //    private String createdAt; // 구매일자
+    private String gameTitle;  // 출시가
+    private Long releasePrice;  // 출시가
+    private int discountRate;   // 할인율
+    private Long salesPrice;  // 판매가
+
+    private String thumbnailUrl;
     private int buyAmount; // 결제금액
 //    private String payMethod; // 결제방법
 //    private String status; // 구매 상태(완료, 취소, 환불등)
@@ -28,9 +34,14 @@ public class BucketDetailDTO {
         bucketDetailDTO.setMemberId(bucketEntity.getMemberEntity().getMemberId());
         bucketDetailDTO.setGameId(bucketEntity.getGameEntity().getId());
 
-//        bucketDetailDTO.setCreatedAt(bucketEntity.getCreatedAt());
-        bucketDetailDTO.setBuyAmount(bucketEntity.getBuyAmount());
+        bucketDetailDTO.setGameTitle(bucketEntity.getGameEntity().getGameTitle());
+        bucketDetailDTO.setReleasePrice(bucketEntity.getGameEntity().getReleasePrice());
+        bucketDetailDTO.setDiscountRate(bucketEntity.getGameEntity().getDiscountRate());
+        bucketDetailDTO.setSalesPrice(bucketEntity.getGameEntity().getSalesPrice());
 
+//        bucketDetailDTO.setThumbnailUrl(bucketEntity.getGameEntity().getThumbnailEntities().get(0).getStoredFileName());
+
+        bucketDetailDTO.setBuyAmount(bucketEntity.getBuyAmount());
 
         return bucketDetailDTO;
     }

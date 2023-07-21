@@ -31,7 +31,7 @@
             <a th:unless="${#httpServletRequest.remoteUser != null}" href="/member/login">로그인</a>
         </li>
         <li class="right" id="bucket-nav">
-            <a th:if="${#httpServletRequest.remoteUser != null}" th:href="@{/bucket/}">장바구니</a>
+            <a th:if="${#httpServletRequest.remoteUser != null}" th:href="@{/bucket/}"> 장바구니</a>
             <a th:unless="${#httpServletRequest.remoteUser != null}" href="/" style="display:none;">장바구니</a>
         </li>
     </ul>

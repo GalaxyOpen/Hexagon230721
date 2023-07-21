@@ -57,7 +57,7 @@ public class BucketController {
 
             Long totalPoint = memberDTO.getTotalPoint();
 //            GameDTO gameDTO = gameService.findById(id);
-//            model.addAttribute("totalPoint", totalPoint);
+            model.addAttribute("totalPoint", totalPoint);
 //            model.addAttribute("member", memberDTO);
 //            model.addAttribute("game", gameDTO);
 

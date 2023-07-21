@@ -3,42 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Bucket</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/gameNav.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/bucket.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 </head>
 <body>
-<h1>장바구니</h1>
-<div th:if="${bucket}">
-    <p>장바구니가 비어있습니다.</p>
+<div th:replace="/components/header :: header"></div>
+<div th:replace="/components/gameNav :: gameNav"></div>
+<div id="bucket-section">
+    <div th:if="${bucket}">
+        <p>장바구니가 비어있습니다.</p>
+    </div>
+    <div th:if="${!bucket}" class="bucket">
+        <h2>장바구니</h2>
+        <div class="bucket-list" th:each="bucket : ${bucketList}">
+            <p th:text="${bucket.memberId}" style="display:none;"></p>
+            <div class="bucket-game">
+                <div class="bucket-thumbnail">
+                    <img class="demo cursor" th:src="@{|/upload/${bucket.thumbnailUrl}|}"
+                         style="width: 100%; height: 20vh; object-fit: fill" onclick="currentSlide(i)" alt="">
+                </div>
+                <div class="bucket-game-info">
+                    <p th:text="${bucket.gameId}" style="display: none"></p>
+                    <p th:text="${bucket.gameTitle}" class="bucket-gt"></p>
+                    <div class="bucket-price">
+                        <div class="bucket-rel-price">
+                            <p>상품금액</p>
+                            <p><span>&#8361; </span><span th:text="${bucket.releasePrice}"></span></p>
+                        </div>
+                        <div class="minus-box">
+                            <i class="fa fa-solid fa-minus"></i>
+                        </div>
+                        <div class="bucket-dc-price">
+                            <p>할인금액</p>
+                            <p th:text="${bucket.discountRate}" style="display: none"></p>
+                            <p><span>&#8361; </span><span th:text="${bucket.releasePrice - bucket.salesPrice}"></span>
+                            </p>
+                        </div>
+                        <div class="equal-box">
+                            <i class="fa fa-solid fa-equals"></i>
+                        </div>
+                        <div class="bucket-sal-price">
+                            <p>주문금액</p>
+                            <p><span style="color: #00d01b">&#8361; </span><span th:text="${bucket.salesPrice}"
+                                                                                 style="color: #00d01b"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="delete-bucket" th:onclick="deleteById([[${bucket.id}]])" title="장바구니에서 삭제"><i class="bi bi-x-lg"></i></button>
+                <p style="display: none">총 결제금액: <span th:text="${bucket.buyAmount}"></span></p>
+                <p style="display: none;">총 결제금액: <span th:text="${totalSalesPrice}"></span></p>
+            </div>
+        </div>
+        <div class="bucket-tp">
+            <p>총 결제금액<p>
+            <p><span>&#8361; </span><span th:text="${totalSalesPrice}"></span></p>
+            <div>
+                <button onclick="" class="btn-4">결제하기</button>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <!-- 여기에 추가적인 내용을 작성하시면 됩니다. -->
+    </div>
 </div>
-<div th:if="${!bucket}">
-    <table>
-        <thead>
-        <tr>
-            <th>게임 제목</th>
-            <th>장바구니에 담은 날짜</th>
-            <th>결제금액</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="bucket : ${bucketList}">
-            <td th:text="${bucket.gameId}"></td>
-            <td>
-                <img class="demo cursor" th:src="@{|/upload/${bucket.thumbnailUrl}|}"
-                     style="width: 100%; height: 300px; object-fit: fill" onclick="currentSlide(i)" alt="">
-            </td>
-            <td th:text="${bucket.gameTitle}"></td>
-            <td th:text="${bucket.releasePrice}"></td>
-            <td th:text="${bucket.discountRate}"></td>
-            <td th:text="${bucket.salesPrice}"></td>
-            <!--            <td th:text="${#temporals.format(bucket.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-            <!--            <td th:text="${bucket.buyAmount}"></td>-->
-        </tr>
-        </tbody>
-    </table>
-    <p>총 결제금액: <span th:text="${totalSalesPrice}"></span></p>
-</div>
-<p>보유 포인트: <span th:text="${totalPoint}"></span></p>
-<div>
-    <!-- 여기에 추가적인 내용을 작성하시면 됩니다. -->
-</div>
+<div th:replace="/components/footer :: footer"></div>
 </body>
+<script>
+    const deleteById = (id) => {
+        axios.delete("/bucket/"+id)
+            .then(()=>{
+                alert("장바구니에서 삭제되었습니다.")
+                location.reload();
+            }).catch(()=>{
+            alert("요청 실패")
+        });
+
+    }
+</script>
 </html>

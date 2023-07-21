@@ -1,0 +1,155 @@
+body {
+    background: linear-gradient(#201425, #341d34);
+    background-size: cover;
+    position: center;
+    height: auto;
+}
+
+#bucket-section {
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    /*padding-bottom: 300px;*/
+    overflow: hidden;
+    margin-top: 50px;
+    color: #cccccc;
+}
+
+.bucket {
+    margin-top: 150px;
+    width: 80%;
+    margin-bottom: 100px;
+}
+
+.bucket h2 {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.bucket-list {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(60deg, rgba(36, 19, 56, 0.9), rgba(126, 24, 93, 0.9));
+    backdrop-filter: blur(5px);
+    border-top: 3px solid #8400ff;
+}
+
+.bucket-game {
+    position: relative;
+}
+
+.bucket-thumbnail {
+    display: inline-block;
+    width: 15%;
+    height: 10%;
+}
+
+.bucket-game-info {
+    display: inline-block;
+    width: 80%;
+    height: 10%;
+    margin-left: 30px;
+    position: absolute;
+    top: 0;
+}
+
+.bucket-gt {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.bucket-sp{
+    font-size: 20px;
+}
+
+.bucket-price {
+    margin-top: 50px;
+}
+
+.bucket-rel-price {
+    display: inline-block;
+    margin-right: 30px;
+}
+.bucket-rel-price p,
+.bucket-dc-price p,
+.bucket-sal-price p {
+    font-weight: bold;
+    color: #ecafff;
+    text-align: center;
+}
+.bucket-rel-price span,
+.bucket-dc-price span {
+    color: #cccccc;
+    font-size: 24px;
+    text-align: left;
+}
+
+.bucket-sal-price span {
+    color: #cccccc;
+    font-size: 28px;
+    text-align: left;
+}
+
+
+
+.bucket-dc-price {
+    display: inline-block;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.bucket-sal-price {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.minus-box, .equal-box {
+    display: inline-block;
+    align-items: center; /* 수직 정렬 */
+    justify-content: center; /* 수평 정렬 */
+}
+
+.delete-bucket {
+    position: absolute;
+    top: 0;
+    right: 5px;
+
+    border: none;
+    background-color: inherit;
+    color: #cccccc;
+    font-size: 24px;
+    font-weight: bold;
+
+    width: 3%;
+}
+
+.bucket-tp {
+    border-top: 3px solid #cccccc;
+    margin-top: 30px;
+    margin-bottom: 200px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 50%;
+    text-align: right;
+    float: right;
+}
+
+.bucket-tp p {
+    font-size: 24px;
+    /*font-weight: bold;*/
+    color: #ecafff;
+}
+
+.bucket-tp span {
+    font-size: 48px;
+    font-weight: bold;
+    color: #cccccc;
+
+}
+
+
+
+

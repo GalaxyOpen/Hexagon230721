@@ -39,7 +39,7 @@ public class GameEntity extends BaseEntity {
     @Column
     private Long releasePrice;
 
-    @Column
+    @Column(columnDefinition = "int default 0")
     private int discountRate;
 
     @Column

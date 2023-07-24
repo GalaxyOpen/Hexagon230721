@@ -1,12 +1,10 @@
 package com.icia.hexagon.Controller;
 
+import com.icia.hexagon.DTO.BucketDetailDTO;
 import com.icia.hexagon.DTO.GameDTO;
 import com.icia.hexagon.DTO.MemberDTO;
 import com.icia.hexagon.DTO.TradeDTO;
-import com.icia.hexagon.Service.GameService;
-import com.icia.hexagon.Service.MemberService;
-import com.icia.hexagon.Service.PointService;
-import com.icia.hexagon.Service.TradeService;
+import com.icia.hexagon.Service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +28,7 @@ public class TradeController {
     private final GameService gameService;
     private final TradeService tradeService;
     private final PointService pointService;
+    private final BucketService bucketService;
 
     @Transactional
     @GetMapping("/save/{id}")
@@ -49,6 +46,42 @@ public class TradeController {
         tradeService.tradeSave(gameDTO, memberDTO);
         return "redirect:/game";
     }
+
+    @Transactional
+    @PostMapping("/saveBatch")
+    public String purchaseAxiosSaveBatch(@RequestBody List<Long> gameIds,
+                                         @AuthenticationPrincipal User user) {
+        // 현재 로그인한 회원 정보를 가져옵니다.
+        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+
+        for (Long gameId : gameIds) {
+            // 구매하려는 게임 정보를 가져옵니다.
+            GameDTO gameDTO = gameService.findById(gameId);
+
+            if (gameDTO != null) {
+                // 구매자 포인트 내역 생성
+                pointService.pointPurchase(memberDTO, gameDTO);
+
+                // 판매자 포인트 내역 생성
+                pointService.pointSales(gameDTO);
+
+                // 거래내역 생성
+                tradeService.tradeSave(gameDTO, memberDTO);
+            } else {
+                // 게임을 찾을 수 없는 경우 에러 처리 또는 로그 남기기
+                System.out.println("Game not found for ID: " + gameId);
+            }
+        }
+
+        // 상품 구매가 완료되면 장바구니 내역에서 해당 회원의 모든 장바구니 항목 삭제
+        List<BucketDetailDTO> detailDTOList = bucketService.findByMemberId(memberDTO.getMemberId());
+        for (BucketDetailDTO detailDTO : detailDTOList) {
+            bucketService.deleteById(detailDTO.getId());
+        }
+
+        return "redirect:/";
+    }
+
 
     @Transactional
     @GetMapping("/purchase")

@@ -59,7 +59,7 @@ public class GameEntity extends BaseEntity {
     private MemberEntity memberEntity;
 
 
-    @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ThumbnailEntity> thumbnailEntities = new ArrayList<>();
     @OneToMany(mappedBy = "gameEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<GameFileEntity> gameFileEntityList = new ArrayList<>();

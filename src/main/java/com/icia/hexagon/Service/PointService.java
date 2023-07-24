@@ -54,6 +54,8 @@ public class PointService {
         return pointDTOS;
     }
 
+
+    @Transactional
     public void pointPurchase(MemberDTO memberDTO, GameDTO gameDTO) {
         // gameDTO.getSalesPrice()가 0인 경우, 작동하지 않도록 조건을 추가합니다.
         if (gameDTO.getSalesPrice() == 0) {

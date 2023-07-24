@@ -450,6 +450,17 @@
         showSlides(slideIndex = n);
     }
 
+    // 자동으로 슬라이드 변경
+    function autoSlides() {
+        plusSlides(1); // 다음 이미지로 이동
+        setTimeout(autoSlides, 8000); // 8초마다 자동으로 호출
+    }
+
+    // 페이지 로드 시 자동 슬라이드 시작
+    window.onload = function () {
+        autoSlides();
+    };
+
     function showSlides(n) {
         let i;
         let slides = document.getElementsByClassName("mySlides");

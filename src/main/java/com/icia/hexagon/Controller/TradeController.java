@@ -51,8 +51,8 @@ public class TradeController {
     @PostMapping("/saveBatch")
     public String purchaseAxiosSaveBatch(@RequestBody List<Long> gameIds,
                                          @AuthenticationPrincipal User user) {
-        // 현재 로그인한 회원 정보를 가져옵니다.
-        MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
+
+        MemberDTO memberDTO = null;
 
         for (Long gameId : gameIds) {
             // 구매하려는 게임 정보를 가져옵니다.
@@ -60,6 +60,8 @@ public class TradeController {
 
             if (gameDTO != null) {
                 // 구매자 포인트 내역 생성
+                memberDTO = memberService.findByMemberId(user.getUsername());
+
                 pointService.pointPurchase(memberDTO, gameDTO);
 
                 // 판매자 포인트 내역 생성

@@ -61,7 +61,7 @@
                 <tr>
                     <th>배급사</th>
                     <td>
-                        <input type="text" name="gameDistr" id="gameDistr" th:value="${game.gameDistr}">
+                        <input type="text" name="gameDistr" id="gameDistr" th:value="${game.gameDistr}" autocomplete='off'>
                     </td>
                 </tr>
                 <tr>
@@ -86,7 +86,7 @@
                     <th>할인율</th>
                     <td>
                         <input type="text" name="discountRate" id="discountRate" placeholder="할인을 적용하지 않을 경우 0을 입력하세요"
-                               oninput="calculateSalesPrice()" th:value="${game.discountRate}"><br>
+                               oninput="calculateSalesPrice()" th:value="${game.discountRate}" autocomplete='off'><br>
                     </td>
                 </tr>
                 <tr>

@@ -46,6 +46,14 @@ body {
     color: white;
 }
 
+#login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #341d34;
+    color: white;
+}
+
 #login-form input[type="date"] {
     width: 75%;
     padding: 10px;

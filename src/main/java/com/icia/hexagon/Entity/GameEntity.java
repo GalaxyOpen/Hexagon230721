@@ -18,7 +18,7 @@ public class GameEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, unique = true)
     private String gameTitle;
 
     @Column(length = 10, nullable = false)

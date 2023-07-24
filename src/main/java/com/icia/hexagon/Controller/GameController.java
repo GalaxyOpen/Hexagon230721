@@ -31,7 +31,16 @@ public class GameController {
 
     // 게임등록 화면
     @GetMapping("/save")
-    public String saveForm() {
+    public String saveForm(Model model) {
+        List<GameDTO> gameDTOList = gameService.findAll();
+
+        List<String> gameTitles = new ArrayList<>();
+        for (GameDTO gameDTO : gameDTOList) {
+            gameTitles.add(gameDTO.getGameTitle());
+        }
+
+        System.out.println("======" + gameTitles);
+        model.addAttribute("gameTitles", gameTitles);
         return "/gamePages/gameSave";
     }
 

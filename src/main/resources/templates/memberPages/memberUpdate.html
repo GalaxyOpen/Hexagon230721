@@ -39,18 +39,18 @@
             <tr>
                 <th>E-mail</th>
                 <td><input type="text" th:value="${user.memberEmail}" name="memberEmail" id="member-email"
-                           onblur="email_check()"></td>
+                           onblur="email_check()" autocomplete='off'></td>
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td th:text="${user.memberPassword}" style="display: none"></td>
+                <td th:text="${user.memberPassword}" style="display: none" autocomplete='off'></td>
                 <td><input type="text" placeholder="변경하실 비밀번호를 입력하세요." name="memberPassword" id="member-password"
                            onblur="password_check()"></td>
             </tr>
             <tr>
                 <th>이름</th>
                 <td><input type="text" th:value="${user.memberName}" name="memberName" id="member-name"
-                           onblur="name_check()"></td>
+                           onblur="name_check()" autocomplete='off'></td>
             </tr>
             <tr>
                 <th>생년월일</th>

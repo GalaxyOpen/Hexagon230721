@@ -20,7 +20,7 @@
 
 
         <div class="input-area">
-            <p>계정 이름으로 로그인</p>
+            <p>아이디</p>
             <input th:if="${member} == null" type="text" name="memberId" placeholder="Id" autofocus autocomplete='off'>
             <input th:unless="${member} == null" type="text" name="memberId" placeholder="Id" autocomplete='off'>
         </div>
@@ -30,8 +30,8 @@
             <input th:if="${member} == null" type="password" name="memberPassword" placeholder="Password" autocomplete='off'>
             <input th:unless="${member} == null" type="password" name="memberPassword" placeholder="Password" autofocus autocomplete='off'>
 
-            <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
-            <label for="show-password">비밀번호 보이기</label>
+            <input type="checkbox" id="show-password" style="width: 15px; height: 15px; margin-top: 10px;  accent-color: #341d34" onclick="togglePasswordVisibility()">
+            <label for="show-password" style="color: white">비밀번호 보이기</label>
 
             <p id="login-check-result" style="margin-top: 5px;">
                 <span  id="login-check" style="color: red">아이디 또는 비밀번호를 잘못 입력했습니다. </span>

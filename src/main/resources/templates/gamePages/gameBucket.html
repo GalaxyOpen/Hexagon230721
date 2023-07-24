@@ -57,16 +57,18 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="delete-bucket" th:onclick="deleteById([[${bucket.id}]])" title="장바구니에서 삭제"><i class="bi bi-x-lg"></i></button>
+                <button type="button" class="delete-bucket" th:onclick="deleteById([[${bucket.id}]])" title="장바구니에서 삭제">
+                    <i class="bi bi-x-lg"></i></button>
                 <p style="display: none">총 결제금액: <span th:text="${bucket.buyAmount}"></span></p>
                 <p style="display: none;">총 결제금액: <span th:text="${totalSalesPrice}"></span></p>
             </div>
         </div>
         <div class="bucket-tp">
-            <p>총 결제금액<p>
+            <p>총 결제금액
+            <p>
             <p><span>&#8361; </span><span th:text="${totalSalesPrice}"></span></p>
             <div>
-                <button onclick="" class="btn-4">결제하기</button>
+                <button th:onclick="purchaseAllItems()" class="btn-4">결제하기</button>
             </div>
         </div>
 
@@ -77,16 +79,83 @@
 </div>
 <div th:replace="/components/footer :: footer"></div>
 </body>
-<script>
+<script th:inline="javascript">
+
+    // 이벤트 리스너 등록을 위한 함수
+    function registerChargeCompleteListener() {
+        window.addEventListener("message", function (event) {
+            if (event.data === "chargeComplete") {
+                // 충전이 완료되었다는 메시지를 받으면 새로고침
+                location.reload();
+            }
+        });
+    }
+
+    // 이벤트 리스너 등록 여부 확인 후 등록
+    if (!window.chargeCompleteListenerRegistered) {
+        registerChargeCompleteListener();
+        window.chargeCompleteListenerRegistered = true;
+    }
+
+    const bucketList = [[${bucketList}]]; // 데이터를 직접 JavaScript 변수로 가져옴
+    const totalSalesPrice = [[${totalSalesPrice}]]
+    const totalPoint = [[${totalPoint}]]
+
+    const purchaseAllItems = () => {
+        console.log(totalPoint);
+        console.log(totalSalesPrice);
+
+        if (totalSalesPrice > totalPoint) {
+            // 포인트가 부족할 경우 포인트 충전 여부 확인
+            if (confirm("포인트가 부족합니다. 충전하시겠습니까?")) {
+                // 포인트 충전 화면 URL
+                const pointChargeUrl = "/point/charge";
+                // 새 창의 옵션을 설정합니다. 새 창의 크기, 위치 등을 조절할 수 있습니다.
+                const windowOptions = "width=528,height=624,scrollbars=yes,resizable=yes";
+                // 새 창을 엽니다.
+                const newWindow = window.open(pointChargeUrl, "_blank", windowOptions);
+                // 포인트 충전 결과를 확인하기 위한 이벤트 리스너 등록
+                window.addEventListener("message", function (event) {
+                    // event.data 값이 "chargeComplete"인 경우, 충전이 완료되었다는 의미
+                    if (event.data === "chargeComplete") {
+                        // 충전이 완료되었다는 메시지를 받으면 새 창을 닫음
+                        newWindow.close();
+                    }
+                });
+            } else {
+                alert("취소되었습니다.");
+            }
+        } else {
+            // 포인트가 충분하면 상품 구매 수행
+            purchaseItems(bucketList);
+        }
+    };
+
+    const purchaseItems = (bucketList) => {
+        const gameIds = bucketList.map(bucket => bucket.gameId);
+        axios.post('/trade/saveBatch', gameIds)
+            .then(response => {
+                alert('상품 구매가 완료되었습니다.');
+                location.href = "/game"
+            })
+            .catch(error => {
+                // 구매 실패 시 처리 로직
+                alert('상품 구매에 실패했습니다.');
+            });
+    };
+
+
     const deleteById = (id) => {
-        axios.delete("/bucket/"+id)
-            .then(()=>{
+        axios.delete("/bucket/" + id)
+            .then(() => {
                 alert("장바구니에서 삭제되었습니다.")
                 location.reload();
-            }).catch(()=>{
+            }).catch(() => {
             alert("요청 실패")
         });
 
     }
+
+
 </script>
 </html>

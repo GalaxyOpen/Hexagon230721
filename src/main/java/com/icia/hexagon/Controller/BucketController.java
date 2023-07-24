@@ -45,8 +45,6 @@ public class BucketController {
         MemberDTO memberDTO = memberService.findByMemberId(user.getUsername());
         List<BucketDetailDTO> bucketDetailDTOS = bucketService.findByMemberId(memberDTO.getMemberId());
 
-        System.out.println("====== 장바구니 ====== " + bucketDetailDTOS);
-
         boolean bucket = false;
 
         if(!bucketDetailDTOS.isEmpty()){

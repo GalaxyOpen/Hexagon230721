@@ -21,12 +21,16 @@
 
         <div class="input-area">
             <p>계정 이름으로 로그인</p>
-            <input type="text" name="memberId" placeholder="Id" >
+            <input type="text" name="memberId" placeholder="Id" autocomplete='off'>
         </div>
 
         <div class="input-area">
             <p>비밀번호</p>
-            <input type="text" name="memberPassword" placeholder="Password">
+            <input type="password" name="memberPassword" placeholder="Password" autocomplete='off'>
+
+            <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
+            <label for="show-password">비밀번호 보이기</label>
+
             <p id="login-check-result">
                 <span id="login-check" style="margin-top: 5px; margin-bottom: 0px; display:none"> </span>
             </p>
@@ -38,6 +42,19 @@
 <div th:replace="/components/footer :: footer"></div>
 </body>
 <script>
+
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementsByName('memberPassword')[0];
+        const showPasswordCheckbox = document.getElementById('show-password');
+
+        // 체크 박스가 선택되어 있으면 비밀번호를 보여주도록 타입을 변경합니다.
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = 'text';
+        } else {
+            // 체크 박스가 선택되어 있지 않으면 다시 비밀번호 필드로 변경합니다.
+            passwordInput.type = 'password';
+        }
+    }
 
 
     const login_check = () => {

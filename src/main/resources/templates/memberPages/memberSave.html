@@ -18,7 +18,7 @@
         <h2>회원가입</h2>
         <div class="input-area">
             <p>ID</p>
-            <input type="text" name="memberId" placeholder="사용하실 ID를 입력하세요." id="member-Id" onblur="id_check()"><br>
+            <input type="text" name="memberId" placeholder="사용하실 ID를 입력하세요." id="member-Id" onblur="id_check()" autocomplete='off'><br>
             <p id="id-check-result">
                 <span id="id-check" style="color:#00d01b; margin-top: 0px; margin-bottom: 20px; display:none"> </span>
             </p>
@@ -26,7 +26,7 @@
 
         <div class="input-area">
             <p>이메일 주소</p>
-            <input type="text" name="memberEmail" placeholder="이메일 주소를 입력하세요." id="member-email" onblur="email_check()"><br>
+            <input type="text" name="memberEmail" placeholder="이메일 주소를 입력하세요." id="member-email" onblur="email_check()" autocomplete='off'><br>
             <p id="email-check-result">
                 <span id="email-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
             </p>
@@ -34,17 +34,20 @@
 
         <div class="input-area">
             <p>비밀번호</p>
-            <input type="text" name="memberPassword" placeholder="비밀번호를 입력하세요." id="member-password"
-                   onblur="password_check()"><br>
+            <input type="password" name="memberPassword" placeholder="비밀번호를 입력하세요." id="member-password"
+                   onblur="password_check()" autocomplete='off'><br>
+
+            <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
+            <label for="show-password">비밀번호 보이기</label>
+
             <p id="password-check-result">
                 <span id="password-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
             </p>
-
         </div>
 
         <div class="input-area">
             <p>이름</p>
-            <input type="text" name="memberName" placeholder="이름을 입력하세요." id="member-name" onblur="name_check()"><br>
+            <input type="text" name="memberName" placeholder="이름을 입력하세요." id="member-name" onblur="name_check()" autocomplete='off'><br>
             <p id="name-check-result">
                 <span id="name-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
             </p>
@@ -61,9 +64,9 @@
         <div class="input-area">
             <p>전화번호</p>
             <input type="text" name="memberMobile" placeholder="010-****-****" id="member-mobile"
-                   onblur="mobile_check()"><br>
+                   onblur="mobile_check()" autocomplete='off'><br>
             <p id="mobile-check-result">
-                <span id="mobile-check" style="margin-top: 0px; margin-bottom: 20px; display:none"> </span>
+                <span id="mobile-check" style="margin-top: 0px; margin-bottom: 20px; display:none" > </span>
             </p>
         </div>
 
@@ -135,6 +138,20 @@
             return false;
         }
     }
+
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('member-password');
+        const showPasswordCheckbox = document.getElementById('show-password');
+
+        // 체크 박스가 선택되어 있으면 비밀번호를 보여주도록 타입을 변경합니다.
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = 'text';
+        } else {
+            // 체크 박스가 선택되어 있지 않으면 다시 비밀번호 필드로 변경합니다.
+            passwordInput.type = 'password';
+        }
+    }
+
 
     const password_check = () => {
         const password = document.querySelector("#member-password").value;

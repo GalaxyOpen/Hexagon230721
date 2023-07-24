@@ -30,7 +30,7 @@
                 <tr>
                     <th>게임명</th>
                     <td>
-                        <input type="text" name="gameTitle" id="game-title" placeholder="제목">
+                        <input type="text" name="gameTitle" id="game-title" placeholder="제목" autocomplete='off'>
                     </td>
                 </tr>
                 <tr>
@@ -57,7 +57,7 @@
                 <tr>
                     <th>배급사</th>
                     <td>
-                        <input type="text" name="gameDistr" id="gameDistr">
+                        <input type="text" name="gameDistr" id="gameDistr" autocomplete='off'>
                     </td>
                 </tr>
                 <tr>
@@ -81,14 +81,15 @@
                 <tr>
                     <th>출시가격</th>
                     <td>
-                        <input type="text" name="releasePrice" id="releasePrice" oninput="calculateSalesPrice()">
+                        <input type="text" name="releasePrice" id="releasePrice" oninput="calculateSalesPrice()"
+                               autocomplete='off'>
                     </td>
                 </tr>
                 <tr>
                     <th>할인율</th>
                     <td>
                         <input type="text" name="discountRate" id="discountRate" th:value="0"
-                               oninput="calculateSalesPrice()"><br>
+                               oninput="calculateSalesPrice()" autocomplete='off'><br>
                     </td>
                 </tr>
                 <tr>
@@ -122,7 +123,7 @@
                     <th>소개영상</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="youtubeUrl" placeholder="url을 입력하세요"></td>
+                    <td><input type="text" name="youtubeUrl" placeholder="url을 입력하세요" autocomplete='off'></td>
                 </tr>
             </table>
             <input type="button" class="btn-1" value="게임 등록" onclick="game_save()">
@@ -130,7 +131,7 @@
     </div>
 </div>
 </body>
-<script>
+<script th:inline="javascript">
     const game_save = () => {
         const gameTitle = document.querySelector('#game-title').value;
         const gameCreator = document.querySelector('#gameCreator').value;
@@ -147,10 +148,15 @@
         const discountRate = document.querySelector('#discountRate').value;
         const thumbnail = document.querySelector('#thumbnail').value;
         const gameFile = document.querySelector('#gameFile').value;
+        const gameTitleDB = [[${gameTitles}]]
+        console.log(gameTitleDB);
+
 
         if (gameTitle.length == 0) {
             document.querySelector('#game-title').focus()
             alert("게임명을 입력해주세요");
+        } else if (gameTitleDB.includes(gameTitle)) {
+            alert("이미 존재하는 게임명 입니다.");
         } else if (gameCreator.length == 0) {
             document.querySelector('#gameCreator').focus()
             alert("제작자명을 입력해주세요");

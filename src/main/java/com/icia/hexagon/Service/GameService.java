@@ -290,4 +290,17 @@ public class GameService {
 
         return gameDTOs;
     }
+
+    @Transactional
+    public List<GameDTO> findAll() {
+        List<GameEntity> gameEntities = gameRepository.findAll();
+        List<GameDTO> gameDTOs = new ArrayList<>();
+
+        for (GameEntity gameEntity : gameEntities) {
+            GameDTO gameDTO = GameDTO.toDTO(gameEntity);
+            gameDTOs.add(gameDTO);
+        }
+
+        return gameDTOs;
+    }
 }

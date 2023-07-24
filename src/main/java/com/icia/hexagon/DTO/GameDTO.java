@@ -62,6 +62,11 @@ public class GameDTO {
         // 게임 멤버의 ID를 gameDTO에 설정합니다.
         gameDTO.setMemberId(gameEntity.getMemberEntity().getId());
 
+        // gameFileEntityList를 초기화하여 LazyInitializationException 방지
+        if (gameEntity.getGameFileEntityList() != null) {
+            gameEntity.getGameFileEntityList().size();
+        }
+
         // 파일 첨부 여부에 따라 파일 이름 리스트를 설정합니다.
         if (gameEntity.getFileAttached() == 1) {
             gameDTO.setFileAttached(1);
